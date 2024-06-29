@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.127.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Connecting to On-Premises :: AWS System Manager</title>
+
+    
+    <link href="/css/nucleus.css?1719680647" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1719680647" rel="stylesheet">
+    <link href="/css/hybrid.css?1719680647" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1719680647" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1719680647" rel="stylesheet">
+    <link href="/css/auto-complete.css?1719680647" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1719680647" rel="stylesheet">
+    <link href="/css/theme.css?1719680647" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1719680647" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1719680647" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1719680647"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2-week2/2.1-sovico/2.1.4-connectonpremises/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1719680647"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1719680647"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1719680647"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/" title="Week 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/">
+           <b> 1. </b> Week 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/" title="Module 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/">
+           <b> 1.1. </b> Module 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/1.1.1-awswaf/" title="AWS Well-Architected Framework" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/1.1.1-awswaf/">
+           <b> 1.1.1. </b> AWS Well-Architected Framework
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.2-lab1/" title="Lab 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.2-lab1/">
+           <b> 1.2. </b> Lab 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.3-lab7/" title="Lab 7" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.3-lab7/">
+           <b> 1.3. </b> Lab 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.4-lab9/" title="Lab 9" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.4-lab9/">
+           <b> 1.4. </b> Lab 9
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/" title="Week 2" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/">
+           <b> 2. </b> Week 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/">
+           <b> 2.1 </b> Sovico Skill Accelerator Lab
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.1-vpc/" title="VPC Fundamentals" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.1-vpc/">
+           <b> 2.1.1 </b> VPC Fundamentals
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.2-multivpcs/">
+           <b> 2.1.2 </b> Multiple VPCs
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Security Controls" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.3-securitycontrols/">
+           <b> 2.1.3 </b> Security Controls
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Connecting to On-Premises" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.4-connectonpremises/">
+           <b> 2.1.4 </b> Connecting to On-Premises
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.5-networkmonitoring/" title="Network Monitoring" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.5-networkmonitoring/">
+           <b> 2.1.5 </b> Network Monitoring
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/" title="Module 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/">
+           <b> 2.2 </b> Module 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.1-vpc/" title="Amazon Virtual Private Cloud" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.1-vpc/">
+           <b> 2.2.1 </b> Amazon Virtual Private Cloud
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/" title="VPC Security and Multi-VPC features" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/">
+           <b> 2.2.2 </b> VPC Security and Multi-VPC features
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.3-gapvxawsevent/" title="OPTIMIZING AWS COSTS AND SECURITY" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.3-gapvxawsevent/">
+           <b> 2.3. </b> OPTIMIZING AWS COSTS AND SECURITY
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"><i class='fab fa-facebook'></i> AWS Study Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="/2-week2/2.1-sovico/2.1.4-connectonpremises/" selected>English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="/vi/2-week2/2.1-sovico/2.1.4-connectonpremises/">Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total Cloud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b> Last Updated </b> <br>
+    <i>
+        <font color=orange>29-09-2024</font>
+    </i>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="" style="color:orange">Minh Tiến</a> <br>
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>Minh Tien Workshop</a> > <a href='/2-week2/'>Week 2</a> > <a href='/2-week2/2.1-sovico/'>Sovico Skill Accelerator Lab</a> > Connecting to On-Premises
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#establish-vpn-connection">Establish VPN Connection</a></li>
+        <li><a href="#explore-hybrid-environment">Explore Hybrid Environment</a></li>
+        <li><a href="#hybrid-dns">Hybrid DNS</a></li>
+        <li><a href="#clean-up">Clean Up</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Connecting to On-Premises
+            </h1>
+          
+
+        
+
+
+
+	<p>Please note, this module is optional and is not required to be completed to proceed with this workshop. You may skip to <a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/monitoring">Network Monitoring</a></p>
+<p>Amazon Virtual Private Cloud (Amazon VPC) provides multiple options to integrate existing data center networks with your AWS VPCs, including AWS Managed Site-to-site (IPsec) VPNs and Direct Connect connections. AWS VPN connections provide up to <strong>1.25gbps</strong> of throughput per tunnel. When used in conjunction with the Transit Gateway, AWS VPN supports Equal-Cost Multipathing (ECMP) to allow you to scale VPN throughput.</p>
+<p>In this lab, we will be standing up a simulated data center environment and connecting it with the existing Transit Gateway that was set up in the &ldquo;Multiple VPCs&rdquo; lab. Recall that at the end of that lab, we had provisioned 3 AWS VPCs and EC2 instances in each VPC. The VPCs were interconnected using Transit Gateway.</p>
+<p>To build out our simulated data center environment and connect it to our AWS environment, we will:</p>
+<ol>
+<li>Deploy a VPC containing a simulated datacenter environment, with DNS server and a simple web application.</li>
+<li>Establish VPN connectivity between the simulated datacenter and the AWS environment.</li>
+<li>Set up DNS resolution between the AWS environment and simulated datacenter.</li>
+<li>Test connectivity from the AWS environment to the simulated datacenter.</li>
+</ol>
+<p>If you are running this lab in <strong>AWS Workshop Studio</strong>, the region has been set by your facilitator. The region you see in /images/2.week2/screenshots may not match your environment. This will not cause any problems.</p>
+<p>If you are running this lab in <strong>your own AWS Account</strong>, it is recommended for all lab resources to be created in us-east-1 region so that the /images/2.week2/screenshots match your environment. This is not mandatory.</p>
+<h4 id="prerequisites">Prerequisites</h4>
+<p>If you have not completed the Multiple VPCs sections&hellip;</p>
+<h4 id="deploy-vpc-to-simulate-on-premises">Deploy VPC to simulate &lsquo;On-Premises&rsquo;</h4>
+<p>Now we are ready to deploy a provided CloudFormation template a the simulated on-premises environment. This stack will create a VPC that will act as our on-premises environment with a public and private subnet as well as the three EC2 instances for a Customer Gateway Server, DNS Server, and Application Server.</p>
+<ol>
+<li>
+<p>Load the following CloudFormation template:</p>
+<p><a href="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/cfn/on-premises-create-on-premises.yaml?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J~7ymRH0Zd~BAFAow5URznkYUC11m940tHfTtFZjb0inr~UHlKX4aMx~6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14~ytkP00b0klOMAoCObjpWlF~P6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi~5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW~fBYWkdJ7cRirtLqaELletY9A__">CloudFormation Template</a></p>
+</li>
+<li>
+<p>Enter the <strong>Stack name</strong> <code>NetworkingWorkshopOnPremisesVPC</code></p>
+</li>
+<li>
+<p>Update <strong>ParticipantIPAddress</strong> and then accept the remaining default values in <strong>Configure stack options</strong></p>
+</li>
+<li>
+<p>Click on <strong>Next</strong></p>
+</li>
+<li>
+<p>Click on <strong>Create stack</strong></p>
+</li>
+</ol>
+<p><img alt="CFN Stack Parameters" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/cfn_stack_configured.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>Wait for the stack to be created. This can take up to 10 minutes.</p>
+<p>Important</p>
+<p>If the deployment of the CloudFormation template fails due to the <strong>Elastic IP address</strong> limit being reached and you are using your own AWS account, please refer to the <strong>Elastic IP Quota</strong> section in <a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/prereqs/aws-account">Prerequisites - Your own AWS Account</a>.</p>
+<p><em><strong>Now we are ready to create the VPN connection between AWS and the on-premise Customer Gateway</strong></em></p>
+<p><img alt="Target State" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab3_cfn_deployed.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h3 id="establish-vpn-connection">Establish VPN Connection</h3>
+<p>In the earlier Multiple VPCs lab we created a Transit Gateway to interconnect our the VPCs. To integrate the simulated datacenter environment, we will establish a VPN connection between the Transit Gateway and a customer gateway device at the datacenter. Since this is a simulated environment, we will use OpenSWAN running on an EC2 host as the Customer Gateway.</p>
+<p><img alt="VPN target state" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab3_vpn_established.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="create-tgw-vpn-attachment">Create TGW VPN Attachment</h4>
+<p>First, we need to capture the Public IP of the Customer Gateway that we will need in a later step.</p>
+<ol>
+<li>
+<p>In the EC2 Dashboard navigate to <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> beside the <code>On Premise Customer Gateway</code> EC2 instance and copy down the <strong>Public IPv4 address</strong></p>
+<p><img alt="Save Customer Gateway IP" src="/images/2.week2/Screenshot_2024-06-25_013901.png"></p>
+</li>
+</ol>
+<p>Now we can create the VPN attachment on the Transit Gateway.</p>
+<ol start="3">
+<li>
+<p>In the VPC dashboard navigate to <a href="https://console.aws.amazon.com/vpc/home?#TransitGatewayAttachments">Transit Gateway Attachments</a> </p>
+</li>
+<li>
+<p>Click <strong>Create transit gateway attachment</strong> <img alt="Create TGW Attachment" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/create_tgw_attachment_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Under <strong>Transit gateway ID</strong> select the Immersion Day TGW</p>
+</li>
+<li>
+<p>Change <strong>Attachment type</strong> to <strong>VPN</strong></p>
+</li>
+<li>
+<p>Under <strong>Customer Gateway</strong> select <strong>New</strong></p>
+</li>
+<li>
+<p>For IP address, enter the Public IP of the <code>On Premise Customer Gateway</code> EC2 instance that you captured in a previous step.</p>
+</li>
+<li>
+<p>Change the <strong>Routing Options</strong> to <strong>Static</strong> routing.</p>
+</li>
+<li>
+<p>Leave all other settings at their defaults. Click <strong>Create transit gateway attachment</strong></p>
+<p><img alt="Create TGW Attachment" src="/images/2.week2/Screenshot_2024-06-25_014104.png"></p>
+</li>
+</ol>
+<h4 id="create-site-to-site-vpn-connection">Create Site-to-Site VPN Connection</h4>
+<ol>
+<li>
+<p>Remain in the <a href="https://console.aws.amazon.com/vpc/home?#TransitGatewayAttachments">Transit Gateway Attachments</a>  dashboard and wait for the newly created VPN connection to transition to the available status. Scroll down to the details tab and click on the <strong>Resource ID</strong> for the Site-to-Site VPN (starting with vpn-)</p>
+<p><img alt="VPN attachment" src="/images/2.week2/Screenshot_2024-06-25_014345.png"></p>
+</li>
+<li>
+<p>In the resulting screen, select the check box next to the VPN and click on the <strong>Tunnel details</strong> tab. Write down the two <code>Outside IP addresses</code>, you will need these at a later step. Click <strong>Download configuration</strong></p>
+<p><img alt="Download VPN Config" src="/images/2.week2/Screenshot_2024-06-25_014520.png"></p>
+</li>
+<li>
+<p>Select <code>Openswan</code> for the vendor.</p>
+<p><img alt="Select Openswan" src="/images/2.week2/Screenshot_2024-06-25_014536.png"></p>
+</li>
+<li>
+<p>Click <strong>Download</strong> and save the downloaded file for later.</p>
+</li>
+<li>
+<p>Click <strong>Cancel</strong> to close the window.</p>
+</li>
+</ol>
+<h4 id="create-a-new-transit-gateway-route-table-for-the-vpn">Create a new Transit Gateway Route Table for the VPN</h4>
+<p>The new VPN connection needs to be associated to a transit gateway route table. Since none of the existing ones are suitable (they do not have all the VPCs routes), we will create a new one.</p>
+<ol>
+<li>
+<p>In the VPC console navigate to <a href="https://console.aws.amazon.com/vpc/home?#TransitGatewayRouteTables:sort=transitGatewayRouteTableId">Transit Gateway Route Tables</a> </p>
+</li>
+<li>
+<p>Click <strong>Create transit gateway route table</strong></p>
+<p><img alt="Create TGW route table" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/tgw_rt_create.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Enter the name <code>VPN Route Table</code> and select the Transit gateway ID.</p>
+</li>
+<li>
+<p>Click <strong>Create transit gateway route table</strong></p>
+<p><img alt="TGW RT Detail" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/tgw_rt_create_detail.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+</ol>
+<h4 id="delete-vpn-attachment-from-transit-gateway-default-route-table">Delete VPN Attachment from Transit Gateway default Route Table</h4>
+<p>](<a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/on-premises/create-vpn#delete-vpn-attachment-from-transit-gateway-default-route-table">https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/on-premises/create-vpn#delete-vpn-attachment-from-transit-gateway-default-route-table</a>)</p>
+<p>When we created the transit gateway, we left the option <code>Default route table association</code> enabled. This means that when we created the VPN attachment, it was automatically associated with the transit gateways default route table. Before we associate the VPN attachment to the new VPN route table, we have to disassociate it from the default route table.</p>
+<p>If you started this workshop after the <strong>Multiple VPCs</strong> section, you do not need to complete this step. <code>Default route table association</code> <strong>is not</strong> enabled in the <code>NetworkingWorkshopMultiVPCandTGW</code> CloudFormation template deployed in the Security Controls or Connecting to On-Premises prerequisites sections.</p>
+<ol>
+<li>Navigate back to <a href="https://console.aws.amazon.com/vpc/home?#TransitGatewayRouteTables:">Transit Gateway Route Tables</a>  or remove the <strong>Transit gateway route table ID:</strong> filter.</li>
+<li>Select the <em>check box</em> for the TGW default route table and scroll down to the <strong>Associations</strong> tab <img alt="Delete VPN Association" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/tgw_routing_association_delete.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>Select the association with the resource type <strong>VPN</strong> and click <strong>Delete association</strong></li>
+<li>Confirm the deletion by clicking <strong>Delete Association</strong> on the following screen</li>
+<li>The association will move into <em>disassociating</em> state.
+<img src="/images/2.week2/Screenshot_2024-06-25_014706.png"></li>
+</ol>
+<h4 id="associate-the-vpn-attachment-to-the-new-transit-gateway-route-table">Associate the VPN attachment to the new Transit Gateway Route Table</h4>
+<ol>
+<li>
+<p>Select the new <code>VPN Route Table</code> and click <strong>Associations</strong> tab. Click <strong>Create association</strong></p>
+<p><img alt="TGW RT Association overview" src="/images/2.week2/Screenshot_2024-06-25_014727.png"></p>
+</li>
+<li>
+<p>Select the VPN attachment from the list and click <strong>Create association</strong></p>
+<p><img alt="TGW RT Association" src="/images/2.week2/Screenshot_2024-06-25_014748.png"></p>
+</li>
+<li>
+<p>Click <strong>Propagations</strong> tab and click <strong>Create propagation</strong></p>
+</li>
+<li>
+<p>Select the VPC A attachment and click <strong>Create propagation</strong>. Repeat this step for VPC B and VPC C.</p>
+<p><img alt="TGW RT VPN" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/tgw_rt_create_propagation.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+</ol>
+<p><em>The VPN connection is now associated to this route table, and has the ability to route to VPC A, B, and C.</em></p>
+<p><img alt="TGW RT Propagation" src="/images/2.week2/Screenshot_2024-06-25_014835.png"></p>
+<h4 id="update-route-tables-with-on-premise-cidr">Update Route Tables with On-Premise CIDR</h4>
+<h5 id="update-transit-gateway-route-table">Update Transit Gateway Route Table</h5>
+<p>Since we are using static routing for our VPN connection, we need to manually create a route in the Transit Gateway route table to route traffic to the on-premise CIDR block via the new VPN attachment.</p>
+<ol>
+<li>
+<p>In the VPC console navigate to <a href="https://console.aws.amazon.com/vpc/home?#TransitGatewayRouteTables:sort=transitGatewayRouteTableId">Transit Gateway Route Tables</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> for the Transit Gateway&rsquo;s <code>Shared Services Route Table</code> route table and then select the <strong>Routes</strong> tab in the lower pane.</p>
+<p><img alt="Select TGW RT routes" src="/images/2.week2/Screenshot_2024-06-25_014852.png"></p>
+</li>
+<li>
+<p>Click <strong>Create static route</strong> to add a new static route.</p>
+</li>
+<li>
+<p>Enter the CIDR block for the simulated data center environment <code>172.16.0.0/16</code> and select the new VPN attachment. There should be 3 attachments of type VPC and one of type VPN.</p>
+</li>
+<li>
+<p>Click <strong>Create static route</strong></p>
+<p><img alt="Add Static Route" src="/images/2.week2/Screenshot_2024-06-25_014915.png"></p>
+</li>
+<li>
+<p>It will initially be created with a route state of &lsquo;Blackhole&rsquo; because we have yet to establish the VPN connection to the on-premise environment.</p>
+</li>
+<li>
+<p>Repeat these steps to update the <code>Default Route Table</code> so that it also has a route to the simulated data center environment.</p>
+</li>
+</ol>
+<h4 id="update-vpc-a-route-table">Update VPC A Route Table</h4>
+<p>Now that we have a Transit Gateway Attachment through which to send traffic to our on-premises network we need to add routes from our AWS VPCs to the Transit Gateway for the on-premise CIDR block. For the purposes of this lab you&rsquo;re only going to add an entry to the private route table for VPC A.</p>
+<ol>
+<li>
+<p>In the VPC Dashboard navigate to <a href="https://console.aws.amazon.com/vpc/home?#RouteTables:">Route Tables</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> next to <code>VPC A Private Route Table</code> and scroll down to the <strong>Routes</strong> tab and click on <strong>Edit routes</strong> <img alt="VPC A RT Edit" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/vpn_vpc_a_private_route_table.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Add a route for <code>172.16.0.0/16</code> toward Transit Gateway <code>VPC A Attachment</code>. Under <strong>Target</strong> select <code>Transit Gateway</code> and then choose the <code>VPC A Attachment</code>. <img alt="VPC A RT Update" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/vpn_update_vpc_a_route_table.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click <strong>Save changes</strong></p>
+<p><img src="/images/2.week2/Screenshot_2024-06-25_015031.png"></p>
+</li>
+</ol>
+<p><em>VPC A will now have the ability to route to the simulated on-premesis environment</em></p>
+<p><strong>Please repeat this step for the VPC B and VPC C Private Route Tables.</strong></p>
+<p>There is no need to configure the routing in the on-premesis VPC. This was configured for you in the on-premesis CloudFormation template.</p>
+<h4 id="update-the-customer-gateway-ec2-instances-security-group">Update the customer gateway EC2 instance&rsquo;s security group</h4>
+<p>We will need to allow the AWS VPN endpoints to communicate with the <code>On Premise Customer Gateway</code> EC2 instance over IPSEC.</p>
+<ol>
+<li>
+<p>In the EC2 Dashboard navigate to <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> beside the <code>On Premise Customer Gateway</code> EC2 instance, click the <strong>Security</strong> tab, and then click the <strong>On-Premises Customer Security Group</strong>. <img alt="Select the security group" src="/images/2.week2/Screenshot_2024-06-25_015057.png"></p>
+</li>
+<li>
+<p>Click <strong>Edit inbound rules</strong> <img alt="Edit the security group" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/vpn_sg_edit.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click <strong>Add rule</strong> four times. Add rules for UDP ports 500 and 4500 for the two tunnel &ldquo;outside&rdquo; addresses you noted when creating the VPN connection above. The dialog requires you to enter the addresses in CIDR notation, so simply append /32 to the end of the two tunnel IP addresses. Click <strong>Save Rules</strong> when done. <img alt="Add two additional rules for IPSEC" src="/images/2.week2/Screenshot_2024-06-25_015544.png"></p>
+</li>
+</ol>
+<h4 id="configure-openswan-and-bring-up-the-tunnel">Configure OpenSWAN and bring up the tunnel</h4>
+<p>Now that we have configured the simulated datacenter VPC and created the VPN connection to the Transit Gateway, we are ready to configure OpenSWAN on the Customer Gateway and bring up the tunnel. OpenSWAN has already been installed on the host during deploymennt and we will use the configuration file downloaded previously to configure the VPN. Since OpenSWAN does not provide built-in tunnel failover capability, we will only be configuring one of the tunnels.</p>
+<ol>
+<li>Open the configuration file that you downloaded from the VPC console for the customer gateway in a text editor. We will be following this file to configure OpenSWAN for Tunnel 1.</li>
+<li>In the EC2 Dashboard navigate to <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </li>
+<li>Select the <em>check box</em> beside the <code>On Premise Customer Gateway</code> EC2 instance and click <strong>Connect</strong> <img alt="Connect to CGW" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/vpn_cgw_select.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>Click <strong>Connect</strong> on the <strong>Session manager</strong> tab to open a shell.</li>
+<li>Create an aws.conf file in <code>/etc/ipsec.d</code>:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo vim /etc/ipsec.d/aws.conf
+</span></span></code></pre></div><p>Enter <code>i</code> to edit in vim.</p>
+<p>Previous way of configuring OpenSWAN</p>
+<p>New way of configuring OpenSWAN</p>
+<ol start="7">
+<li>
+<p>Copy and paste the following configuration. Modify <code>X.X.X.X</code> with your specific gateway IP address and <code>Y.Y.Y.Y</code> with your specific tunnel 1 IP addresses. You can get these IP addresses from the configuration file that you downloaded in <a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/on-premises/create-vpn#create-site-to-site-vpn-connection">Create Site-to-Site VPN Connection</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conn Tunnel1
+</span></span><span style="display:flex;"><span>    authby<span style="color:#f92672">=</span>secret
+</span></span><span style="display:flex;"><span>    auto<span style="color:#f92672">=</span>start
+</span></span><span style="display:flex;"><span>    left<span style="color:#f92672">=</span>%defaultroute
+</span></span><span style="display:flex;"><span>    leftid<span style="color:#f92672">=</span>X.X.X.X
+</span></span><span style="display:flex;"><span>    right<span style="color:#f92672">=</span>Y.Y.Y.Y
+</span></span><span style="display:flex;"><span>    type<span style="color:#f92672">=</span>tunnel
+</span></span><span style="display:flex;"><span>    ikelifetime<span style="color:#f92672">=</span>8h
+</span></span><span style="display:flex;"><span>    keylife<span style="color:#f92672">=</span>1h
+</span></span><span style="display:flex;"><span>    phase2alg<span style="color:#f92672">=</span>aes_gcm
+</span></span><span style="display:flex;"><span>    ike<span style="color:#f92672">=</span>aes256-sha2_256;dh14
+</span></span><span style="display:flex;"><span>    keyingtries<span style="color:#f92672">=</span>%forever
+</span></span><span style="display:flex;"><span>    keyexchange<span style="color:#f92672">=</span>ike
+</span></span><span style="display:flex;"><span>    leftsubnet<span style="color:#f92672">=</span>172.16.0.0/16
+</span></span><span style="display:flex;"><span>    rightsubnet<span style="color:#f92672">=</span>10.0.0.0/14
+</span></span><span style="display:flex;"><span>    dpddelay<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    dpdtimeout<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    dpdaction<span style="color:#f92672">=</span>restart_by_peer
+</span></span></code></pre></div><p><img src="/images/2.week2/Screenshot_2024-06-25_015846.png"></p>
+</li>
+<li>
+<p>Enter <code>esc</code> and <code>:wq!</code> to save the updates and exit vim.</p>
+</li>
+<li>
+<p>Create an aws.secrets file in <code>/etc/ipsec.d</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo vim /etc/ipsec.d/aws.secrets
+</span></span></code></pre></div></li>
+<li>
+<p>Copy and paste the pre-shared secret line from <code>Step 5</code> of the instructions into the secrets file. <img alt="AWS Secret" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/vpn_aws_secret.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p><img src="/images/2.week2/Screenshot_2024-06-25_015951.png"></p>
+</li>
+<li>
+<p>Enter <code>esc</code> and <code>:wq!</code> to save the update to aws.secrets and exit vim.</p>
+</li>
+<li>
+<p>Enable and start OpenSWAN:</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl enable ipsec.service
+</span></span><span style="display:flex;"><span>sudo systemctl start ipsec.service
+</span></span><span style="display:flex;"><span>sudo ipsec status
+</span></span></code></pre></div><ol start="13">
+<li>The output should end with lines indicating an authenticate IPsec SA and three lines indicating the tunnel details <img alt="VPN Status" src="/images/2.week2/Screenshot_2024-06-25_020009.png"></li>
+</ol>
+<p>AWS VPN connections are only brought up from the customer-side when using IKEv1, so we will need to send some traffic to one of our AWS VPCs from the simulated OnPrem environment.</p>
+<ol start="14">
+<li>
+<p>From the Customer Gateway ping the private IP address of the EC2 instance in the private subnet in VPC A:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.0.1.100
+</span></span></code></pre></div><p>Note that it may take up to 30 seconds before the tunnel comes up and you start seeing ping responses.</p>
+<p><img alt="VPN Ping" src="/images/2.week2/Screenshot_2024-06-25_020108.png"></p>
+</li>
+<li>
+<p>Enter <code>CTL C</code> to kill the ping command and terminate the Session Manager connection.</p>
+</li>
+</ol>
+<p><em><strong>Congratulations you&rsquo;ve just connected the on-premises environment to AWS via a Site-to-Site VPN attached to the Transit Gateway</strong></em></p>
+<p><img alt="VPN deployed state" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab3_vpn_ping.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h3 id="explore-hybrid-environment">Explore Hybrid Environment</h3>
+<p>Now we are ready to explore the simulated on-premises environment. <img alt="VPN established state" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab3_vpn_established.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="explore-the-simulated-datacenter-environment">Explore the simulated datacenter environment</h4>
+<p>We&rsquo;ve now launched a simulated datacenter environment that consists of a customer gateway, a web application server, and a DNS server. Let&rsquo;s make sure that the components are working before we move on to connecting this to our AWS environment.</p>
+<ol>
+<li>
+<p>On the Customer Gateway instance check which DNS server the host is using by examining the <code>/etc/resolv.conf</code> file.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /etc/resolv.conf
+</span></span></code></pre></div></li>
+<li>
+<p>Take note of the &ldquo;nameserver&rdquo; line, which should point to 172.16.1.200 which is the IP address of the on premise DNS Server created by CloudFormation template rather than the default VPC name server on 172.16.0.2.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sh-4.2$ cat /etc/resolv.conf
+</span></span><span style="display:flex;"><span>; generated by /usr/sbin/dhclient-script
+</span></span><span style="display:flex;"><span>search example.corp
+</span></span><span style="display:flex;"><span>options timeout:2 attempts:5
+</span></span><span style="display:flex;"><span>nameserver 172.16.1.200
+</span></span></code></pre></div><p><img src="/images/2.week2/Screenshot_2024-06-25_020150.png"></p>
+</li>
+<li>
+<p>Test the application server. In our simulated datacenter environment, we use the internal domain name <em>example.corp</em> and the application server has a hostname entry for <em>myapp.example.corp</em> created in the DNS server. We can test that the application server is up and running by using the curl command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> curl http://myapp.example.corp
+</span></span></code></pre></div></li>
+<li>
+<p>If your application server is working properly, you will see a response of &ldquo;Hello, world.&rdquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sh-4.2$ curl http://myapp.example.corp
+</span></span><span style="display:flex;"><span>Hello, world.
+</span></span></code></pre></div><p><img src="/images/2.week2/Screenshot_2024-06-25_020208.png"></p>
+</li>
+<li>
+<p>Terminate the Session Manager connection.</p>
+</li>
+</ol>
+<h4 id="test-the-vpn-connection-from-aws-to-the-simulated-datacenter-network">Test the VPN connection from AWS to the simulated datacenter network.</h4>
+<p>Now that our VPN tunnel is up, we can test connectivity from the AWS environment, via the Transit Gateway, to our simulated on-premises environment. Recall that our on-premises environment contains an application server and a DNS server. The application server has a DNS A record in the on-premises DNS server for the <strong>myapp.example.corp</strong> hostname. In this section, we will verify connectivity between the AWS and simulated datacenter environments and test that we can connect to the application server.</p>
+<ol>
+<li>
+<p>In the EC2 Dashboard select <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> next to <code>VPC A Private AZ1 Server</code> and click <strong>Connect</strong> to start a Session Manager console</p>
+</li>
+<li>
+<p>Test connectivity to the on premise application server&rsquo;s private IP address of 172.16.1.100</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 172.16.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sh-4.2$ ping 172.16.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>PING 172.16.1.100 <span style="color:#f92672">(</span>172.16.1.100<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 172.16.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">253</span> time<span style="color:#f92672">=</span>2.90 ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 172.16.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">253</span> time<span style="color:#f92672">=</span>2.28 ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 172.16.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">253</span> time<span style="color:#f92672">=</span>2.07 ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 172.16.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">253</span> time<span style="color:#f92672">=</span>2.17 ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 172.16.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">253</span> time<span style="color:#f92672">=</span>2.28 ms
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>--- 172.16.1.100 ping statistics ---
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span> packets transmitted, <span style="color:#ae81ff">5</span> received, 0% packet loss, time 4005ms
+</span></span><span style="display:flex;"><span>rtt min/avg/max/mdev <span style="color:#f92672">=</span> 2.077/2.345/2.909/0.293 ms
+</span></span></code></pre></div></li>
+<li>
+<p>Test the application server using curl:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://172.16.1.100
+</span></span></code></pre></div><p>If your VPN connection is functioning correctly, this command will return &ldquo;Hello, world.&rdquo; from the application server.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sh-4.2$ curl http://172.16.1.100
+</span></span><span style="display:flex;"><span>Hello, world.
+</span></span></code></pre></div></li>
+<li>
+<p>Next let&rsquo;s verify that the AWS EC2 instances can reach the on-premises DNS server if we query it directly by using the IP address and the dig command to query for myapp.example.corp:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dig @172.16.1.200 myapp.example.corp
+</span></span></code></pre></div><p>Your query should return an A record for the on-premises application server, similar to the following:</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>    ; &lt;&lt;&gt;&gt; DiG 9.11.4-P2-RedHat-9.11.4-26.P2.amzn2.5.2 &lt;&lt;&gt;&gt; @172.16.1.200 myapp.example.corp
+</span></span><span style="display:flex;"><span>    ; <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> server found<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    ;; global options: +cmd
+</span></span><span style="display:flex;"><span>    ;; Got answer:
+</span></span><span style="display:flex;"><span>    ;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style="color:#ae81ff">2272</span>
+</span></span><span style="display:flex;"><span>    ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ;; OPT PSEUDOSECTION:
+</span></span><span style="display:flex;"><span>    ; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+</span></span><span style="display:flex;"><span>    ;; QUESTION SECTION:
+</span></span><span style="display:flex;"><span>    ;myapp.example.corp.            IN      A
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    ;; ANSWER SECTION:
+</span></span><span style="display:flex;"><span>    myapp.example.corp.     <span style="color:#ae81ff">60</span>      IN      A       172.16.1.100
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    ;; AUTHORITY SECTION:
+</span></span><span style="display:flex;"><span>    example.corp.           <span style="color:#ae81ff">86400</span>   IN      NS      ns1.example.corp.
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ;; ADDITIONAL SECTION:
+</span></span><span style="display:flex;"><span>    ns1.example.corp.       <span style="color:#ae81ff">60</span>      IN      A       172.16.1.200
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ;; Query time: <span style="color:#ae81ff">7</span> msec
+</span></span><span style="display:flex;"><span>    ;; SERVER: 172.16.1.200#53<span style="color:#f92672">(</span>172.16.1.200<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    ;; WHEN: Tue Sep <span style="color:#ae81ff">21</span> 05:01:56 UTC <span style="color:#ae81ff">2021</span>
+</span></span><span style="display:flex;"><span>    ;; MSG SIZE  rcvd: <span style="color:#ae81ff">97</span>
+</span></span></code></pre></div><ol start="6">
+<li>
+<p>Test the application server by using the hostname in the curl request:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://myapp.example.corp
+</span></span></code></pre></div><p><strong>This should fail</strong>. We will receive an error message &ldquo;Could not resolve host&rdquo; because DNS has not yet been configured to allow the AWS instances to resolve names hosted on the datacenter&rsquo;s DNS server.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sh-4.2$ curl http://myapp.example.corp
+</span></span><span style="display:flex;"><span>curl: <span style="color:#f92672">(</span>6<span style="color:#f92672">)</span> Could not resolve host: myapp.example.corp
+</span></span></code></pre></div><p><img src="/images/2.week2/Screenshot_2024-06-25_020323.png"></p>
+</li>
+<li>
+<p>Terminate the Session Manager connection.</p>
+</li>
+</ol>
+<p><em><strong>Congratulations you&rsquo;ve shown that there is connectivity in place from AWS to both the application server and DNS instance running in the on-premise environment. We will address hybrid-DNS in the next section that will allow DNS resolution of on-premise hosts from AWS.</strong></em></p>
+<p><img alt="VPN traffic from AWS" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab3_traffic_from_aws.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h3 id="hybrid-dns">Hybrid DNS</h3>
+<p>Route 53 Resolver makes hybrid cloud easier for enterprise customers by enabling seamless DNS query resolution across your entire hybrid cloud. You can create DNS endpoints and conditional forwarding rules to allow resolution of DNS namespaces between your on-premises data center and AWS VPCs.</p>
+<p>Recall that our simulated on-premises datacenter has a DNS server, providing authoritative name service for the example.corp domain where all internal application hosts are registered. In order to provide a complete hybrid-connectivity solution, we want to enable hosts in our AWS VPCs to resolve names of hosts in the datacenter environment. This can be achieved using Route 53 resolvers and conditional forwarding rules for the example.corp domain, while allowing the AWS instances to continue to take advantage of the highly available Amazon DNS service for all other name resolution inside the VPC and the internet.</p>
+<p><em>For this exercise, we will focus on establishing DNS resolution from the AWS environment to the simulated datacenter, but it&rsquo;s important to note that the reverse is possible as well. Route 53 Resolvers supports inbound DNS queries that are conditionally forwarded from an on-premises DNS server. You can learn more about inbound DNS resolution in the <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver.html#resolver-overview-forward-network-to-vpc">AWS documentation</a> .</em></p>
+<h4 id="configure-a-route-53-resolver-outbound-endpoint">Configure a Route 53 Resolver Outbound Endpoint</h4>
+<p>Route 53 Resolver uses endpoints to communicate with external DNS servers. An endpoint is an Elastic Network Interface (ENI) placed inside of a VPC which has connectivity to the existing DNS server. This may be a DNS server running on an EC2 instance, or a DNS server running on-premises accessible via Direct Connect or VPN. Since all three VPCs in our AWS environment have connectivity to the simulated datacenter via the Transit Gateway, we can use any of them for our endpoint. The endpoint will create interfaces in a minimum of two availability zones in your chosen VPC for high availability.</p>
+<ol>
+<li>Navigate to <a href="https://console.aws.amazon.com/route53resolver/home?#/outbound-endpoints">Route 53</a> ,</li>
+<li>Expand the hamburger on the top left and Under <strong>Resolver</strong> select <strong>Outbound endpoints</strong> <img alt="Select Outbound Endpoints" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/dns_outbound_endpoints_screen.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+</ol>
+<p>If you have not been to the Route 53 Resolver console before, it will take you to a splash page that you see in the /images/2.week2/screenshot above. Under <strong>Resolver</strong> on the left menu, select <strong>Outbound endpoints</strong> again to take you to the screen you see in the /images/2.week2/screenshot below. You want to see the button <strong>Create outbound endpoint</strong> not <strong>Configure endpoints</strong></p>
+<ol start="3">
+<li>
+<p>Click <strong>Create outbound endpoint</strong>. <img alt="Create Outbound Endpoint" src="/images/2.week2/Screenshot_2024-06-25_020403.png"></p>
+</li>
+<li>
+<p>Configure the settings for the outbound endpoint as follows:</p>
+<ul>
+<li><strong>Endpoint name</strong>: <code>NetworkingDayOutbound</code></li>
+<li><strong>VPC in the Region</strong>: Select <code>VPC A</code></li>
+<li><strong>Security group for this endpoint</strong>: Select the <code>default</code> Security Group for your VPC A, which already contains a rule permitting outbound connectivity.</li>
+<li><strong>Endpoint type</strong>: Select <code>IPv4</code></li>
+<li><strong>IP address #1</strong>:
+<ul>
+<li><strong>Availability zone</strong>: Choose <code>us-east-1a</code></li>
+<li><strong>Subnet</strong>: <code>VPC A Private Subnet AZ1</code>.</li>
+<li><strong>IP address</strong>: <code>Use an IP address that is selected automatically</code></li>
+</ul>
+</li>
+<li><strong>IP address #2</strong>:
+<ul>
+<li><strong>Availability zone</strong>: <code>us-east-1b</code></li>
+<li><strong>Subnet</strong>: <code>VPC A Private Subnet AZ2</code>.</li>
+<li><strong>IP address</strong>: <code>Use an IP address that is selected automatically</code></li>
+</ul>
+</li>
+</ul>
+<p><img alt="Outbound endpoint config" src="/images/2.week2/Screenshot_2024-06-25_020504.png"></p>
+<p><img src="/images/2.week2/Screenshot_2024-06-25_020510.png"></p>
+</li>
+<li>
+<p>Click <strong>Submit</strong> to create the endpoint.</p>
+</li>
+<li>
+<p>Wait for the endpoint status to change to <em>Operational</em>. Then proceed to the next step.</p>
+<p><img alt="Outbound Endpoint Operational" src="/images/2.week2/Screenshot_2024-06-25_020730.png"></p>
+</li>
+</ol>
+<h4 id="create-a-route-53-resolver-rule-for-examplecorp">Create a Route 53 Resolver rule for example.corp.</h4>
+<p>Now that we have created an outbound endpoint this provides the Route 53 Resolver with a path to the on premise DNS server via VPC A and the Transit Gateway&rsquo;s VPN connection. Next we need to configure a <em>Route 53 Resolver Rule</em> to direct queries for <strong>example.corp</strong> to the on premise DNS server via that endpoint. We will associate the rule with VPC&rsquo;s A, B, and C and this will cause Route 53 Resolver to use this rule whenever the VPC DNS resolver processes queries for <em>example.corp</em> from instances in any of those three VPCs.</p>
+<ol>
+<li>
+<p>While still in the Route 53 console, navigate to the <strong>Rules</strong> tab under <strong>Resolver</strong></p>
+</li>
+<li>
+<p>Select <strong>Create rule</strong> <img alt="Create Resolver Rule" src="/images/2.week2/Screenshot_2024-06-25_020743.png"></p>
+</li>
+<li>
+<p>Provide configuration for the rule:</p>
+<ul>
+<li>Set <strong>Name</strong> as <code>NetworkingDayRule</code></li>
+<li>Leave <strong>Rule type</strong> as <code>Forward</code></li>
+<li>Specify the <strong>Domain name</strong> as <code>example.corp</code>.</li>
+<li>Associate the rule with all three of your AWS VPCs: <code>VPC A</code>, <code>VPC B</code>, and <code>VPC C</code>.</li>
+<li>For <strong>Outbound endpoint</strong> choose the endpoint you created in the previous step: <code>NetworkingDayOutbound</code></li>
+<li>Under <strong>Target IP addresses</strong> enter the on-premise DNS server IP address: <code>172.16.1.200</code> <img alt="Resolver Rule Config" src="/images/2.week2/Screenshot_2024-06-25_020820.png"></li>
+</ul>
+<p><img src="/images/2.week2/Screenshot_2024-06-25_020839.png"></p>
+</li>
+<li>
+<p>Click <strong>Submit</strong> to create the rule.</p>
+</li>
+</ol>
+<h4 id="testing-the-route-53-resolver-rule">Testing the Route 53 Resolver rule</h4>
+<p><img alt="DNS query flow" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/on-premises/dns_query_flow.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>At this point, we have configured Route 53 resolver to forward queries to the datacenter&rsquo;s DNS server for the example.corp domain from any of the AWS VPC&rsquo;s A, B, or C. We can test name resolution by attempting to connect to the on-premises app server from one of the EC2 instances in our AWS VPCs.</p>
+<ol>
+<li>
+<p>In the EC2 console navigate to <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> next to <code>VPC B Private AZ1 Server</code> and click the <strong>Connect</strong> button above.</p>
+</li>
+<li>
+<p>On the <strong>Session manager</strong> tab click <strong>Connect</strong> to open a command prompt</p>
+</li>
+<li>
+<p>Check setting of the DNS server on the instance by examining <code>resolv.conf</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /etc/resolv.conf
+</span></span></code></pre></div><p>Note that the instance is using the AWS provided DNS server (e.g. 10.1.0.2) and not your on-premises DNS server for name resolution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nameserver 10.1.0.2
+</span></span><span style="display:flex;"><span>search ec2.internal
+</span></span></code></pre></div></li>
+<li>
+<p>Check that the hostname for myapp.example.corp resolves to an IP address:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nslookup myapp.example.corp
+</span></span></code></pre></div><p>Note that the instance is using the AWS provided DNS server (e.g. 10.1.0.2) and not your on-premises DNS server for name resolution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nslookup myapp.example.corp
+</span></span><span style="display:flex;"><span>Server:         10.1.0.2
+</span></span><span style="display:flex;"><span>Address:        10.1.0.2#53
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Non-authoritative answer:
+</span></span><span style="display:flex;"><span>Name:   myapp.example.corp
+</span></span><span style="display:flex;"><span>Address: 172.16.1.100
+</span></span></code></pre></div></li>
+<li>
+<p>Use <em>curl</em> to query the on-premises application server by its hostname, myapp.example.corp</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://myapp.example.corp
+</span></span></code></pre></div><p>If name resolution and your application server are functioning, you will receive back a &ldquo;Hello, world&rdquo; response.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://myapp.example.corp
+</span></span><span style="display:flex;"><span>Hello, world.
+</span></span></code></pre></div><p><img src="/images/2.week2/Screenshot_2024-06-25_021427.png"></p>
+</li>
+<li>
+<p>Terminate the Session Manager connection.</p>
+</li>
+</ol>
+<p><em><strong>Congratulations, you&rsquo;ve established hybrid DNS that allows hostnames managed by the on-premises DNS server to be resolved from AWS hosts</strong></em></p>
+<h3 id="clean-up">Clean Up</h3>
+<p>If you are using your own AWS Account to conduct this workshop and you are finished, complete the follow steps to clean up.</p>
+<p>Warning</p>
+<p>You should only complete this clean up section if you do not plan on continuing with this workshop.</p>
+<p>Make sure you terminate / delete the resources below to avoid unnecessary charges.</p>
+<h4 id="delete-site-to-site-vpn">Delete Site-to-Site VPN</h4>
+<h4 id="delete-the-on-premises-vpc">Delete the On-Premises VPC</h4>
+<h4 id="delete-route53-resolver-endpoints">Delete Route53 Resolver Endpoints</h4>
+<h4 id="continue-deleting-resources-please-make-a-selection">Continue deleting resources. Please make a selection:</h4>
+<p>Option 1: You started this lab at the start</p>
+<p>Option 2: You started the lab in the Multi VPCs section by deploying the CloudFormation template</p>
+<p>Option 3: You started the lab in the Basic Security or On-Premises section by deploying the CloudFormation template</p>
+<h4 id="finished">Finished</h4>
+<p><em>Once you have completed the above steps, you are finished. If you want to continue the workshop later, you can skip this step and use the CloudFormation template in the next step to build the prerequisites.</em></p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Security Controls"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2-week2/2.1-sovico/2.1.5-networkmonitoring/" title="Network Monitoring" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1719680647"></script>
+    <script src="/js/jquery.sticky.js?1719680647"></script>
+    <script src="/js/featherlight.min.js?1719680647"></script>
+    <script src="/js/highlight.pack.js?1719680647"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1719680647"></script>
+    <script src="/js/learn.js?1719680647"></script>
+    <script src="/js/hugo-learn.js?1719680647"></script>
+
+    <link href="/mermaid/mermaid.css?1719680647" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1719680647"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

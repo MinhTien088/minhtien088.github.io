@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.127.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Network Monitoring :: AWS System Manager</title>
+
+    
+    <link href="/css/nucleus.css?1719680647" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1719680647" rel="stylesheet">
+    <link href="/css/hybrid.css?1719680647" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1719680647" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1719680647" rel="stylesheet">
+    <link href="/css/auto-complete.css?1719680647" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1719680647" rel="stylesheet">
+    <link href="/css/theme.css?1719680647" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1719680647" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1719680647" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1719680647"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2-week2/2.1-sovico/2.1.5-networkmonitoring/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1719680647"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1719680647"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1719680647"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/" title="Week 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/">
+           <b> 1. </b> Week 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/" title="Module 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/">
+           <b> 1.1. </b> Module 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/1.1.1-awswaf/" title="AWS Well-Architected Framework" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/1.1.1-awswaf/">
+           <b> 1.1.1. </b> AWS Well-Architected Framework
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.2-lab1/" title="Lab 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.2-lab1/">
+           <b> 1.2. </b> Lab 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.3-lab7/" title="Lab 7" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.3-lab7/">
+           <b> 1.3. </b> Lab 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.4-lab9/" title="Lab 9" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.4-lab9/">
+           <b> 1.4. </b> Lab 9
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/" title="Week 2" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/">
+           <b> 2. </b> Week 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/">
+           <b> 2.1 </b> Sovico Skill Accelerator Lab
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.1-vpc/" title="VPC Fundamentals" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.1-vpc/">
+           <b> 2.1.1 </b> VPC Fundamentals
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.2-multivpcs/">
+           <b> 2.1.2 </b> Multiple VPCs
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Security Controls" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.3-securitycontrols/">
+           <b> 2.1.3 </b> Security Controls
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Connecting to On-Premises" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.4-connectonpremises/">
+           <b> 2.1.4 </b> Connecting to On-Premises
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.5-networkmonitoring/" title="Network Monitoring" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.5-networkmonitoring/">
+           <b> 2.1.5 </b> Network Monitoring
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/" title="Module 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/">
+           <b> 2.2 </b> Module 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.1-vpc/" title="Amazon Virtual Private Cloud" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.1-vpc/">
+           <b> 2.2.1 </b> Amazon Virtual Private Cloud
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/" title="VPC Security and Multi-VPC features" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/">
+           <b> 2.2.2 </b> VPC Security and Multi-VPC features
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.3-gapvxawsevent/" title="OPTIMIZING AWS COSTS AND SECURITY" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.3-gapvxawsevent/">
+           <b> 2.3. </b> OPTIMIZING AWS COSTS AND SECURITY
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"><i class='fab fa-facebook'></i> AWS Study Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="/2-week2/2.1-sovico/2.1.5-networkmonitoring/" selected>English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="/vi/2-week2/2.1-sovico/2.1.5-networkmonitoring/">Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total Cloud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b> Last Updated </b> <br>
+    <i>
+        <font color=orange>29-09-2024</font>
+    </i>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="" style="color:orange">Minh Tiến</a> <br>
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>Minh Tien Workshop</a> > <a href='/2-week2/'>Week 2</a> > <a href='/2-week2/2.1-sovico/'>Sovico Skill Accelerator Lab</a> > Network Monitoring
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#cloudwatch">CloudWatch</a></li>
+        <li><a href="#vpc-flow-logs">VPC Flow Logs</a></li>
+        <li><a href="#check-alarm-notification">Check Alarm Notification</a></li>
+        <li><a href="#clean-up">Clean Up</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Network Monitoring
+            </h1>
+          
+
+        
+
+
+
+	<p>In this section, you will utilize the three VPC’s with Internet Gateways, Transit Gateway, and EC2 instances that were created in the Multiple VPCs lab. You will set up VPC Flow logs for VPC A, generate some traffic, and then view the logs in CloudWatch.</p>
+<h3 id="cloudwatch">CloudWatch</h3>
+<p>Amazon CloudWatch is a metrics repository. AWS services send metrics into the repository, and you retrieve statistics based on those metrics.</p>
+<p>In this section, you will review some of the Networking metrics available in CloudWatch, create a dashboard to view a set of metrics on one page and set up an alarm on a threshold breach.</p>
+<h4 id="review-automatic-dashboards">Review Automatic Dashboards</h4>
+<p>Amazon CloudWatch dashboards are customizable home pages in the CloudWatch console that you can use to monitor your resources in a single view, even those resources that are spread across different Regions. You can use CloudWatch dashboards to create customized views of the metrics and alarms for your AWS resources.</p>
+<ol>
+<li>
+<p>Navigate to the <a href="https://console.aws.amazon.com/cloudwatch">CloudWatch console</a> </p>
+</li>
+<li>
+<p>Click <strong>Dashboards</strong>, then click <strong>Automatic Dashboards</strong> and <strong>VPC NAT Gateways</strong></p>
+<p><img alt="Click CloudWatch Automated Dashboards" src="/images/2.week2/Screenshot_2024-06-25_021510.png"></p>
+</li>
+<li>
+<p>A dashboard will be shown that contains the key network metrics for NAT Gateways</p>
+<p><img alt="CloudWatch NAT Gateway Dashboard" src="/images/2.week2/Screenshot_2024-06-25_021538.png"></p>
+<p><img src="/images/2.week2/Screenshot_2024-06-25_021604.png"></p>
+</li>
+<li>
+<p>Review the metrics</p>
+</li>
+</ol>
+<h4 id="create-custom-dashboard">Create Custom Dashboard</h4>
+<p>Amazon EC2 provides instance-level metrics that measure CPU, disk, and network performance. These metrics include bytes and packets in/out and collected by default and can be viewed in Amazon CloudWatch. Amazon EC2 has recently announced additional high-resolution instance level network performance metrics for Elastic Network Adapter (ENA). With these new metrics you can gain insights into traffic drops when network allowances are exceeded. For more information, please see <a href="https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-ec2-instance-level-network-performance-metrics-uncover-new-insights/">Amazon EC2 instance-level network performance metrics uncover new insights</a> </p>
+<p>In this section we will review the Network metrics in CloudWatch for the <strong>VPC A Private AZ1 Server</strong> instance in VPC A and create a custom dashboard with a widget showing the <strong>NetworkIn</strong> and <strong>NetworkOut</strong> metrics and another widget for the <strong>NetworkPacketsIn</strong> and <strong>NetworkPacketsOut</strong> metrics.</p>
+<ol>
+<li>
+<p>Navigate to the <a href="https://console.aws.amazon.com/cloudwatch">CloudWatch console</a> </p>
+</li>
+<li>
+<p>Under the <strong>All Metrics</strong> tab in the main screen click on <strong>EC2</strong></p>
+<p><img alt="CloudWatch Metrics Page" src="/images/2.week2/Screenshot_2024-06-25_021654.png"></p>
+</li>
+<li>
+<p>Click on <strong>Per-Instance Metrics</strong>.</p>
+<p><img alt="Per Instance Metrics" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_metrics_per_instance.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Filter the list for metrics with network in the name by entering <strong>network</strong> in the search</p>
+<p><img alt="Network Metrics Search" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_metrics_search_network.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Select the metric <strong>NetworkIn</strong> and <strong>NetworkOut</strong> for the <code>VPC A Private AZ1 Server</code></p>
+<p><img alt="EC2 Instance Network Metrics" src="/images/2.week2/Screenshot_2024-06-25_021822.png"></p>
+</li>
+<li>
+<p>Click on the pencil icon at the top left corner of the graph and enter a name of <code>VPC A Private AZ1 Server Network In/Out</code> <img alt="EC2 Instance Network Metrics" src="/images/2.week2/Screenshot_2024-06-25_021842.png"></p>
+</li>
+<li>
+<p>Click on <strong>Actions</strong> and select <strong>Add to dashboard</strong> from the dropdown</p>
+<p><img alt="EC2 Instance Network Metrics" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_metrics_select_add_to_dashboard.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click on <strong>Create new</strong></p>
+<p><img alt="EC2 Instance Network Metrics" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_metrics_create_new_dashboard.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Enter <code>NetworkingWorkshopEC2</code> and click <strong>Create</strong></p>
+<p><img alt="EC2 Instance Network Metrics" src="/images/2.week2/Screenshot_2024-06-25_021903.png"></p>
+</li>
+<li>
+<p>Click <strong>Add to dashboard</strong></p>
+<p><img alt="EC2 Instance Network Metrics" src="/images/2.week2/Screenshot_2024-06-25_021922.png"></p>
+</li>
+<li>
+<p>The graph of Network In/Out statistics in bytes for the EC2 instance will be added to a new dashboard. To add Packets In/Out statistics click on the <strong>+</strong> in the top right corner to add another widget</p>
+<p><img alt="New dashboard created" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_metrics_added_to_dashboard.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>In the <strong>Add Widget</strong> screen select <code>Number</code></p>
+<p><img alt="Widget Screen" src="/images/2.week2/Screenshot_2024-06-25_021943.png"></p>
+</li>
+<li>
+<p>Click on <strong>EC2</strong></p>
+<p><img alt="Widget Select EC2" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_dashboard_metrics_ec2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click on <strong>Per-Instance Metrics</strong></p>
+<p><img alt="Widget Select Per Instance" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_dashboard_metrics_per_instance.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Enter <code>NetworkPackets</code> in the Search box and select the two lines for <code>VPC A Private AZ1 Server</code> and click <strong>Create Widget</strong></p>
+<p><img alt="Select Instance" src="/images/2.week2/Screenshot_2024-06-25_022013.png"></p>
+</li>
+<li>
+<p>The new widget will then be placed on your dashboard, click <strong>Save</strong> to persist the dashboard. </p>
+<p><img alt="Widget Added" src="/images/2.week2/Screenshot_2024-06-25_022046.png"></p>
+</li>
+</ol>
+<h4 id="create-alarm">Create Alarm</h4>
+<p>You can create a CloudWatch alarm that monitors CloudWatch metrics for a given AWS service. CloudWatch will automatically send you a notification when the metric reaches a threshold you specify.</p>
+<p>In this section you will create an alarm that monitors the amount of traffic received by an EC2 instance and sends an email notification if a threshold is breached.</p>
+<ol>
+<li>
+<p>In the <a href="https://console.aws.amazon.com/cloudwatch">CloudWatch console</a>  navigate to <strong>All alarms</strong> and click on <strong>Create alarm</strong></p>
+<p><img alt="All Alarms" src="/images/2.week2/Screenshot_2024-06-25_022115.png"></p>
+</li>
+<li>
+<p>Click <strong>Select metric</strong></p>
+<p><img alt="Select Metric" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_alarms_select_metric.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click on <strong>EC2</strong></p>
+<p><img alt="EC2 Metrics" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_alarms_ec2_metrics.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click on <strong>Per-instance Metrics</strong></p>
+<p><img alt="EC2 Metrics" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_alarms_instance_metrics.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Enter <code>NetworkIn</code> in the search box and hit enter.</p>
+<p><img alt="Metric Search" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_alarms_metric_search.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Select the checkbox for <code>VPC B Private AZ1 Server</code> and click <strong>Select metric</strong></p>
+<p><img alt="Metric select" src="/images/2.week2/Screenshot_2024-06-25_022210.png"></p>
+</li>
+<li>
+<p>In the resulting <strong>Specify metric and conditions</strong> screen change the <strong>Statistic</strong> and <strong>Period</strong> fields to <code>Maximum</code> and <code>1 minute</code> respectively.</p>
+<p><img alt="Metric select" src="/images/2.week2/Screenshot_2024-06-25_022248.png"></p>
+</li>
+<li>
+<p>In the <strong>Conditions</strong> section below, enter a threshold value of <code>1000000</code> and click <strong>Next</strong></p>
+<p><img alt="Metric threshold" src="/images/2.week2/Screenshot_2024-06-25_022301.png"></p>
+</li>
+<li>
+<p>In the <strong>Configure actions</strong> screen click on <strong>Add notification</strong></p>
+<p><img alt="Add Notification" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_alarms_add_notification.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Select <strong>Create new topic</strong>, enter <code>NetworkingWorkshopAlarmTopic</code> as the name, enter your email and click <strong>Create topic</strong></p>
+<p><img alt="Add Notification" src="/images/2.week2/Screenshot_2024-06-25_022352.png"></p>
+</li>
+<li>
+<p>Scroll to the bottom of the page, click <strong>Next</strong> and on the resulting screen</p>
+<ul>
+<li>Enter <code>NetworkingWorkshopAlarm</code> as the <strong>Alarm name</strong></li>
+<li>Click <strong>Next</strong></li>
+</ul>
+<p><img alt="Enter alarm name" src="/images/2.week2/Screenshot_2024-06-25_022414.png"></p>
+</li>
+<li>
+<p>Review the values on the <strong>Preview and create</strong> screen and click <strong>Create alarm</strong></p>
+<p><img alt="Preview and create" src="/images/2.week2/Screenshot_2024-06-25_022433.png"></p>
+</li>
+<li>
+<p>The alarm will be created but the &ldquo;State&rdquo; of the alarm may show &ldquo;Insufficient data&rdquo;. This will happen until enough data points are received by the alarm.</p>
+<p><img alt="Alarm Created" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_alarms_ec2_alarm_created.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Under <strong>Actions</strong> there will be a warning for &ldquo;Pending confirmation&rdquo; which means that you have not confirmed the email subscription to SNS yet.</p>
+<p><img alt="Alarm warning" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/cloudwatch_alarms_alarm_warning.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Go into your email, open the new message from &ldquo;AWS Notifications&rdquo; and confirm the subscription. This will be required to ensure you receive the notification.</p>
+<p><img alt="Confirm subscription" src="/images/2.week2/Screenshot_2024-06-25_022559.png"></p>
+</li>
+</ol>
+<p>In the next section you will get the opportunity to trigger the alarm and test the notification that you configured.</p>
+<h3 id="vpc-flow-logs">VPC Flow Logs</h3>
+<p>VPC Flow Logs is a feature that enables you to capture information (metadata) about the IP traffic going to and from network interfaces in your VPC. For example, if you have a content delivery platform, flow logs can profile, analyze, and predict customer patterns of the content access, and track down top talkers and malicious calls.</p>
+<h4 id="create-flow-log">Create Flow Log</h4>
+<p>Create a flow log for all traffic in VPC A and save it to the destination log group <strong>NetworkingWorkshopFlowLog</strong>.</p>
+<h5 id="create-cloudwatch-log-group">Create CloudWatch Log group</h5>
+<p>First, let’s create a CloudWatch Log group to store flow logs in:</p>
+<ol>
+<li>
+<p>Navigate to the <a href="https://console.aws.amazon.com/cloudwatch">CloudWatch Console</a> </p>
+</li>
+<li>
+<p>In the menu on the left, click <strong>Log groups</strong> under <strong>Logs</strong> and click <strong>Create log group</strong> in the top right</p>
+<p><img alt="Create Log Group" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_create_log_group.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Enter <code>NetworkingWorkshopFlowLogsGroup</code> as Log group name and click <strong>Create</strong></p>
+<p><img alt="Create Log Group" src="/images/2.week2/Screenshot_2024-06-25_022749.png"></p>
+</li>
+</ol>
+<h5 id="create-vpc-flow-log">Create VPC Flow log</h5>
+<ol start="4">
+<li>
+<p>In the VPC Dashboard navigate to <a href="https://console.aws.amazon.com/vpc/home?#vpcs:">Your VPCs</a> </p>
+</li>
+<li>
+<p>Select <code>VPC A</code>, scroll down to the <strong>Flow Logs</strong> tab and click on <strong>Create flow log</strong></p>
+<p><img alt="Create Flow Log" src="/images/2.week2/Screenshot_2024-06-25_022816.png"></p>
+</li>
+<li>
+<p>In the resulting <strong>Flow log settings</strong> section</p>
+<ul>
+<li>Enter <code>NetworkingWorkshopFlowLog</code> in the <strong>Name</strong> field</li>
+<li>Set <strong>Filter</strong> to <code>All</code></li>
+<li>Set <strong>Maximum aggregation interval</strong> to <code>1 minute</code></li>
+<li>Leave <strong>Destination</strong> as <code>Send to CloudWatch Logs</code></li>
+<li>Set <strong>Destination log group</strong> as <code>NetworkingWorkshopFlowLogsGroup</code></li>
+<li>Select <code>NetworkingWorkshopFlowLogsRole</code> from the <strong>IAM role</strong> dropdown (this IAM role was created by the workshop&rsquo;s base CloudFormation template)</li>
+</ul>
+<p><img alt="Flow Log Settings" src="/images/2.week2/Screenshot_2024-06-25_023240.png"></p>
+</li>
+<li>
+<p>Click on <strong>Create flow log</strong></p>
+</li>
+</ol>
+<p>You completed setup of the VPC flow logs.</p>
+<h4 id="generate-traffic">Generate Traffic</h4>
+<p>IP traffic going to and from network interfaces in VPC A is now being collected in CloudWatch. Generate some traffic between the <strong>VPC A Private AZ1 Server</strong> Amazon EC2 instance in <strong>VPC A</strong>, and the <strong>VPC B Private AZ1 Server</strong> instance in <strong>VPC B</strong> using <code>iperf</code> (a widely used tool for network performance measurement and tuning).</p>
+<p>After generating the traffic, continue to the next step to view the flow log in CloudWatch.</p>
+<h5 id="review-security-group-for-ec2-instance-in-vpc-b">Review Security Group for EC2 instance in VPC B</h5>
+<p>A Security Group rule for the Amazon EC2 instance in VPC B has been created for you to allow the iperf server to receive incoming traffic.</p>
+<ol>
+<li>
+<p>In the EC2 Dashboard navigate to <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> next to the <code>VPC B Private AZ1 Server</code> instance, scroll down and click on the <strong>Security</strong> tab below and click on the <strong>Security groups</strong> <em>link</em> for <code>sg-xxxxxxxx (VPC B Security Group)</code></p>
+<p><img alt="Security Group Link" src="/images/2.week2/Screenshot_2024-06-25_023400.png"></p>
+</li>
+<li>
+<p>In the <strong>Security Group</strong> screen that opens scroll down to the <strong>Inbound rules</strong> tab and confirm that port 5201 is open for TCP traffic from 10.0.0.0/8</p>
+<p><img alt="Security Group Screen" src="/images/2.week2/Screenshot_2024-06-25_023413.png"></p>
+</li>
+</ol>
+<h5 id="install-and-run-iperf3-server-on-ec2-instance-in-vpc-b">Install and run iperf3 server on EC2 instance in VPC B</h5>
+<ol start="4">
+<li>
+<p>In the EC2 Dashboard navigate to <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> next to the <code>VPC B Private AZ1 Server</code> instance, click <strong>Connect</strong></p>
+<p><img alt="VPC B Instance" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_vpcb_instance_connect.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click <strong>Connect</strong> again in the <strong>Session Manager</strong> tab to open a command prompt</p>
+<p><img alt="Session Manager" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_session_manager_connect.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Install and start the iperf server on the EC2 instance in VPC B:</p>
+<pre tabindex="0"><code>sudo dnf install iperf3 -y &amp;&amp; iperf3 -s
+</code></pre></li>
+</ol>
+<p><img alt="Install iperf" src="/images/2.week2/Screenshot_2024-06-25_023500.png"></p>
+<ol start="8">
+<li>Leave the Session Manager browser tab open, switch back to the <strong>Connect to instance</strong> tab and click on the <strong>Instances</strong> link</li>
+</ol>
+<p><img alt="Instances Link" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_instances_link.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="9">
+<li>Select the <em>check box</em> next to the <code>VPC A Private AZ1 Server</code> instance, and click <strong>Connect</strong></li>
+</ol>
+<p><img alt="VPC A Instance" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_vpca_instance_connect.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="10">
+<li>Click <strong>Connect</strong> again in the <strong>Session Manager</strong> tab to open a command prompt</li>
+</ol>
+<p><img alt="Session Manager" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_session_manager_connect.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="11">
+<li>
+<p>Install iperf and set up a TCP transfer with 2 parallel streams for 30 seconds to the EC2 instance in VPC B.</p>
+<pre tabindex="0"><code>sudo dnf install iperf3 -y &amp;&amp; iperf3 -c 10.1.1.100 -P 2 -t 30
+</code></pre></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Connecting to host 10.1.1.100, port <span style="color:#ae81ff">5201</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  4<span style="color:#f92672">]</span> local 10.0.1.100 port <span style="color:#ae81ff">37860</span> connected to 10.1.1.100 port <span style="color:#ae81ff">5201</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  6<span style="color:#f92672">]</span> local 10.0.1.100 port <span style="color:#ae81ff">37862</span> connected to 10.1.1.100 port <span style="color:#ae81ff">5201</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> ID<span style="color:#f92672">]</span> Interval           Transfer     Bandwidth       Retr  Cwnd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  4<span style="color:#f92672">]</span>   0.00-1.00   sec  64.9 MBytes   <span style="color:#ae81ff">544</span> Mbits/sec   <span style="color:#ae81ff">18</span>    <span style="color:#ae81ff">429</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  6<span style="color:#f92672">]</span>   0.00-1.00   sec  57.5 MBytes   <span style="color:#ae81ff">482</span> Mbits/sec   <span style="color:#ae81ff">16</span>    <span style="color:#ae81ff">380</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>SUM<span style="color:#f92672">]</span>   0.00-1.00   sec   <span style="color:#ae81ff">122</span> MBytes  1.03 Gbits/sec   <span style="color:#ae81ff">34</span>
+</span></span><span style="display:flex;"><span>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  4<span style="color:#f92672">]</span>   1.00-2.00   sec  59.6 MBytes   <span style="color:#ae81ff">500</span> Mbits/sec   <span style="color:#ae81ff">15</span>    <span style="color:#ae81ff">322</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  6<span style="color:#f92672">]</span>   1.00-2.00   sec  59.0 MBytes   <span style="color:#ae81ff">495</span> Mbits/sec   <span style="color:#ae81ff">25</span>    <span style="color:#ae81ff">256</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>SUM<span style="color:#f92672">]</span>   1.00-2.00   sec   <span style="color:#ae81ff">119</span> MBytes   <span style="color:#ae81ff">994</span> Mbits/sec   <span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  4<span style="color:#f92672">]</span>   2.00-3.00   sec  64.6 MBytes   <span style="color:#ae81ff">542</span> Mbits/sec   <span style="color:#ae81ff">20</span>    <span style="color:#ae81ff">330</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  6<span style="color:#f92672">]</span>   2.00-3.00   sec  55.4 MBytes   <span style="color:#ae81ff">465</span> Mbits/sec   <span style="color:#ae81ff">23</span>    <span style="color:#ae81ff">223</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>SUM<span style="color:#f92672">]</span>   2.00-3.00   sec   <span style="color:#ae81ff">120</span> MBytes  1.01 Gbits/sec   <span style="color:#ae81ff">43</span>
+</span></span><span style="display:flex;"><span>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  4<span style="color:#f92672">]</span>   3.00-4.00   sec  49.6 MBytes   <span style="color:#ae81ff">416</span> Mbits/sec   <span style="color:#ae81ff">25</span>    <span style="color:#ae81ff">280</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  6<span style="color:#f92672">]</span>   3.00-4.00   sec  69.3 MBytes   <span style="color:#ae81ff">581</span> Mbits/sec   <span style="color:#ae81ff">15</span>    <span style="color:#ae81ff">272</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>SUM<span style="color:#f92672">]</span>   3.00-4.00   sec   <span style="color:#ae81ff">119</span> MBytes   <span style="color:#ae81ff">998</span> Mbits/sec   <span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  4<span style="color:#f92672">]</span>  28.00-29.00  sec  59.7 MBytes   <span style="color:#ae81ff">501</span> Mbits/sec   <span style="color:#ae81ff">13</span>    <span style="color:#ae81ff">396</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  6<span style="color:#f92672">]</span>  28.00-29.00  sec  54.9 MBytes   <span style="color:#ae81ff">460</span> Mbits/sec   <span style="color:#ae81ff">14</span>    <span style="color:#ae81ff">330</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>SUM<span style="color:#f92672">]</span>  28.00-29.00  sec   <span style="color:#ae81ff">115</span> MBytes   <span style="color:#ae81ff">961</span> Mbits/sec   <span style="color:#ae81ff">27</span>
+</span></span><span style="display:flex;"><span>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  4<span style="color:#f92672">]</span>  29.00-30.00  sec  62.9 MBytes   <span style="color:#ae81ff">528</span> Mbits/sec   <span style="color:#ae81ff">11</span>    <span style="color:#ae81ff">330</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  6<span style="color:#f92672">]</span>  29.00-30.00  sec  51.4 MBytes   <span style="color:#ae81ff">431</span> Mbits/sec   <span style="color:#ae81ff">17</span>    <span style="color:#ae81ff">289</span> KBytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>SUM<span style="color:#f92672">]</span>  29.00-30.00  sec   <span style="color:#ae81ff">114</span> MBytes   <span style="color:#ae81ff">959</span> Mbits/sec   <span style="color:#ae81ff">28</span>
+</span></span><span style="display:flex;"><span>- - - - - - - - - - - - - - - - - - - - - - - - -
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> ID<span style="color:#f92672">]</span> Interval           Transfer     Bandwidth       Retr
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  4<span style="color:#f92672">]</span>   0.00-30.00  sec  1.78 GBytes   <span style="color:#ae81ff">508</span> Mbits/sec  <span style="color:#ae81ff">412</span>             sender
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  4<span style="color:#f92672">]</span>   0.00-30.00  sec  1.77 GBytes   <span style="color:#ae81ff">508</span> Mbits/sec                  receiver
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  6<span style="color:#f92672">]</span>   0.00-30.00  sec  1.66 GBytes   <span style="color:#ae81ff">474</span> Mbits/sec  <span style="color:#ae81ff">441</span>             sender
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>  6<span style="color:#f92672">]</span>   0.00-30.00  sec  1.66 GBytes   <span style="color:#ae81ff">474</span> Mbits/sec                  receiver
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>SUM<span style="color:#f92672">]</span>   0.00-30.00  sec  3.43 GBytes   <span style="color:#ae81ff">983</span> Mbits/sec  <span style="color:#ae81ff">853</span>             sender
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>SUM<span style="color:#f92672">]</span>   0.00-30.00  sec  3.43 GBytes   <span style="color:#ae81ff">982</span> Mbits/sec                  receiver
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>iperf Done.
+</span></span></code></pre></div><p><img src="/images/2.week2/Screenshot_2024-06-25_023537.png"></p>
+<p><img src="/images/2.week2/Screenshot_2024-06-25_023559.png"></p>
+<ol start="12">
+<li>When iperf completed with an <em>iperf Done.</em> message, terminate the Session Manager connection on the VPC A instance and switch to the Session Manager tab for the connection to the VPC B instance and terminate that session too.</li>
+</ol>
+<p>You have successfully generated traffic between the two instances. The next step is to view the flow log in CloudWatch.</p>
+<h4 id="view-flow-logs-in-cloudwatch">View Flow Logs in CloudWatch</h4>
+<p>When publishing to CloudWatch, flow log data is published to a log group, and each network interface has a unique log stream in the log group. Log streams contain flow log records. You can create multiple flow logs that publish data to the same log group.</p>
+<ol>
+<li>
+<p>In the EC2 Dashboard, navigate to <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>checkbox</em> next to <code>VPC A Private AZ1 Server</code>, scroll down to the <strong>Networking</strong> tab and make a note of the <strong>Interface ID</strong> under <strong>Network Interfaces</strong></p>
+<p><img alt="Instance ENI" src="/images/2.week2/Screenshot_2024-06-25_023651.png"></p>
+</li>
+</ol>
+<p>VPC Flow logs can be sent to either an Amazon S3 bucket or CloudWatch. In this lab, you configured the flow logs from VPC A to be sent to CloudWatch.</p>
+<ol start="3">
+<li>
+<p>Navigate to Log Groups in the <a href="https://console.aws.amazon.com/cloudwatch/home?#logsV2:log-groups/log-group/NetworkingWorkshopFlowLogsGroup">CloudWatch console</a>  and click on the <code>NetworkingWorkshopFlowLogsGroup</code> log group</p>
+<p><img alt="Log groups" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_log_groups.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click on the log stream matching the interface ID noted in step (1) to see the flow records for that interface (make sure to select the ENI from VPC A EC2)</p>
+<p><img alt="Flow Log Streams" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_log_streams.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click on any entry to expand the log line</p>
+<p><img alt="Flow log ENI" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_eni_logs.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+</ol>
+<p>Anatomy of a flow log: <img alt="Flow log anatomy" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_anatomy.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="query-flow-log-for-insights">Query Flow Log for Insights</h4>
+<p>CloudWatch Logs Insights enables you to interactively search and analyze log data in CloudWatch Logs, including VPC flow logs. You can perform queries to help you more efficiently and effectively respond to operational issues. In the section you will run a query to show the top 10 talkers based on bytes transferred.</p>
+<ol>
+<li>
+<p>In the <a href="https://console.aws.amazon.com/cloudwatch">CloudWatch console</a>  click on <strong>Logs Insights</strong></p>
+<p><img alt="CloudWatch Log Insights" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_cwlogs_insights.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Select <code>NetworkingWorkshopFlowLogsGroup</code> from the <strong>Select log group(s)</strong> dropdown and click the <strong>Queries</strong> folder on the right hand side</p>
+<p><img alt="CloudWatch Log Insights" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_cwlogs_queries.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click <strong>Top 10 byte transfers by source and destination IP addresses</strong> under <strong>VPC Flow Logs</strong>, click <strong>Apply</strong> and then <strong>Run query</strong></p>
+<p><img alt="CloudWatch Log Insights" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_query.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Review the query results. Do you recognize the top two IP addresses?</p>
+<p><img alt="CloudWatch Query Results" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/monitoring/flow_logs_query_results.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+</ol>
+<h3 id="check-alarm-notification">Check Alarm Notification</h3>
+<p>Generating traffic to the instance in VPC B via iperf should have triggered the alarm we created earlier.</p>
+<p>Open the inbox for the email destination you configured for the alarm and check that an email notification has arrived.</p>
+<p><img alt="Alarm Email Received" src="/images/2.week2/Screenshot_2024-06-25_024234.png"></p>
+<h3 id="clean-up">Clean Up</h3>
+<p>If you are using your own AWS Account to conduct this workshop and you are finished, complete the follow steps to clean up.</p>
+<p>Warning</p>
+<p>You should only complete this clean up section if you do not plan on continuing with this workshop.</p>
+<p>Make sure you terminate / delete the resources below to avoid unnecessary charges.</p>
+<h4 id="delete-cloudwatch-alarm">Delete CloudWatch Alarm</h4>
+<h4 id="delete-the-flowlog-cloudwatch-log-group">Delete the FlowLog Cloudwatch Log Group</h4>
+<h4 id="delete-cloudwatch-dashboard">Delete CloudWatch Dashboard</h4>
+<h4 id="please-make-a-selection">Please make a selection:</h4>
+<p>Option 1: You started this lab at the start</p>
+<p>Option 2: You started the lab in the Multi VPCs section by deploying the CloudFormation template</p>
+<p>Option 3: You started the lab in the Basic Security section by deploying the CloudFormation template</p>
+<h4 id="finished">Finished</h4>
+<p><em>Once you have completed the above steps, you are finished. If you want to continue the workshop later, you can skip this step and use the CloudFormation template in the next step to build the prerequisites.</em></p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Connecting to On-Premises"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2-week2/2.2-module2/" title="Module 2" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1719680647"></script>
+    <script src="/js/jquery.sticky.js?1719680647"></script>
+    <script src="/js/featherlight.min.js?1719680647"></script>
+    <script src="/js/highlight.pack.js?1719680647"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1719680647"></script>
+    <script src="/js/learn.js?1719680647"></script>
+    <script src="/js/hugo-learn.js?1719680647"></script>
+
+    <link href="/mermaid/mermaid.css?1719680647" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1719680647"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="vi" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.127.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>AWS Well-Architected Framework :: AWS System Manager</title>
+
+    
+    <link href="/css/nucleus.css?1719680647" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1719680647" rel="stylesheet">
+    <link href="/css/hybrid.css?1719680647" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1719680647" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1719680647" rel="stylesheet">
+    <link href="/css/auto-complete.css?1719680647" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1719680647" rel="stylesheet">
+    <link href="/css/theme.css?1719680647" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1719680647" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1719680647" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1719680647"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/vi/1-week1/1.1-module1/1.1.1-awswaf/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1719680647"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1719680647"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/\/vi";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1719680647"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/" title="Tuần 1" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/vi/1-week1/">
+           <b> 1. </b> Tuần 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.1-module1/" title="Module 1" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/vi/1-week1/1.1-module1/">
+           <b> 1.1. </b> Module 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.1-module1/1.1.1-awswaf/" title="AWS Well-Architected Framework" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/vi/1-week1/1.1-module1/1.1.1-awswaf/">
+           <b> 1.1.1. </b> AWS Well-Architected Framework
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.2-lab1/" title="Lab 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.2-lab1/">
+           <b> 1.2. </b> Lab 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.3-lab7/" title="Lab 7" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.3-lab7/">
+           <b> 1.3. </b> Lab 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.4-lab9/" title="Lab 9" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.4-lab9/">
+           <b> 1.4. </b> Lab 9
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/" title="Tuần 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/">
+           <b> 2. </b> Tuần 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/">
+           <b> 2.1 </b> Sovico Skill Accelerator Lab
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.1-vpc/" title="VPC Căn bản" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.1-vpc/">
+           <b> 2.1.1 </b> VPC Căn bản
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.2-multivpcs/">
+           <b> 2.1.2 </b> Multiple VPCs
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Cấu hình bảo mật cho VPC" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.3-securitycontrols/">
+           <b> 2.1.3 </b> Cấu hình bảo mật cho VPC
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Kết nối tới môi trường on-premises" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.4-connectonpremises/">
+           <b> 2.1.4 </b> Kết nối tới môi trường on-premises
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.5-networkmonitoring/" title="Giám sát mạng" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.5-networkmonitoring/">
+           <b> 2.1.5 </b> Giám sát mạng
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.2-module2/" title="Module 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.2-module2/">
+           <b> 2.2 </b> Module 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.2-module2/2.2.1-vpc/" title="Amazon Virtual Private Cloud" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.2-module2/2.2.1-vpc/">
+           <b> 2.2.1 </b> Amazon Virtual Private Cloud
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/" title="VPC Security và các tính năng Multi-VPC" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/">
+           <b> 2.2.2 </b> VPC Security và các tính năng Multi-VPC
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.3-gapvxawsevent/" title="OPTIMIZING AWS COSTS AND SECURITY" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.3-gapvxawsevent/">
+           <b> 2.3. </b> OPTIMIZING AWS COSTS AND SECURITY
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"><i class='fab fa-facebook'></i> AWS Study Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="/1-week1/1.1-module1/1.1.1-awswaf/">English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="/vi/1-week1/1.1-module1/1.1.1-awswaf/" selected>Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total Cloud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b> Last Updated </b> <br>
+    <i>
+        <font color=orange>29-09-2024</font>
+    </i>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="" style="color:orange">Minh Tiến</a> <br>
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/vi/'>Minh Tiến Workshop</a> > <a href='/vi/1-week1/'>Tuần 1</a> > <a href='/vi/1-week1/1.1-module1/'>Module 1</a> > AWS Well-Architected Framework
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#giới-thiệu-về-aws-well-architected-framework">Giới thiệu về AWS Well-Architected Framework</a>
+      <ul>
+        <li><a href="#các-định-nghĩa">Các định nghĩa</a></li>
+        <li><a href="#về-kiến-trúc">Về kiến trúc</a></li>
+        <li><a href="#nguyên-tắc-thiết-kế-chung">Nguyên tắc thiết kế chung</a></li>
+      </ul>
+    </li>
+    <li><a href="#trụ-cột-1-operational-excellence---vận-hành-xuất-sắc">Trụ cột 1: Operational excellence - Vận hành xuất sắc</a>
+      <ul>
+        <li><a href="#nguyên-tắc-thiết-kế">Nguyên tắc thiết kế</a></li>
+      </ul>
+    </li>
+    <li><a href="#trụ-cột-2-security---bảo-mật">Trụ cột 2: Security - Bảo mật</a>
+      <ul>
+        <li><a href="#nguyên-tắc-thiết-kế-1">Nguyên tắc thiết kế</a></li>
+      </ul>
+    </li>
+    <li><a href="#trụ-cột-3-reliability---độ-tin-cậy">Trụ cột 3: Reliability - Độ tin cậy</a>
+      <ul>
+        <li><a href="#nguyên-tắc-thiết-kế-2">Nguyên tắc thiết kế</a></li>
+      </ul>
+    </li>
+    <li><a href="#trụ-cột-4-performance-efficiency---hiệu-suất-vận-hành">Trụ cột 4: Performance efficiency - Hiệu suất vận hành</a>
+      <ul>
+        <li><a href="#nguyên-tắc-thiết-kế-3">Nguyên tắc thiết kế</a></li>
+      </ul>
+    </li>
+    <li><a href="#trụ-cột-5-cost-optimization---tối-ưu-hoá-chi-phí">Trụ cột 5: Cost optimization - Tối ưu hoá chi phí</a>
+      <ul>
+        <li><a href="#nguyên-tắc-thiết-kế-4">Nguyên tắc thiết kế</a></li>
+      </ul>
+    </li>
+    <li><a href="#trụ-cột-6-sustainability---tính-bền-vững">Trụ cột 6: Sustainability - Tính bền vững</a>
+      <ul>
+        <li><a href="#nguyên-tắc-thiết-kế-5">Nguyên tắc thiết kế</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              AWS Well-Architected Framework
+            </h1>
+          
+
+        
+
+
+
+	<h2 id="giới-thiệu-về-aws-well-architected-framework">Giới thiệu về AWS Well-Architected Framework</h2>
+<p>AWS Well-Architected Framework giúp bạn hiểu được những ưu và nhược điểm của các quyết định mà người phát triển đưa ra khi xây dựng hệ thống trên AWS. Bằng cách sử dụng Framework này, người sử dụng sẽ học được những thực hành tốt nhất về kiến trúc cho việc thiết kế và vận hành các <!-- raw HTML omitted -->workload<!-- raw HTML omitted --> an toàn, đáng tin cậy, hiệu quả, chi phí hiệu quả và bền vững trên đám mây AWS.</p>
+<p>AWS Well-Architected Framework cung cấp một cách thức nhất quán để đánh giá hệ thống so với các thực hành tốt nhất và xác định những lĩnh vực cần cải thiện. Quá trình đánh giá kiến trúc là một cuộc đối thoại xây dựng về các quyết định kiến trúc, không phải là một cơ chế kiểm toán.</p>
+
+<div class="notices note" ><p>Các hệ thống được thiết kế tốt =&gt; Làm tăng đáng kể khả năng thành công của doanh nghiệp.</p>
+</div>
+
+<p>AWS Well-Architected Framework cung cấp một tập hợp các câu hỏi và cách tiếp cận nhất quán để đánh giá và đưa ra các khuyến nghị cải thiện để thiết kế kiến trúc phù hợp với các thực hành tốt nhất cho hệ thống đám mây hiện đại.</p>
+<p>Framework này dành cho những người trong các vai trò kỹ thuật, như giám đốc công nghệ (CTO), kiến trúc sư, lập trình viên và thành viên nhóm vận hành.
+Nó mô tả các thực hành và chiến lược tốt nhất của AWS khi thiết kế và vận hành workload trên đám mây, và cung cấp liên kết đến các chi tiết triển khai và mẫu kiến trúc thêm (xem thêm tại <a href="https://aws.amazon.com/vi/architecture/well-architected/">đây</a>).</p>
+<p>AWS Well-Architected Tool (AWS WA Tool) là một dịch vụ trên đám mây cung cấp một quy trình nhất quán giúp đánh giá và đo lường kiến trúc bằng AWS Well-Architected Framework. AWS WA Tool cung cấp các khuyến nghị để giúp workload trở nên đáng tin cậy, an toàn, hiệu quả và chi phí hiệu quả hơn.</p>
+<h3 id="các-định-nghĩa">Các định nghĩa</h3>
+<p>AWS Well-Architected Framework dựa trên sáu trụ cột:</p>
+<table>
+<thead>
+<tr>
+<th>Trụ cột</th>
+<th>Mô tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><!-- raw HTML omitted -->Operational excellence<!-- raw HTML omitted --></td>
+<td>Khả năng hỗ trợ phát triển và vận hành workload một cách hiệu quả, liên tục cải tiến các quy trình và thủ tục hỗ trợ để mang lại giá trị kinh doanh</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->Security<!-- raw HTML omitted --></td>
+<td>Tận dụng công nghệ đám mây để bảo vệ dữ liệu, hệ thống và tài nguyên theo cách có thể.</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->Reliability<!-- raw HTML omitted --></td>
+<td>Khả năng workload thực hiện chức năng dự định của nó một cách chính xác và nhất quán.</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->Performance efficiency<!-- raw HTML omitted --></td>
+<td>Khả năng sử dụng tài nguyên máy tính một cách hiệu quả để đáp ứng các yêu cầu của hệ thống và duy trì hiệu quả đó khi nhu cầu thay đổi và công nghệ phát triển.</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->Cost optimization<!-- raw HTML omitted --></td>
+<td>Khả năng vận hành các hệ thống để mang lại giá trị kinh doanh ở mức giá thấp nhất.</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->Sustainability<!-- raw HTML omitted --></td>
+<td>Khả năng liên tục cải thiện tác động bền vững bằng cách giảm tiêu thụ năng lượng và tăng hiệu quả trên tất cả các thành phần của workload bằng cách tối đa hóa lợi ích từ các tài nguyên được cung cấp và giảm thiểu tổng nguồn tài nguyên cần thiết.</td>
+</tr>
+</tbody>
+</table>
+<p>Bên cạnh đó AWS Well-Architect Framework còn sử dụng các thuật ngữ sau:</p>
+<ul>
+<li>
+<p>Một <strong>component</strong> (thành phần) là code, cấu hình và Tài nguyên AWS cùng hoạt động để đáp ứng một yêu cầu. Một component thường là đơn vị sở hữu kỹ thuật và được tách biệt với các component khác.</p>
+</li>
+<li>
+<p>Thuật ngữ <strong>workload</strong> được sử dụng để xác định một tập hợp các component cùng nhau mang lại giá trị kinh doanh. Một workload thường là mức độ chi tiết mà lãnh đạo kinh doanh và công nghệ đề cập đến.</p>
+</li>
+<li>
+<p>Chúng ta coi <strong>architecture</strong> (kiến trúc) là cách các component hoạt động cùng nhau trong một workload. Cách thức giao tiếp và tương tác giữa các component thường là trọng tâm của sơ đồ architecture.</p>
+</li>
+<li>
+<p><strong>Milestone</strong> (mốc) đánh dấu những thay đổi chủ chốt trong architecture của bạn khi nó phát triển trong suốt vòng đời sản phẩm (thiết kế, triển khai, kiểm thử, đưa vào vận hành và trong giai đoạn sản xuất).</p>
+</li>
+<li>
+<p>Trong tổ chức, <strong>technology portfolio</strong> là tập hợp các workload cần thiết để doanh nghiệp hoạt động.</p>
+</li>
+<li>
+<p><strong>Level of effort</strong> (Mức độ nỗ lực) được phân loại theo lượng thời gian, công sức và độ phức tạp mà một tác vụ đòi hỏi để triển khai. Mỗi tổ chức cần xem xét quy mô và chuyên môn của nhóm cũng như độ phức tạp của workload để xác định level of effort phù hợp cho tổ chức đó.</p>
+<ul>
+<li><strong>Cao</strong>: Công việc có thể mất nhiều tuần hoặc nhiều tháng. Điều này có thể được chia nhỏ thành nhiều câu chuyện, phiên bản và nhiệm vụ.</li>
+<li><strong>Trung bình</strong>: Công việc có thể mất nhiều ngày hoặc nhiều tuần. Điều này có thể được chia nhỏ thành nhiều phiên bản và nhiệm vụ.</li>
+<li><strong>Thấp</strong>: Công việc có thể mất nhiều giờ hoặc nhiều ngày. Điều này có thể được chia nhỏ thành nhiều nhiệm vụ.</li>
+</ul>
+</li>
+</ul>
+<p>Khi thiết kế architecture cho workload, cần phải cân bằng giữa các trụ cột dựa trên bối cảnh kinh doanh.</p>
+<p>VD: trong môi trường phát triển, có thể hy sinh độ tin cậy để giảm chi phí; trong các giải pháp quan trọng, cần tối ưu hoá độ tin cậy từ đó dẫn đến chi phí và tác động bền vững tăng lên,&hellip;</p>
+
+<div class="notices info" ><p>Bảo mật và Hiệu suất vận hành thường không được cân bằng với các trụ cột khác.</p>
+</div>
+
+<h3 id="về-kiến-trúc">Về kiến trúc</h3>
+<p>Thường có một nhóm trung tâm cho kiến trúc công nghệ với các vai trò như kiến trúc sư kỹ thuật, kiến trúc sư giải pháp, kiến trúc sư dữ liệu, kiến trúc sư mạng và kiến trúc sư bảo mật.</p>
+<p>Thay vì có một nhóm kiến trúc tập trung, AWS phân tán khả năng kiến trúc vào các nhóm sản phẩm/tính năng khác nhau. Điều này giúp các nhóm tập trung vào nhu cầu của khách hàng và xây dựng sản phẩm phù hợp.</p>
+<blockquote>
+<p>&ldquo;Ý định tốt không bao giờ có tác dụng, cần có cơ chế tốt để thực hiện hoá mọi thứ&rdquo; - Jeff Bezos.</p>
+</blockquote>
+<p>Để đảm bảo chất lượng và tuân thủ tiêu chuẩn, AWS có hai cách thức chính:</p>
+<ul>
+<li>Thiết lập các thực hành, quy trình, tiêu chuẩn được chấp nhận và có chuyên gia xác minh việc tuân thủ của các nhóm.</li>
+<li>Triển khai cơ chế kiểm tra tự động để kiểm tra việc đáp ứng các tiêu chuẩn, thay vì hoàn toàn dựa vào nỗ lực con người.</li>
+</ul>
+<p>AWS tin rằng kiến trúc doanh nghiệp tốt có thể nảy sinh khi các nhóm tập trung vào nhu cầu khách hàng và tuân thủ các thực hành, các hướng dẫn tốt nhất thông qua mô hình phân tán với cộng đồng kỹ sư chính. Đánh giá Well-Architected Framework giúp hiểu rõ rủi ro và xác định vấn đề cần cải thiện bằng cơ chế, đào tạo hoặc chia sẻ kiến thức.</p>
+<h3 id="nguyên-tắc-thiết-kế-chung">Nguyên tắc thiết kế chung</h3>
+<ul>
+<li><strong>Ngừng đoán nhu cầu về tài nguyên</strong>: Trên đám mây, bạn có thể động thái co giãn tài nguyên lên hoặc xuống dựa trên nhu cầu, tránh cung cấp quá nhiều hoặc không đủ.</li>
+<li><strong>Thử nghiệm hệ thống trên quy mô sản xuất</strong>: Triển khai môi trường kiểm tra quy mô sản xuất theo nhu cầu trên đám mây để kiểm tra, sau đó dỡ bỏ khi xong để tránh chi phí liên tục.</li>
+<li><strong>Tự động hóa với định hướng thử nghiệm</strong>: Tự động hóa triển khai và khai thác cơ sở hạ tầng bất biến để bạn có thể thử nghiệm, theo dõi thay đổi và dễ dàng khôi phục nếu cần.</li>
+<li><strong>Cân nhắc các kiến trúc tiến hóa</strong>: Đám mây tạo điều kiện cho kiến trúc tiến hóa theo thời gian thay vì những nỗ lực tái thiết kế lớn, hiếm dùng.</li>
+<li><strong>Cải thiện kiến trúc bằng việc thu thập dữ liệu</strong>: Thu thập số liệu về tác vụ của bạn để lập trình các lựa chọn thiết kế và cải tiến theo cách thức lặp đi lặp lại.</li>
+<li><strong>Cải thiện qua <em>game days</em></strong>: Định kỳ mô phỏng sự cố/sự kiện thực tế trong môi trường sản xuất để kiểm tra khả năng phục hồi và tìm ra lĩnh vực cần cải thiện quy trình và kiến trúc.</li>
+</ul>
+<h2 id="trụ-cột-1-operational-excellence---vận-hành-xuất-sắc">Trụ cột 1: Operational excellence - Vận hành xuất sắc</h2>
+<p>Trụ cột Vận hành xuất sắc bao gồm khả năng hỗ trợ phát triển và vận hành workload một cách hiệu quả, hiểu rõ hơn về hoạt động của chúng và liên tục cải tiến các quy trình và thủ tục hỗ trợ để mang lại giá trị kinh doanh.</p>
+<h3 id="nguyên-tắc-thiết-kế">Nguyên tắc thiết kế</h3>
+<ol>
+<li>
+<p>Thực hiện hoạt động dưới dạng code:</p>
+<ul>
+<li>Định nghĩa toàn bộ môi trường làm việc (ứng dụng, hạ tầng) dưới dạng code.</li>
+<li>Cập nhật môi trường bằng code.</li>
+<li>Lập trình các quy trình vận hành và tự động hóa chúng để đáp ứng sự kiện.</li>
+<li>Giảm thiểu lỗi con người và đảm bảo phản ứng nhất quán.</li>
+</ul>
+</li>
+<li>
+<p>Thực hiện thay đổi nhỏ, đảo ngược thường xuyên:</p>
+<ul>
+<li>Thiết kế môi trường có khả năng mở rộng và linh hoạt.</li>
+<li>Cập nhật thường xuyên các thành phần.</li>
+<li>Sử dụng kỹ thuật triển khai tự động.</li>
+<li>Thay đổi nhỏ, từng bước để giảm bán kính ảnh hưởng của sự cố.</li>
+<li>Đảo ngược nhanh chóng khi có lỗi.</li>
+<li>Tăng Độ tin cậy để thích ứng với thay đổi thị trường.</li>
+</ul>
+</li>
+<li>
+<p>Hoàn thiện quy trình thường xuyên:</p>
+<ul>
+<li>Xem xét và cập nhật quy trình khi môi trường phát triển.</li>
+<li>Đánh giá hiệu quả của quy trình và kiến thức của nhóm.</li>
+<li>Cập nhật, truyền đạt và đào tạo các thay đổi quy trình.</li>
+<li>Chia sẻ phương pháp hay nhất cho các thành viên trong nhóm.</li>
+</ul>
+</li>
+<li>
+<p>Dự đoán sự cố:</p>
+<ul>
+<li>Thực hiện &ldquo;phân tích hậu quả (pre-moterm)&rdquo; để xác định nguồn lỗi tiềm ẩn.</li>
+<li>Loại bỏ hoặc giảm nhẹ các nguyên nhân gây lỗi.</li>
+<li>Kiểm tra kịch bản sự cố và quy trình ứng phó.</li>
+<li>Tổ chức các game days để mô phỏng các sự cố.</li>
+</ul>
+</li>
+<li>
+<p>Học hỏi từ sự cố:</p>
+<ul>
+<li>Rút ra bài học từ tất cả sự cố vận hành.</li>
+<li>Chia sẻ bài học trong nhóm và toàn bộ tổ chức.</li>
+</ul>
+</li>
+<li>
+<p>Sử dụng dịch vụ được quản lý:</p>
+<ul>
+<li>Sử dụng các dịch vụ được quản lý của AWS.</li>
+<li>Xây dựng quy trình tương tác với các dịch vụ đó.</li>
+</ul>
+</li>
+<li>
+<p>Triển khai quan sát hiệu quả:</p>
+<ul>
+<li>Theo dõi hành vi, hiệu suất, độ tin cậy, chi phí, sức khỏe.</li>
+<li>Thiết lập chỉ số hiệu suất chính (KPI).</li>
+<li>Sử dụng dữ liệu quan sát để ra quyết định và hành động.</li>
+<li>Cải thiện hiệu suất, độ tin cậy, chi phí dựa trên dữ liệu.</li>
+</ul>
+</li>
+</ol>
+<p>Nhìn chung là áp dụng nguyên lý phát triển phần mềm, tự động hóa quy trình, thường xuyên đánh giá và cải tiến, dự đoán rủi ro, chia sẻ kinh nghiệm và tận dụng các công cụ điện toán đám mây để thực hiện tốt trụ cột này.</p>
+<h2 id="trụ-cột-2-security---bảo-mật">Trụ cột 2: Security - Bảo mật</h2>
+<p>Trụ cột Bảo mật bao gồm khả năng bảo vệ dữ liệu, hệ thống và tài nguyên, tận dụng công nghệ đám mây nhằm cải thiện bảo mật cho hệ thống, kiến trúc.</p>
+<h3 id="nguyên-tắc-thiết-kế-1">Nguyên tắc thiết kế</h3>
+<ol>
+<li>
+<p>Xây dựng nền tảng định danh mạnh:</p>
+<ul>
+<li>Áp dụng nguyên tắc cấp quyền tối thiểu.</li>
+<li>Thực hiện phân tách nhiệm vụ.</li>
+<li>Tập trung hóa quản lý định danh.</li>
+<li>Giảm sử dụng thông tin xác thực tĩnh dài hạn.</li>
+</ul>
+</li>
+<li>
+<p>Duy trì khả năng truy vết:</p>
+<ul>
+<li>Giám sát và cảnh báo trong thời gian thực.</li>
+<li>Kiểm toán các hành động và thay đổi.</li>
+<li>Tích hợp thu thập log và metric.</li>
+<li>Tự động hóa việc điều tra và phản ứng.</li>
+</ul>
+</li>
+<li>
+<p>Áp dụng bảo mật nhiều lớp:</p>
+<ul>
+<li>Sử dụng phương pháp phòng thủ theo chiều sâu.</li>
+<li>Bảo vệ tất cả các tầng: từ mạng đến mã nguồn.</li>
+</ul>
+</li>
+<li>
+<p>Tự động hóa thực hành bảo mật:</p>
+<ul>
+<li>Triển khai các cơ chế bảo mật tự động.</li>
+<li>Xây dựng kiến trúc bảo mật bằng mã.</li>
+<li>Quản lý các biện pháp kiểm soát trong template có version.</li>
+</ul>
+</li>
+<li>
+<p>Bảo vệ dữ liệu:</p>
+<ul>
+<li>Phân loại dữ liệu theo độ nhạy cảm.</li>
+<li>Sử dụng mã hóa, tokenization và kiểm soát truy cập.</li>
+</ul>
+</li>
+<li>
+<p>Hạn chế tiếp xúc trực tiếp với dữ liệu:</p>
+<ul>
+<li>Sử dụng công cụ giảm thiểu xử lý thủ công.</li>
+<li>Giảm nguy cơ lỗi do con người.</li>
+</ul>
+</li>
+<li>
+<p>Chuẩn bị cho sự cố bảo mật:</p>
+<ul>
+<li>Xây dựng quy trình quản lý và điều tra sự cố.</li>
+<li>Thực hiện mô phỏng ứng phó.</li>
+<li>Sử dụng công cụ tự động để tăng tốc phát hiện và khôi phục.</li>
+</ul>
+</li>
+</ol>
+<p>Các nguyên tắc này tạo nên một chiến lược toàn diện, giúp tăng cường bảo mật, giảm thiểu rủi ro và cải thiện khả năng ứng phó với các mối đe dọa khi triển khai hệ thống trên môi trường đám mây.</p>
+<h2 id="trụ-cột-3-reliability---độ-tin-cậy">Trụ cột 3: Reliability - Độ tin cậy</h2>
+<p>Trụ cột Độ tin cậy bao gồm khả năng các workload thực hiện chức năng dự định của nó một cách chính xác và nhất quán như mong đợi. Điều này bao gồm khả năng vận hành và kiểm tra workload trong toàn bộ vòng đời của nó.</p>
+<h3 id="nguyên-tắc-thiết-kế-2">Nguyên tắc thiết kế</h3>
+<ol>
+<li>
+<p>Tự động phục hồi sau lỗi:</p>
+<ul>
+<li>Giám sát các chỉ số hiệu suất quan trọng (KPI) của workload.</li>
+<li>Tập trung vào các KPI đo lường giá trị kinh doanh, không phải khía cạnh kỹ thuật.</li>
+<li>Thiết lập hệ thống tự động khi vượt ngưỡng KPI.</li>
+<li>Tự động hóa việc thông báo, theo dõi và khắc phục lỗi.</li>
+<li>Phát triển khả năng dự đoán và ngăn chặn lỗi trước khi xảy ra.</li>
+</ul>
+</li>
+<li>
+<p>Kiểm tra quy trình phục hồi:</p>
+<ul>
+<li>Khác biệt với môi trường <!-- raw HTML omitted -->on-premises<!-- raw HTML omitted -->, tập trung vào kiểm tra chiến lược phục hồi.</li>
+<li>Sử dụng môi trường đám mây để mô phỏng các kịch bản lỗi.</li>
+<li>Tái tạo các tình huống lỗi đã xảy ra trước đó.</li>
+<li>Phát hiện và sửa chữa các lỗ hổng trước khi chúng gây ra vấn đề thực tế.</li>
+<li>Giảm thiểu rủi ro bằng cách chuẩn bị kỹ lưỡng cho các tình huống lỗi.</li>
+</ul>
+</li>
+<li>
+<p>Mở rộng theo chiều ngang:</p>
+<ul>
+<li>Thay thế các tài nguyên lớn bằng nhiều tài nguyên nhỏ hơn.</li>
+<li>Phân tán yêu cầu trên nhiều tài nguyên để tránh điểm lỗi chung.</li>
+<li>Tăng khả năng chịu lỗi tổng thể của hệ thống.</li>
+<li>Giảm thiểu tác động của lỗi đơn lẻ đối với toàn bộ workload.</li>
+</ul>
+</li>
+<li>
+<p>Quản lý công suất linh hoạt:</p>
+<ul>
+<li>Tránh bão hòa tài nguyên, một vấn đề phổ biến trong môi trường on-premises.</li>
+<li>Giám sát liên tục nhu cầu và mức sử dụng workload.</li>
+<li>Tự động thêm hoặc xóa tài nguyên để đáp ứng nhu cầu.</li>
+<li>Tối ưu hóa việc sử dụng tài nguyên, tránh cung cấp quá mức hoặc thiếu hụt.</li>
+<li>Quản lý hiệu quả các giới hạn và hạn ngạch dịch vụ.</li>
+</ul>
+</li>
+<li>
+<p>Tự động hóa quản lý thay đổi:</p>
+<ul>
+<li>Thực hiện các thay đổi cơ sở hạ tầng thông qua tự động hóa.</li>
+<li>Áp dụng tự động hóa cho cả quá trình thay đổi và quy trình tự động hóa.</li>
+<li>Theo dõi và xem xét các thay đổi một cách có hệ thống.</li>
+<li>Giảm thiểu lỗi do con người và tăng tính nhất quán trong quản lý hệ thống.</li>
+</ul>
+</li>
+</ol>
+<p>Các nguyên tắc này kết hợp với nhau để tạo ra một hệ thống đám mây đáng tin cậy, linh hoạt và hiệu quả, có khả năng tự phục hồi và thích ứng với các thay đổi và thách thức.</p>
+<h2 id="trụ-cột-4-performance-efficiency---hiệu-suất-vận-hành">Trụ cột 4: Performance efficiency - Hiệu suất vận hành</h2>
+<p>Trụ cột Hiệu suất vận hành bao gồm khả năng sử dụng tài nguyên máy tính một cách hiệu quả để đáp ứng các yêu cầu của hệ thống và duy trì hiệu quả đó khi nhu cầu thay đổi và công nghệ phát triển.</p>
+<h3 id="nguyên-tắc-thiết-kế-3">Nguyên tắc thiết kế</h3>
+<ol>
+<li>
+<p>Phổ cập công nghệ tiên tiến:</p>
+<ul>
+<li>Sử dụng các công nghệ phức tạp như dịch vụ từ nhà cung cấp cloud</li>
+<li>Giúp đội ngũ tập trung vào phát triển sản phẩm thay vì quản lý tài nguyên</li>
+<li>Ví dụ: NoSQL databases, media transcoding, machine learning</li>
+</ul>
+</li>
+<li>
+<p>Toàn cầu hóa nhanh chóng:</p>
+<ul>
+<li>Triển khai workload ở nhiều AWS Region trên toàn cầu</li>
+<li>Giảm độ trễ và cải thiện trải nghiệm người dùng</li>
+<li>Chi phí tối thiểu cho việc mở rộng quy mô toàn cầu</li>
+</ul>
+</li>
+<li>
+<p>Áp dụng kiến trúc serverless:</p>
+<ul>
+<li>Loại bỏ nhu cầu quản lý máy chủ vật lý</li>
+<li>Giảm gánh nặng vận hành và chi phí giao dịch</li>
+<li>Ví dụ: Dịch vụ lưu trữ làm trang web tĩnh, dịch vụ sự kiện lưu trữ mã</li>
+</ul>
+</li>
+<li>
+<p>Thử nghiệm thường xuyên:</p>
+<ul>
+<li>Tận dụng tài nguyên ảo hóa và tự động hóa</li>
+<li>Thực hiện các bài kiểm tra so sánh nhanh chóng</li>
+<li>Thử nghiệm với các loại instance, storage, và cấu hình khác nhau</li>
+</ul>
+</li>
+<li>
+<p>Xem xét mechanical sympathy:</p>
+<ul>
+<li>Hiểu cách các dịch vụ cloud được sử dụng</li>
+<li>Chọn công nghệ phù hợp với mục tiêu của workload</li>
+<li>Ví dụ: Cân nhắc mô hình truy cập dữ liệu khi chọn phương pháp cơ sở dữ liệu hoặc lưu trữ</li>
+</ul>
+</li>
+</ol>
+<p>Các nguyên tắc này giúp tối ưu hóa hiệu suất, giảm chi phí, tăng tính linh hoạt và khả năng mở rộng trong môi trường cloud, đồng thời cho phép đội ngũ tập trung vào việc phát triển sản phẩm và đổi mới.</p>
+<h2 id="trụ-cột-5-cost-optimization---tối-ưu-hoá-chi-phí">Trụ cột 5: Cost optimization - Tối ưu hoá chi phí</h2>
+<p>Trụ cột Tối ưu hóa chi phí bao gồm khả năng vận hành các hệ thống để mang lại giá trị kinh doanh ở mức giá thấp nhất.</p>
+<h3 id="nguyên-tắc-thiết-kế-4">Nguyên tắc thiết kế</h3>
+<ol>
+<li>
+<p>Thực hiện quản lý tài chính đám mây:</p>
+<ul>
+<li>Đầu tư thời gian và nguồn lực vào việc xây dựng năng lực quản lý tài chính đám mây.</li>
+<li>Phát triển kiến thức, chương trình, quy trình và nguồn lực cần thiết.</li>
+<li>Xem đây như một lĩnh vực mới, tương tự như bảo mật hay vận hành xuất sắc.</li>
+</ul>
+</li>
+<li>
+<p>Áp dụng mô hình tiêu thụ:</p>
+<ul>
+<li>Chỉ trả tiền cho tài nguyên thực sự cần dùng.</li>
+<li>Điều chỉnh mức sử dụng linh hoạt theo nhu cầu kinh doanh.</li>
+<li>Tránh dự báo phức tạp, thay vào đó tập trung vào sử dụng thực tế.</li>
+<li>Ví dụ: tắt môi trường phát triển/kiểm thử khi không dùng để tiết kiệm tới 75% chi phí.</li>
+</ul>
+</li>
+<li>
+<p>Đo lường hiệu quả tổng thể:</p>
+<ul>
+<li>Theo dõi cả đầu ra kinh doanh và chi phí liên quan.</li>
+<li>Sử dụng các chỉ số này để đánh giá hiệu quả của việc tăng năng suất và giảm chi phí.</li>
+</ul>
+</li>
+<li>
+<p>Tận dụng dịch vụ quản lý của nhà cung cấp đám mây:</p>
+<ul>
+<li>Để nhà cung cấp xử lý các công việc cơ bản như quản lý trung tâm dữ liệu, máy chủ.</li>
+<li>Sử dụng dịch vụ được quản lý để giảm gánh nặng vận hành hệ thống và ứng dụng.</li>
+<li>Tập trung nguồn lực vào các dự án kinh doanh cốt lõi thay vì quản lý hạ tầng IT.</li>
+</ul>
+</li>
+<li>
+<p>Phân tích và phân bổ chi tiêu:</p>
+<ul>
+<li>Tận dụng khả năng theo dõi chi tiết việc sử dụng và chi phí trên đám mây.</li>
+<li>Phân bổ chi phí IT một cách minh bạch cho từng chủ sở hữu công việc.</li>
+<li>Đo lường ROI (lợi tức đầu tư) chính xác hơn.</li>
+<li>Tạo cơ hội cho các chủ sở hữu công việc tối ưu hóa việc sử dụng tài nguyên.</li>
+</ul>
+</li>
+</ol>
+<p>Những nguyên tắc này giúp tổ chức tận dụng tối đa lợi ích của đám mây, tối ưu hóa chi phí và hiệu quả sử dụng, đồng thời tập trung vào các hoạt động tạo ra giá trị cho doanh nghiệp.</p>
+<h2 id="trụ-cột-6-sustainability---tính-bền-vững">Trụ cột 6: Sustainability - Tính bền vững</h2>
+<p>Trụ cột Bền vững tập trung vào các tác động môi trường, đặc biệt là tiêu thụ và hiệu quả năng lượng, vì chúng là đòn bẩy quan trọng để các kiến ​​trúc sư đưa ra hành động trực tiếp nhằm giảm thiểu việc sử dụng tài nguyên.</p>
+<h3 id="nguyên-tắc-thiết-kế-5">Nguyên tắc thiết kế</h3>
+<p>Đây là bản tóm tắt chi tiết hơn về các nguyên tắc thiết kế cho tính bền vững trong điện toán đám mây:</p>
+<ol>
+<li>
+<p>Hiểu rõ tác động:</p>
+<ul>
+<li>Đo lường tác động hiện tại và dự đoán tác động tương lai của các workloads.</li>
+<li>Xem xét tất cả nguồn tác động, bao gồm cả việc sử dụng sản phẩm của khách hàng và tác động khi ngừng sử dụng.</li>
+<li>So sánh năng suất với tổng tác động, tính toán tài nguyên và khí thải cho mỗi đơn vị công việc.</li>
+<li>Sử dụng dữ liệu để thiết lập KPI và đánh giá cách cải thiện.</li>
+</ul>
+</li>
+<li>
+<p>Thiết lập mục tiêu bền vững:</p>
+<ul>
+<li>Đặt mục tiêu dài hạn cho mỗi workload, như giảm tài nguyên cần thiết cho mỗi giao dịch.</li>
+<li>Mô hình hóa lợi nhuận đầu tư cho các cải tiến bền vững.</li>
+<li>Lập kế hoạch tăng trưởng sao cho giảm cường độ tác động theo thời gian.</li>
+<li>Sử dụng mục tiêu để hỗ trợ chiến lược bền vững tổng thể của tổ chức.</li>
+</ul>
+</li>
+<li>
+<p>Tối đa hóa việc sử dụng:</p>
+<ul>
+<li>Điều chỉnh quy mô khối lượng công việc phù hợp để tối ưu hiệu suất năng lượng.</li>
+<li>Thực hiện thiết kế hiệu quả để đạt mức sử dụng cao.</li>
+<li>Giảm thiểu tài nguyên, xử lý và lưu trữ không cần thiết.</li>
+</ul>
+</li>
+<li>
+<p>Áp dụng công nghệ mới:</p>
+<ul>
+<li>Liên tục theo dõi và đánh giá công nghệ phần cứng và phần mềm mới, hiệu quả hơn.</li>
+<li>Thiết kế linh hoạt để có thể nhanh chóng áp dụng công nghệ mới.</li>
+<li>Hỗ trợ các cải tiến từ đối tác và nhà cung cấp.</li>
+</ul>
+</li>
+<li>
+<p>Sử dụng dịch vụ được quản lý:</p>
+<ul>
+<li>Tận dụng dịch vụ chia sẻ để tối ưu hóa việc sử dụng tài nguyên.</li>
+<li>Chuyển đổi sang các dịch vụ đám mây quản lý để tận dụng lợi thế quy mô.</li>
+<li>Sử dụng các tính năng tự động hóa để tối ưu hóa việc sử dụng tài nguyên, như di chuyển dữ liệu ít được truy cập vào <!-- raw HTML omitted -->kho lưu trữ lạnh<!-- raw HTML omitted -->.</li>
+</ul>
+</li>
+<li>
+<p>Giảm tác động <!-- raw HTML omitted -->xuôi dòng<!-- raw HTML omitted -->:</p>
+<ul>
+<li>Giảm năng lượng và tài nguyên cần thiết để sử dụng dịch vụ của bạn.</li>
+<li>Hạn chế nhu cầu nâng cấp thiết bị của khách hàng.</li>
+<li>Kiểm tra tác động bằng cách sử dụng <!-- raw HTML omitted -->device farm<!-- raw HTML omitted --> và phản hồi từ khách hàng thực tế.</li>
+</ul>
+</li>
+</ol>
+<p>Các nguyên tắc này cung cấp một khuôn khổ toàn diện để tối ưu hóa hiệu suất, giảm tác động môi trường và cải thiện tính bền vững tổng thể của hoạt động điện toán đám mây.</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/vi/1-week1/1.1-module1/" title="Module 1"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/vi/1-week1/1.2-lab1/" title="Lab 1" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1719680647"></script>
+    <script src="/js/jquery.sticky.js?1719680647"></script>
+    <script src="/js/featherlight.min.js?1719680647"></script>
+    <script src="/js/highlight.pack.js?1719680647"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1719680647"></script>
+    <script src="/js/learn.js?1719680647"></script>
+    <script src="/js/hugo-learn.js?1719680647"></script>
+
+    <link href="/mermaid/mermaid.css?1719680647" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1719680647"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

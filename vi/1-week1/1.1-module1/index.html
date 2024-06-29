@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="vi" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.127.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Module 1 :: AWS System Manager</title>
+
+    
+    <link href="/css/nucleus.css?1719680647" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1719680647" rel="stylesheet">
+    <link href="/css/hybrid.css?1719680647" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1719680647" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1719680647" rel="stylesheet">
+    <link href="/css/auto-complete.css?1719680647" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1719680647" rel="stylesheet">
+    <link href="/css/theme.css?1719680647" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1719680647" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1719680647" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1719680647"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/vi/1-week1/1.1-module1/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1719680647"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1719680647"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/\/vi";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1719680647"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/" title="Tuần 1" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/vi/1-week1/">
+           <b> 1. </b> Tuần 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.1-module1/" title="Module 1" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/vi/1-week1/1.1-module1/">
+           <b> 1.1. </b> Module 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.1-module1/1.1.1-awswaf/" title="AWS Well-Architected Framework" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.1-module1/1.1.1-awswaf/">
+           <b> 1.1.1. </b> AWS Well-Architected Framework
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.2-lab1/" title="Lab 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.2-lab1/">
+           <b> 1.2. </b> Lab 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.3-lab7/" title="Lab 7" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.3-lab7/">
+           <b> 1.3. </b> Lab 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.4-lab9/" title="Lab 9" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.4-lab9/">
+           <b> 1.4. </b> Lab 9
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/" title="Tuần 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/">
+           <b> 2. </b> Tuần 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/">
+           <b> 2.1 </b> Sovico Skill Accelerator Lab
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.1-vpc/" title="VPC Căn bản" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.1-vpc/">
+           <b> 2.1.1 </b> VPC Căn bản
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.2-multivpcs/">
+           <b> 2.1.2 </b> Multiple VPCs
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Cấu hình bảo mật cho VPC" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.3-securitycontrols/">
+           <b> 2.1.3 </b> Cấu hình bảo mật cho VPC
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Kết nối tới môi trường on-premises" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.4-connectonpremises/">
+           <b> 2.1.4 </b> Kết nối tới môi trường on-premises
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.5-networkmonitoring/" title="Giám sát mạng" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.5-networkmonitoring/">
+           <b> 2.1.5 </b> Giám sát mạng
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.2-module2/" title="Module 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.2-module2/">
+           <b> 2.2 </b> Module 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.2-module2/2.2.1-vpc/" title="Amazon Virtual Private Cloud" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.2-module2/2.2.1-vpc/">
+           <b> 2.2.1 </b> Amazon Virtual Private Cloud
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/" title="VPC Security và các tính năng Multi-VPC" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/">
+           <b> 2.2.2 </b> VPC Security và các tính năng Multi-VPC
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.3-gapvxawsevent/" title="OPTIMIZING AWS COSTS AND SECURITY" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.3-gapvxawsevent/">
+           <b> 2.3. </b> OPTIMIZING AWS COSTS AND SECURITY
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"><i class='fab fa-facebook'></i> AWS Study Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="/1-week1/1.1-module1/">English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="/vi/1-week1/1.1-module1/" selected>Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total Cloud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b> Last Updated </b> <br>
+    <i>
+        <font color=orange>29-09-2024</font>
+    </i>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="" style="color:orange">Minh Tiến</a> <br>
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/vi/'>Minh Tiến Workshop</a> > <a href='/vi/1-week1/'>Tuần 1</a> > Module 1
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-điện-toán-đám-mây-là-gì">1. Điện toán đám mây là gì?</a></li>
+        <li><a href="#2-điều-gì-tạo-nên-sự-khác-biệt-của-aws">2. Điều gì tạo nên sự khác biệt của AWS?</a></li>
+        <li><a href="#3-bắt-đầu-hành-trình-lên-mây">3. Bắt đầu hành trình lên mây</a></li>
+        <li><a href="#4-hạ-tầng-toàn-cầu-của-aws">4. Hạ tầng toàn cầu của AWS</a></li>
+        <li><a href="#5-công-cụ-quản-lý-aws-services">5. Công cụ quản lý AWS Services</a></li>
+        <li><a href="#6-tối-ưu-hoá-chi-phí-trên-aws">6. Tối ưu hoá chi phí trên AWS</a></li>
+        <li><a href="#7-aws-well-architect-framework">7. AWS Well Architect Framework</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Module 1
+            </h1>
+          
+
+        
+
+
+
+	<h3 id="1-điện-toán-đám-mây-là-gì">1. Điện toán đám mây là gì?</h3>
+<p>Điện toán đám mây là việc <strong>phân phối các tài nguyên CNTT</strong> <strong>theo nhu cầu</strong> qua internet với chính sách <strong>thanh toán theo mức sử dụng</strong>.</p>
+<p><strong>Ví dụ:</strong> người dùng (có xác thực) muốn triển khai ứng dụng, web, cần 1 máy chủ, thay vì mua rồi setup thì thuê dịch vụ đtđm, bên dịch vụ đtđm sẽ cung cấp theo yêu cầu, xài bao nhiêu bao lâu thì tính tiền bấy nhiêu.</p>
+<h4 id="lợi-ích">Lợi ích</h4>
+<ul>
+<li>Sử dụng bao nhiêu tính tiền bấy nhiêu, cung cấp khả năng tối ưu chi phí.</li>
+<li>Tăng tốc độ phát triển, nhờ tận dụng các tính năng tự động hoá và quản trị bởi nhà cung cấp dịch vụ.</li>
+<li>Linh hoạt, thêm bớt các tài nguyên tuỳ ý. VD: nay dùng 2 CPU, mai lượng truy cập ứng dụng tăng -&gt; dễ dàng nâng số CPU.</li>
+<li>Khả năng mở rộng quy mô ứng dụng lên toàn cầu.</li>
+</ul>
+<h3 id="2-điều-gì-tạo-nên-sự-khác-biệt-của-aws">2. Điều gì tạo nên sự khác biệt của AWS?</h3>
+<p>AWS là nhà cung cấp ha tầng điện toán đám mây dẫn đầu trong 13 năm liên tiếp (đến hết năm 2023) – theo báo cáo của Gartner.</p>
+<p>AWS là nhà cung cấp khác biệt về tầm nhìn và văn hoá.</p>
+
+<div class="notices note" ><p>Triết lý về giá của AWS: càng ngày càng trả ít tiền hơn cho cùng dịch vụ/tính năng/tài nguyên sử dụng.</p>
+</div>
+
+<p><img src="/images/1.week1/Picture1.png"></p>
+<h4 id="sự-khác-biệt-khác">Sự khác biệt khác:</h4>
+<p>với các nhà cung cấp khác, cho dùng thử giá rẻ, sau đó giá cao -&gt; AWS không làm như vậy.</p>
+<h4 id="triết-lý-văn-hoá-của-aws-được-thể-hiện-thông-qua-các-nguyên-tắc-lãnh-đạohttpswwwamazonjobscontentenour-workplaceleadership-principles-của-mình">Triết lý, văn hoá của AWS được thể hiện thông qua các <a href="https://www.amazon.jobs/content/en/our-workplace/leadership-principles">nguyên tắc lãnh đạo</a> của mình.</h4>
+<ul>
+<li><strong>Customer Obsession</strong>: Đặt khách hàng làm ưu tiên hàng đầu. VD: kỹ thuật viên, nhân viên tư vấn ko chịu áp lực về KPI sẽ tư vấn cho khách hàng tốt nhất có thể, ngược lại nếu chịu áp lực về KPI thì sẽ tư vấn cho khách hàng dùng càng nhiều càng tốt.</li>
+<li><strong>Ownership</strong>: làm việc cho công ty, cho tổ chức, nhưng xem đó là việc của mình, luôn nghĩ cách tốt nhất để phát triển công ty.</li>
+<li>…</li>
+</ul>
+<h3 id="3-bắt-đầu-hành-trình-lên-mây">3. Bắt đầu hành trình lên mây</h3>
+<p>Tham khảo lộ trình học: <a href="https://aws.amazon.com/vi/training/learn-about/">https://aws.amazon.com/vi/training/learn-about/</a></p>
+<h3 id="4-hạ-tầng-toàn-cầu-của-aws">4. Hạ tầng toàn cầu của AWS</h3>
+<h4 id="trung-tâm-dữ-liệu-của-aws">Trung tâm dữ liệu của AWS</h4>
+<p>Một trung tâm dữ liệu (data center) có thể chứa rất nhiều máy chủ.</p>
+<p>Tất cả data center của AWS đều được sử dụng các thiết bị được tối ưu hoá dành riêng cho hoạt động của AWS.</p>
+
+<div class="notices tip" ><p>Muốn đánh giá hiệu năng của các máy chủ khác nhau thì nên đánh giá bằng hiệu năng thực tế.</p>
+</div>
+
+<p>Tham khảo: <a href="https://aws.amazon.com/vi/about-aws/global-infrastructure/">https://aws.amazon.com/vi/about-aws/global-infrastructure/</a></p>
+<h4 id="availability-zone-az">Availability Zone (AZ)</h4>
+<p>Một AZ bao gồm 1 hoặc nhiều data center, các AZ được thiết kế để không xảy ra sự cố ảnh hưởng đồng thời 2 AZ một lúc (fault isolation – cô lập lỗi).</p>
+<p>Giữa 2 AZ là đường kết nối riêng tốc độ cao.</p>
+<p>AWS khuyến nghị nên triển khai ứng dụng tối thiểu trên 2 AZ.</p>
+
+<div class="notices note" ><p>Đi thi lấy chứng chỉ thì sẽ có câu này, nhưng trên thực tế, tuỳ trường hợp thì không cần triển khai trên 2 AZ, triển khai trên 1 AZ - sau đó backup lại.</p>
+</div>
+
+<h4 id="region-khu-vực">Region (Khu vực)</h4>
+<p>Một AWS Region bao gồm tối thiểu <strong>3 AZ</strong>.</p>
+<p>Hiện tại, theo <a href="https://aws.amazon.com/vi/about-aws/global-infrastructure/">trang web</a> của AWS, có:</p>
+<ul>
+<li>33 Region</li>
+<li>105 AZ</li>
+<li>và dự kiến sẽ bổ sung  6 Region và 18 AZ trên toàn cầu.</li>
+</ul>
+<p>Các Region được kết nối với nhau bởi mạng <em>backbone</em> của AWS.</p>
+<p>Mặc định dữ liệu và dịch vụ ở các Region <strong>độc lập với nhau</strong>. (Trừ một số dịch vụ ở quy mô Global).</p>
+<p>VD: khách hàng ở VN thì nên chọn Region gần đó (Singapore) để tối ưu độ trễ. Có một số dịch vụ đặc thù (dịch vụ mới, dịch vụ đang phát triển) thì sẽ bị hạn chế về Region.</p>
+
+<div class="notices note" ><p>Có thể thấy nguyên tắt Customer Obsession và văn hoá của AWS ở đây:
+<em>Hạ tầng mở lâu -&gt; Khách hàng nhiều -&gt; Mức sử dụng cao -&gt; Giá càng rẻ.</em>
+VD: Region ở Mỹ sẽ rẻ hơn Region ở Sing…
+Vậy, nếu chạy test, có thể chọn các region rẻ để tối ưu chi phí</p>
+</div>
+
+<h4 id="edge-locations">Edge Locations</h4>
+<p>Là mạng lưới data center của AWS được thiết kế để cung cấp dịch vụ với độ trễ thấp nhất có thể.</p>
+<p>Các dịch vụ AWS hoạt động tại <strong>Edge Locations (POP – Points of Present)</strong> bao gồm:</p>
+<ul>
+<li><strong>CloudFront (CDN – Content Delivery Network)</strong> giúp caching dữ liệu người dùng duyệt web.</li>
+<li><strong>Web Application Firewall (WAF)</strong> là một dịch vụ firewall layer 7.</li>
+<li><strong>Route 53 (DNS Service)</strong> – có thể tạo domain cho ứng dụng web.</li>
+</ul>
+
+<div class="notices note" ><p>Hiện ở VN có 2 Edge Locations: 1 ở HCM, 1 ở HN.</p>
+</div>
+
+<h3 id="5-công-cụ-quản-lý-aws-services">5. Công cụ quản lý AWS Services</h3>
+<ul>
+<li><strong>Root login</strong>: là tài khoản đăng ký AWS Account đầu tiên, gồm email, username, pasword. Cực kỳ quan trọng, thông thường sẽ hạn chế sử dụng</li>
+<li><strong>IAM login</strong>: IAM user không là một AWS Account hoàn chỉnh, chỉ là một user con giúp chúng ta truy xuất, quản lý các tài nguyên của AWS.</li>
+<li><strong>Account ID</strong>: chuỗi 12 chữ số</li>
+<li><strong>Service Search</strong>: tìm kiếm các dịch vụ, mỗi một dịch vụ sẽ có trang management riêng cho phép sử dụng các tính năng của dịch vụ đó.</li>
+<li><strong>Support Center</strong>: tạo support case để yêu cầu hỗ trợ từ đội ngũ của AWS.</li>
+<li><strong>AWS Command Line Interface (CLI)</strong>: một công cụ mã nguồn mở cho phép tương tác với các dịch vụ AWS bằng cách sử dụng các câu lệnh; cho phép chạy các lệnh triển khai chức năng tương đương với chức năng được cung cấp bởi AWS Management Console.</li>
+<li><strong>AWS SDK</strong>: đơn giản hoá việc sử dụng AWS services cho ứng dụng bằng cách cung cấp một bộ thư viện nhất quán và quen thuộc cho team dev.
+<ul>
+<li>AWS SDK cung cấp hỗ trợ cho việc quản lý vòng đời của API tới AWS Services như manage credentials – retry – data marshalling – serialization – deserialization.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/1.week1/Picture2.png"></p>
+<h3 id="6-tối-ưu-hoá-chi-phí-trên-aws">6. Tối ưu hoá chi phí trên AWS</h3>
+<ul>
+<li>Lựa chọn cấu hình tài nguyên tính toán và nơi lưu trữ phù hợp.</li>
+<li>Tận dụng các phương thức thanh toán giảm giá.</li>
+<li>Xoá các tài nguyên không dùng, bật tắt tự động các tài nguyên không cần chạy 24/7.</li>
+<li>Tận dụng các dịch vụ serverless.</li>
+<li>Thiết kế kiến trúc tối ưu để giải quyết yêu cầu đề ra.</li>
+<li>Cài đặt và sử dụng AWS Budget.</li>
+<li>Quản lý chi phí theo phòng ban / ứng dụng với cost allocation tag.</li>
+<li>Liên tục theo dõi và tối ưu chi phí.</li>
+</ul>
+<p><strong>Sử dụng <a href="https://calculator.aws/">https://calculator.aws/#</a> để tính toán chi phí ước lượng cho các dịch vụ và tài nguyên sử dụng.</strong></p>
+<p>Có 4 gói</p>
+<ol>
+<li>
+<p><strong>Gói Basic</strong>
+Gói Basic cung cấp hỗ trợ cơ bản cho các vấn đề liên quan đến tài khoản và thanh toán cùng với các yêu cầu tăng thêm hạn mức cho tài khoản.
+Tất cả khách hàng của AWS được cung cấp truy cập 24/7 vào các tính năng sau của gói hỗ trợ Basic:</p>
+<ul>
+<li>Phòng chat trực tiếp 1-1 cho các câu hỏi về tài khoản và thanh toán.</li>
+<li>Diễn đàn hỗ trợ.</li>
+<li>Kiểm tra Dịch vụ.</li>
+<li>Tài liệu, tài liệu kĩ thuật và các hướng dẫn best practice.</li>
+</ul>
+</li>
+<li>
+<p><strong>Gói Developer</strong>
+Đối với gói Developer, các tính năng được hỗ trợ sẽ được mở rộng hơn với:</p>
+<ul>
+<li>Các chỉ dẫn thực hiện best practice.</li>
+<li>Hỗ trợ xây dựng kiến trúc khối: Chỉ dẫn cách sử dụng và kết hợp các sản phẩm, tính năng và dịch vụ của AWS.</li>
+<li>Hỗ trợ không giới hạn các yêu cầu hỗ trợ được tạo bởi tài khoản gốc (root user).</li>
+</ul>
+</li>
+<li>
+<p><strong>Gói Business</strong>
+Khi nâng lên gói hỗ trợ Business, bạn sẽ có thêm các hỗ trợ sau:</p>
+<ul>
+<li>Chỉ dẫn theo Use-case cụ thể: Đưa ra lời khuyên về lựa chọn các sản phẩm, tính năng và dịch vụ của AWS hỗ trợ tốt nhất cho nhu cầu của bạn.</li>
+<li>AWS Trusted Advisor: Chức năng tự động khảo sát môi trường sử dụng của khách hàng và xác định cơ hội tiết kiệm chi phí, giảm thiểu rủi ro an ninh và tăng cường độ tin cậy và hiệu suất của hệ thống.</li>
+<li>Hỗ trợ sử dụng AWS Support API: Tương tác với Support Center và Trusted Advisor qua API để tự động quản lý yêu cầu hỗ trợ và vận hành AWS Trusted Advisor.</li>
+<li>Hỗ trợ về phần mềm bên thứ ba: Hỗ trợ hệ điều hành và cấu hình máy ảo EC2, cùng với hiệu suất của các ứng dụng phổ biến trên nền tảng AWS.</li>
+<li>Hỗ trợ không giới hạn các yêu cầu hỗ trợ được tạo bởi tất cả các IAM User.</li>
+</ul>
+</li>
+<li>
+<p><strong>Gói Enterprise</strong>
+Thêm vào đó, với khách hàng sử dụng gói Enterprise sẽ có thêm các đặc quyền về tính năng như sau:</p>
+<ul>
+<li>Chỉ dẫn về kiến trúc phần mềm: Lời khuyên về cách phối hợp dịch vụ AWS để giải quyết vấn đề về ứng dụng hoặc tải trọng công việc.</li>
+<li>Quản lý sự kiện hạ tầng: Phân tích chuyên sâu về use-case của bạn và cung cấp hướng dẫn về quy mô và kiến trúc phù hợp cho sự kiện cụ thể.</li>
+<li>Technical Account Manager: Sự hỗ trợ thường trực từ Technical Account Manager (TAM) giải quyết các vấn đề liên quan đến tình huống và ứng dụng của bạn.</li>
+<li>Ưu tiên và chăm sóc đặc biệt cho các yêu cầu hỗ trợ</li>
+<li>Hỗ trợ đánh giá Quản lý Doanh nghiệp.</li>
+</ul>
+</li>
+</ol>
+<h3 id="7-aws-well-architect-framework">7. AWS Well Architect Framework</h3>
+<p>Nghiên cứu tiếp theo&hellip;</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/vi/1-week1/" title="Tuần 1"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/vi/1-week1/1.1-module1/1.1.1-awswaf/" title="AWS Well-Architected Framework" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1719680647"></script>
+    <script src="/js/jquery.sticky.js?1719680647"></script>
+    <script src="/js/featherlight.min.js?1719680647"></script>
+    <script src="/js/highlight.pack.js?1719680647"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1719680647"></script>
+    <script src="/js/learn.js?1719680647"></script>
+    <script src="/js/hugo-learn.js?1719680647"></script>
+
+    <link href="/mermaid/mermaid.css?1719680647" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1719680647"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

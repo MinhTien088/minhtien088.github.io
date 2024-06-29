@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="vi" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.127.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>OPTIMIZING AWS COSTS AND SECURITY :: AWS System Manager</title>
+
+    
+    <link href="/css/nucleus.css?1719680647" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1719680647" rel="stylesheet">
+    <link href="/css/hybrid.css?1719680647" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1719680647" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1719680647" rel="stylesheet">
+    <link href="/css/auto-complete.css?1719680647" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1719680647" rel="stylesheet">
+    <link href="/css/theme.css?1719680647" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1719680647" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1719680647" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1719680647"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/vi/2-week2/2.3-gapvxawsevent/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1719680647"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1719680647"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/\/vi";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1719680647"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/" title="Tuần 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/">
+           <b> 1. </b> Tuần 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.1-module1/" title="Module 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.1-module1/">
+           <b> 1.1. </b> Module 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.1-module1/1.1.1-awswaf/" title="AWS Well-Architected Framework" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.1-module1/1.1.1-awswaf/">
+           <b> 1.1.1. </b> AWS Well-Architected Framework
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.2-lab1/" title="Lab 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.2-lab1/">
+           <b> 1.2. </b> Lab 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.3-lab7/" title="Lab 7" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.3-lab7/">
+           <b> 1.3. </b> Lab 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-week1/1.4-lab9/" title="Lab 9" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-week1/1.4-lab9/">
+           <b> 1.4. </b> Lab 9
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/" title="Tuần 2" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/vi/2-week2/">
+           <b> 2. </b> Tuần 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/">
+           <b> 2.1 </b> Sovico Skill Accelerator Lab
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.1-vpc/" title="VPC Căn bản" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.1-vpc/">
+           <b> 2.1.1 </b> VPC Căn bản
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.2-multivpcs/">
+           <b> 2.1.2 </b> Multiple VPCs
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Cấu hình bảo mật cho VPC" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.3-securitycontrols/">
+           <b> 2.1.3 </b> Cấu hình bảo mật cho VPC
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Kết nối tới môi trường on-premises" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.4-connectonpremises/">
+           <b> 2.1.4 </b> Kết nối tới môi trường on-premises
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.1-sovico/2.1.5-networkmonitoring/" title="Giám sát mạng" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.1-sovico/2.1.5-networkmonitoring/">
+           <b> 2.1.5 </b> Giám sát mạng
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.2-module2/" title="Module 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.2-module2/">
+           <b> 2.2 </b> Module 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.2-module2/2.2.1-vpc/" title="Amazon Virtual Private Cloud" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.2-module2/2.2.1-vpc/">
+           <b> 2.2.1 </b> Amazon Virtual Private Cloud
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/" title="VPC Security và các tính năng Multi-VPC" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/">
+           <b> 2.2.2 </b> VPC Security và các tính năng Multi-VPC
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-week2/2.3-gapvxawsevent/" title="OPTIMIZING AWS COSTS AND SECURITY" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/vi/2-week2/2.3-gapvxawsevent/">
+           <b> 2.3. </b> OPTIMIZING AWS COSTS AND SECURITY
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"><i class='fab fa-facebook'></i> AWS Study Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="/2-week2/2.3-gapvxawsevent/">English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="/vi/2-week2/2.3-gapvxawsevent/" selected>Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total Cloud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b> Last Updated </b> <br>
+    <i>
+        <font color=orange>29-09-2024</font>
+    </i>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="" style="color:orange">Minh Tiến</a> <br>
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/vi/'>Minh Tiến Workshop</a> > <a href='/vi/2-week2/'>Tuần 2</a> > OPTIMIZING AWS COSTS AND SECURITY
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#before-starting-the-workshophttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesbefore-starting-the-workshop"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites#before-starting-the-workshop...">Before starting the workshop&hellip;</a></a>
+      <ul>
+        <li><a href="#preparing-for-the-workshophttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitespreparing-for-the-workshop"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites#preparing-for-the-workshop">Preparing for the workshop</a></a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#start-with-aws-workshop-studio-accounthttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesatawseventstart-with-aws-workshop-studio-account"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites/atawsevent#start-with-aws-workshop-studio-account">Start with AWS Workshop Studio account</a></a>
+      <ul>
+        <li><a href="#log-in-with-aws-workshop-portalhttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesatawseventlog-in-with-aws-workshop-portal"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites/atawsevent#log-in-with-aws-workshop-portal">Log in with AWS Workshop Portal</a></a></li>
+        <li><a href="#join-the-workshop-studio-eventhttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesatawseventjoin-the-workshop-studio-event"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites/atawsevent#join-the-workshop-studio-event">Join the Workshop Studio Event</a></a></li>
+        <li><a href="#open-the-aws-consolehttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesatawseventopen-the-aws-console"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites/atawsevent#open-the-aws-console">Open the AWS Console</a></a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#workshop-background-and-architecturehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-stepsworkshop-background-and-architecture"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps#workshop-background-and-architecture">Workshop background and architecture</a></a></li>
+    <li><a href="#architecture-diagramhttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-stepsarchitecture-diagram"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps#architecture-diagram">Architecture Diagram</a></a>
+      <ul>
+        <li><a href="#what-is-deployed-in-your-accounthttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-stepswhat-is-deployed-in-your-account"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps#what-is-deployed-in-your-account">What is deployed in your account</a></a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#using-service-screenerhttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps01-install-ssusing-service-screener"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/01-install-ss#using-service-screener">Using Service Screener</a></a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#home-pagehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps02-intro-sshome-page"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/02-intro-ss#home-page">Home page</a></a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#configuring-a-custom-password-policy-in-aws-iamhttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps03-iamconfiguring-a-custom-password-policy-in-aws-iam"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/03-iam#configuring-a-custom-password-policy-in-aws-iam">Configuring a custom password policy in AWS IAM</a></a></li>
+        <li><a href="#converting-an-inline-policy-to-a-managed-policyhttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps03-iamconverting-an-inline-policy-to-a-managed-policy"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/03-iam#converting-an-inline-policy-to-a-managed-policy">Converting an inline policy to a managed policy</a></a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#remove-unrestricted-access-to-sensitive-ports-of-the-amazon-ec2-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps04-ec2remove-unrestricted-access-to-sensitive-ports-of-the-amazon-ec2-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/04-ec2#remove-unrestricted-access-to-sensitive-ports-of-the-amazon-ec2-instance">Remove unrestricted access to sensitive ports of the Amazon EC2 instance</a></a></li>
+        <li><a href="#create-a-snapshot-of-the-amazon-ec2-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps04-ec2create-a-snapshot-of-the-amazon-ec2-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/04-ec2#create-a-snapshot-of-the-amazon-ec2-instance">Create a snapshot of the Amazon EC2 instance</a></a></li>
+        <li><a href="#change-the-instance-type-of-the-amazon-ec2-instance-to-the-latest-generation-typehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps04-ec2change-the-instance-type-of-the-amazon-ec2-instance-to-the-latest-generation-type"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/04-ec2#change-the-instance-type-of-the-amazon-ec2-instance-to-the-latest-generation-type">Change the instance type of the Amazon EC2 instance to the latest generation type</a></a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#remove-public-access-to-amazon-rds-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsremove-public-access-to-amazon-rds-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#remove-public-access-to-amazon-rds-instance">Remove public access to Amazon RDS instance</a></a></li>
+        <li><a href="#enable-encryption-on-the-amazon-rds-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsenable-encryption-on-the-amazon-rds-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#enable-encryption-on-the-amazon-rds-instance">Enable encryption on the Amazon RDS instance</a></a></li>
+        <li><a href="#create-a-db-snapshot-of-the-unencrypted-db-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdscreate-a-db-snapshot-of-the-unencrypted-db-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#create-a-db-snapshot-of-the-unencrypted-db-instance">Create a DB snapshot of the unencrypted DB instance</a></a></li>
+        <li><a href="#create-an-encrypted-db-snapshothttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdscreate-an-encrypted-db-snapshot"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#create-an-encrypted-db-snapshot">Create an encrypted DB snapshot</a></a></li>
+        <li><a href="#restore-the-db-instance-from-the-encrypted-snapshothttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsrestore-the-db-instance-from-the-encrypted-snapshot"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#restore-the-db-instance-from-the-encrypted-snapshot">Restore the DB instance from the encrypted snapshot</a></a></li>
+        <li><a href="#enable-automated-backups-on-the-amazon-rds-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsenable-automated-backups-on-the-amazon-rds-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#enable-automated-backups-on-the-amazon-rds-instance">Enable automated backups on the Amazon RDS instance</a></a></li>
+        <li><a href="#enable-automatic-minor-version-upgrades-on-the-amazon-rds-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsenable-automatic-minor-version-upgrades-on-the-amazon-rds-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#enable-automatic-minor-version-upgrades-on-the-amazon-rds-instance">Enable automatic minor version upgrades on the Amazon RDS instance</a></a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#block-public-access-to-the-amazon-s3-buckethttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps06-s3block-public-access-to-the-amazon-s3-bucket"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/06-s3#block-public-access-to-the-amazon-s3-bucket">Block public access to the Amazon S3 bucket</a></a></li>
+        <li><a href="#create-a-lifecycle-configuration-for-the-amazon-s3-buckethttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps06-s3create-a-lifecycle-configuration-for-the-amazon-s3-bucket"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/06-s3#create-a-lifecycle-configuration-for-the-amazon-s3-bucket">Create a lifecycle configuration for the Amazon S3 bucket</a></a></li>
+        <li><a href="#enable-intelligent-tiering-on-the-amazon-s3-buckethttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps06-s3enable-intelligent-tiering-on-the-amazon-s3-bucket"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/06-s3#enable-intelligent-tiering-on-the-amazon-s3-bucket">Enable Intelligent-Tiering on the Amazon S3 bucket</a></a></li>
+        <li><a href="#challengehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps06-s3challenge"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/06-s3#challenge">Challenge</a></a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#what-have-we-learnthttpscatalogworkshopsawseventdashboarden-usworkshopsummarywhat-have-we-learnt"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/summary#what-have-we-learnt">What have we learnt?</a></a></li>
+        <li><a href="#next-stephttpscatalogworkshopsawseventdashboarden-usworkshopsummarynext-step"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/summary#next-step">Next step</a></a></li>
+      </ul>
+    </li>
+    <li><a href="#thank-you-for-attending-aws-service-screener-workshophttpscatalogworkshopsawseventdashboarden-usworkshopsummarythank-you-for-attending-aws-service-screener-workshop"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/summary#thank-you-for-attending-aws-service-screener-workshop!">Thank you for attending AWS Service Screener Workshop!</a></a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              OPTIMIZING AWS COSTS AND SECURITY
+            </h1>
+          
+
+        
+
+
+
+	<p>Bài viết này chỉ lưu lại workshop từ event &ldquo;OPTIMIZING AWS COSTS AND SECURITY&rdquo; được tổ chức bởi AWS và G-AsiaPacific Việt Nam</p>
+<p>Event cung cấp các kiến thức về Security trên AWS, phòng chống Ransomware, Tối ưu hoá chi phí (Cost optimizing), và các hoạt động kèm theo.</p>
+<p>Workshop cho biết về cách sử dụng Screener - một ứng dụng nguồn mở giúp doanh nghiệp cũng như người dùng có thể nắm bắt được các vấn đề, các thông tin diễn ra trên hệ thống AWS của mình với 5 trụ cột lớn trong AWS Well-Architected Framework.</p>
+<p>Dưới đây là toàn bộ bài Workshop.</p>
+<p>===</p>
+<h1 id="pre-requisites">Pre-requisites</h1>
+<h2 id="before-starting-the-workshophttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesbefore-starting-the-workshop"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites#before-starting-the-workshop...">Before starting the workshop&hellip;</a></h2>
+<p><strong>Workshop expected duration of completion:</strong> 2 hours</p>
+<p><strong>Target audience:</strong> AWS Users with any workload on AWS</p>
+<p><strong>Recommended background knowledge:</strong> Basic AWS knowledge such as Compute, Database, Storage, Security and Networking.</p>
+<h3 id="preparing-for-the-workshophttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitespreparing-for-the-workshop"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites#preparing-for-the-workshop">Preparing for the workshop</a></h3>
+<p>Before starting the lab, make sure to prepare an account to use AWS services, let&rsquo;s get started with AWS temporary account provided in this workshop.</p>
+<p>Also, to minimize the browser compatibility issue, we recommend you to use either <strong>Mozilla Firefox</strong> or <strong>Google Chrome</strong> Browser for the lab.</p>
+<h1 id="at-aws-event">&hellip;At AWS Event</h1>
+<h2 id="start-with-aws-workshop-studio-accounthttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesatawseventstart-with-aws-workshop-studio-account"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites/atawsevent#start-with-aws-workshop-studio-account">Start with AWS Workshop Studio account</a></h2>
+<h3 id="log-in-with-aws-workshop-portalhttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesatawseventlog-in-with-aws-workshop-portal"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites/atawsevent#log-in-with-aws-workshop-portal">Log in with AWS Workshop Portal</a></h3>
+<p>This page guides you through the prerequisites steps before starting the lab when attending an event hosted by AWS.</p>
+<p>Connect to the portal by going to the link that is provided by your AWS Event Facilitator.</p>
+<p>The following screen shows up. Click <strong>Enter one-time-password (OTP)</strong>.</p>
+<p><img alt="AWS Workshop Studio Email OTP" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/ws_01.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>Enter your <strong>email address</strong>. You should receive an email with a one-time passcode.</p>
+<p><img alt="AWS Workshop Studio Enter Email" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/ws_02.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>Enter the <strong>one-time password</strong> on the below screen, then click next.</p>
+<p><img alt="AWS Workshop Studio Enter OTP" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/ws_03.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<h3 id="join-the-workshop-studio-eventhttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesatawseventjoin-the-workshop-studio-event"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites/atawsevent#join-the-workshop-studio-event">Join the Workshop Studio Event</a></h3>
+<p>You will now be on the Review and Join page. Review and accept the terms and conditions, then click <strong>Join Event</strong>.</p>
+<p><img alt="AWS Workshop Studio Join Event" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/workshop-02.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<h3 id="open-the-aws-consolehttpscatalogworkshopsawseventdashboarden-usworkshop01-prerequisitesatawseventopen-the-aws-console"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/01-prerequisites/atawsevent#open-the-aws-console">Open the AWS Console</a></h3>
+<p>Joining the event should have opened a new Amazon Service Screener Workshop page which will allow you to open the AWS console. On this window, click the Open AWS console link in the left-hand menu bar.</p>
+<p><img alt="AWS Workshop Studio AWS Console" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/workshop-03.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>Once you&rsquo;ve followed all of the steps above, you are ready to start the lab.</p>
+<p>This workshop will only run in North Virginia region <strong>us-east-1</strong>. Please make sure that you are on this region the whole time. If you are unable to locate certain resources, check the region selection and ensure it is on <strong>us-east-1</strong></p>
+<h1 id="workshop-instructions">Workshop Instructions</h1>
+<h2 id="workshop-background-and-architecturehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-stepsworkshop-background-and-architecture"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps#workshop-background-and-architecture">Workshop background and architecture</a></h2>
+<p>In this workshop, a web application has been deployed in your AWS environment, along with a database server and an S3 bucket.</p>
+<p>Overview of what&rsquo;s next:</p>
+<ul>
+<li>Install Service Screener</li>
+<li>Examine Service Screener report</li>
+<li>How to be well architected?</li>
+</ul>
+<h2 id="architecture-diagramhttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-stepsarchitecture-diagram"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps#architecture-diagram">Architecture Diagram</a></h2>
+<p><img alt="Service Screener Architecture" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/Service-Screener-Architecture.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<h3 id="what-is-deployed-in-your-accounthttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-stepswhat-is-deployed-in-your-account"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps#what-is-deployed-in-your-account">What is deployed in your account</a></h3>
+<ul>
+<li>EC2 instance as Web Server</li>
+<li>RDS MySQL instance as Database Server</li>
+<li>S3 Bucket with objects</li>
+<li>Other services such as IAM, networking.</li>
+</ul>
+<h1 id="installing-service-screener">Installing Service Screener</h1>
+<p>First we are going to install Service Screener to run checks on our AWS environment.</p>
+<ol>
+<li>
+<p>Launch <a href="https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-east-1">CloudShell</a> </p>
+</li>
+<li>
+<p>In the CloudShell terminal, run this script to install the dependencies</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m venv .
+</span></span><span style="display:flex;"><span>source bin/activate
+</span></span><span style="display:flex;"><span>rm -rf service-screner-v2
+</span></span><span style="display:flex;"><span>git clone https://github.com/aws-samples/service-screener-v2.git
+</span></span><span style="display:flex;"><span>cd service-screener-v2
+</span></span><span style="display:flex;"><span>pip install -r requirements.txt
+</span></span><span style="display:flex;"><span>alias screener<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;python3 </span><span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span><span style="color:#e6db74">/main.py&#34;</span>
+</span></span></code></pre></div><p><img alt="CloudShell" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/cloudshell-1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<h3 id="using-service-screenerhttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps01-install-ssusing-service-screener"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/01-install-ss#using-service-screener">Using Service Screener</a></h3>
+<p>When running Service Screener, you need to specify the regions and services you would like to run on. In this lab, since our workload is in <strong>us-east-1</strong>, run the following code in CloudShell terminal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>screener --region us-east-1 
+</span></span></code></pre></div><p>You should see the following after you have installed service screener in CloudShell</p>
+<p><img alt="CloudShell Installed" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/cloudshell-2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>Service screener runs locally within CloudShell, and generates a report output as <strong>output.zip</strong> file. You can download the file in CloudShell console.</p>
+<ol>
+<li>Click on <strong>Actions</strong>, then <strong>Download file</strong>.</li>
+</ol>
+<p><img alt="CloudShell Step 1" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/cloudshell-3.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<ol start="2">
+<li>
+<p>Enter file path:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>~/service-screener/output.zip
+</span></span></code></pre></div></li>
+</ol>
+<p><img alt="CloudShell Step 2" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/cloudshell-4.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<ol start="3">
+<li>
+<p>The file is downloaded locally in your machine.</p>
+</li>
+<li>
+<p>Unzip output.zip file. You will see a folder named <strong>html</strong>.</p>
+</li>
+<li>
+<p>Open <strong>html</strong> folder, then double click to open <strong>index.html</strong>.</p>
+</li>
+</ol>
+<p><img alt="CloudShell Step 5" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/cloudshell-5.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<ol start="6">
+<li>Once you opened the file, you will see a static webpage which contains the report generated by Service Screener.</li>
+</ol>
+<p><img alt="CloudShell Step 6" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/cloudshell-6.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>Successfully obtained Service Screener Report!</p>
+<p>You may now move on to the next step of this workshop.</p>
+<h1 id="exploring-service-screener-report">Exploring Service Screener Report</h1>
+<p>In the report webpage, you can navigate through the left side menu to understand more in detail what is in your AWS environment.</p>
+<h3 id="home-pagehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps02-intro-sshome-page"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/02-intro-ss#home-page">Home page</a></h3>
+<p>In the home page, we can see an overview of our AWS environment, you can see that there are many findings (based on Well Architected Framework) in our current environment that can be improved.</p>
+<p><img alt="Service Screener Home" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/ServiceScreener-Home.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>The findings are categorized with different level of criticality/risk such as: high, medium, low and informational, each of them indicates:</p>
+<ul>
+<li><strong>High</strong>: Organisation need to take <strong>immediate</strong> action, keeping this item open often lead to unforeseen high-impact technical debt.</li>
+<li><strong>Medium</strong>: Organisation to evaluate the priorities on these items, improvements can be done within the next 3-6 months.</li>
+<li><strong>Low</strong>: Organisation can make changes to improve bits of your cloud infrastructure.</li>
+<li><strong>Informational</strong>: Out-of-norm type of settings but usually do not have risks against AWS Well-Architected Pillar. Flagged it out for the purposes of ease of dive-deep consultation among the team.</li>
+</ul>
+<p>Please take a look around the webpage and see what&rsquo;s in the report of our current account.</p>
+<p>Since we only deployed services like EC2, RDS, S3 and IAM - please explore the findings for these services using the left navigation bar.</p>
+<p><img alt="Service Screener Menu" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/ServiceScreener-Menu.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>If you are running Service Screener in your own AWS account, you will see more findings populated for your AWS environment.</p>
+<p>Coming up, we will see how we can be more well-architected by using the information provided by Service Screener, making changes in our AWS environment to be more well-architected.</p>
+<p>We will be exploring services in this sequence:</p>
+<ul>
+<li>IAM</li>
+<li>EC2</li>
+<li>RDS</li>
+<li>S3</li>
+</ul>
+<h1 id="iam">IAM</h1>
+<h3 id="configuring-a-custom-password-policy-in-aws-iamhttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps03-iamconfiguring-a-custom-password-policy-in-aws-iam"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/03-iam#configuring-a-custom-password-policy-in-aws-iam">Configuring a custom password policy in AWS IAM</a></h3>
+<p>In Service Screener report, you will see the findings which tells you that your current AWS Account does not have a password policy.</p>
+<p>Based on <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/aws-startup-security-baseline/acct-06.html">AWS Startup Security Baseline</a>  enforcing password policy is one of the controls that should be in place to prevent discovery of passwords through brute force or social engineering.</p>
+<p><img alt="passwordPolicy" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/passwordPolicy_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<ol>
+<li>Open the AWS <strong>IAM</strong> <a href="https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1">console</a> .</li>
+<li>In the navigation pane, choose <strong>Account settings</strong>.</li>
+</ol>
+<p><img alt="Account settings" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/passwordPolicy_2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<ol start="3">
+<li>In the Password policy section, choose <strong>Edit</strong>.</li>
+<li>Choose <strong>Custom</strong> to use a custom password policy.</li>
+</ol>
+<p>Details about the custom password policy options can be found <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html#password-policy-details%22">here</a> </p>
+<p><img alt="Custom password policy" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/passwordPolicy_3.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<ol start="5">
+<li>Select the options that you want to apply to the password policy and choose <strong>Save changes</strong>.</li>
+<li>Confirm that you want to set a custom password policy by choosing <strong>Set custom</strong>.</li>
+</ol>
+<p>Password policy set!</p>
+<p>You have a password policy in place to prevent password discovery and vulnerability.</p>
+<hr>
+<h3 id="converting-an-inline-policy-to-a-managed-policyhttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps03-iamconverting-an-inline-policy-to-a-managed-policy"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/03-iam#converting-an-inline-policy-to-a-managed-policy">Converting an inline policy to a managed policy</a></h3>
+<p>In the Service Screener report, you will find that we have inline policies that is linked to the Operational Excellence Pillar. Typically, we recommend to use AWS managed policies for the features as mentioned in the description of the finding shown.</p>
+<p><img alt="InlinePolicy" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/InlinePolicy_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>If you have inline policies within your AWS account, you can convert them to managed policies. To do this, copy the policy to a new managed policy. Next, attach the new policy to the identity that has the inline policy. Then delete the inline policy.</p>
+<p>Steps to convert inline policy to managed policy:</p>
+<ol>
+<li>Open the AWS <strong>IAM</strong> <a href="https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1">console</a> .</li>
+<li>In the navigation pane, choose <strong>Roles</strong>.</li>
+<li>In the list, choose the name of the <strong>IAM role</strong> that has the policy. For example, the <strong>appstack-WebServerInstanceRole</strong>.</li>
+</ol>
+<p>If you see a red warning box saying <code>You need permissions</code>, please ignore it and proceed with the workshop as usual. It will not affect the ability to complete the steps below.</p>
+<ol start="4">
+<li>
+<p>Choose the <strong>Permissions</strong> tab.</p>
+</li>
+<li>
+<p>Choose the &ldquo;+&rdquo; next to the <strong>WebServerInstanceRoleDefaultPolicy</strong> to expand the selection. Note that this is a customer inline policy.</p>
+</li>
+<li>
+<p>Copy the JSON policy document for the policy. <img alt="InlinePolicy2" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/InlinePolicy_2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+</li>
+<li>
+<p>In the navigation pane, choose <strong>Policies</strong>.</p>
+</li>
+<li>
+<p>Choose <strong>Create policy</strong> and then choose the <strong>JSON</strong> tab.</p>
+</li>
+<li>
+<p>Replace the existing text with your <strong>JSON</strong> policy text, and then choose <strong>Next</strong>. <img alt="InlinePolicy3" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/InlinePolicy_3.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+</li>
+<li>
+<p>Enter a <strong>name</strong> for your policy and choose <strong>Create policy</strong>.</p>
+</li>
+<li>
+<p>In the navigation pane, choose <strong>Roles</strong>, and again choose the name of the IAM role <strong>appstack-WebServerInstanceRole</strong>.</p>
+</li>
+<li>
+<p>Choose Add <strong>permissions</strong>.</p>
+</li>
+<li>
+<p>On the next page, choose <strong>Attach existing policies</strong> directly, select the check box next to the name of your new policy, choose <strong>Next: Review</strong>, and then choose <strong>Add permissions</strong>. You are returned to the Summary page for the role.</p>
+</li>
+<li>
+<p>Select the button next to the inline policy that you want to remove.</p>
+</li>
+<li>
+<p>Choose <strong>Remove</strong>. Confirm removing the policy by entering the name of the policy. <img alt="InlinePolicy4" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/InlinePolicy_4.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+</li>
+<li>
+<p>Your inline policy is removed.</p>
+</li>
+</ol>
+<p>Converted Inline to Customer Managed Policy!</p>
+<p>Your inline policies are now converted to managed policies with the benefits of reusability, central change management, versioning and more. Find out more here</p>
+<h1 id="ec2">EC2</h1>
+<h3 id="remove-unrestricted-access-to-sensitive-ports-of-the-amazon-ec2-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps04-ec2remove-unrestricted-access-to-sensitive-ports-of-the-amazon-ec2-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/04-ec2#remove-unrestricted-access-to-sensitive-ports-of-the-amazon-ec2-instance">Remove unrestricted access to sensitive ports of the Amazon EC2 instance</a></h3>
+<p>Let&rsquo;s take a look at the findings for EC2 Web server. If you filter the <strong>Criticality</strong> as <code>High</code>, you will see that sensitive ports are open to all.</p>
+<p><img alt="SGSensitivePortOpenToAll" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/SGSensitivePortOpenToAll_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>Security groups are used to control traffic to EC2 instances, and other supported resources. Security groups act as a virtual firewall that can be applied to any group of related resources in order to consistently define rules for allowing inbound and outbound traffic. In addition to rules based on IP addresses and ports, security groups support rules to allow traffic from resources associated to other security groups.</p>
+<p>Therefore, it is important to restrict the access to sensitive ports - in this case port 22 is open to all.</p>
+<p>Steps to modify security group:</p>
+<ol>
+<li>
+<p>Open the Amazon <strong>VPC</strong> <a href="https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1">console</a> .</p>
+</li>
+<li>
+<p>In the left pane, choose <strong>Security groups</strong>.</p>
+</li>
+<li>
+<p>Select <strong>appstack-EC2SecurityGroup</strong>.</p>
+</li>
+<li>
+<p>In the bottom section of the page, choose the <strong>Inbound Rules</strong> tab.</p>
+</li>
+<li>
+<p>Choose <strong>Edit rules</strong>.</p>
+</li>
+<li>
+<p>Identify the rule that allows access through port 22 and then choose <strong>Delete</strong> to remove it.</p>
+</li>
+<li>
+<p>Choose <strong>Save rules</strong>.</p>
+</li>
+</ol>
+<p>Removed sensitive port access!</p>
+<p>In this case, since port 22 is not needed for any remote access, we are removing it from the security group inbound traffic allow list.</p>
+<p>Do you know that AWS Systems Manager Session Manager can be used to allow remote access to Amazon EC2 instances without the need of exposing an inbound SSH port or remote PowerShell port? Find out more information <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html">here</a> .</p>
+<hr>
+<h3 id="create-a-snapshot-of-the-amazon-ec2-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps04-ec2create-a-snapshot-of-the-amazon-ec2-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/04-ec2#create-a-snapshot-of-the-amazon-ec2-instance">Create a snapshot of the Amazon EC2 instance</a></h3>
+<p>Reliability pillar in AWS Well Architected encompassess the ability of a workload to perform its intended function correctly and consistently when it’s expected to.</p>
+<p>How reliable is our EC2 instance?</p>
+<ul>
+<li>Can we automatically recover from failure?</li>
+<li>Can we test recovery procedures?</li>
+</ul>
+<p>The answer to the above is no, hence Service Screener flagged this as a <code>High</code> criticality where the EBS of our EC2 instance does not have snapshots available for us to recover.</p>
+<p><img alt="EBSSnapshot" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/EBSSnapshot_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>We will need to take EBS snapshots to ensure our workload is reliable, where we could recover when failure occurs.</p>
+<p>Steps to create a snapshot:</p>
+<ol>
+<li>
+<p>Open the Amazon <strong>EC2</strong> <a href="https://us-east-1.console.aws.amazon.com/ec2/home?region=us-east-1">console</a> .</p>
+</li>
+<li>
+<p>In the navigation pane, choose <strong>Snapshots</strong>, then <strong>Create snapshot</strong>.</p>
+</li>
+<li>
+<p>For Resource type, choose <strong>Volume</strong>.</p>
+</li>
+<li>
+<p>For <strong>Volume ID</strong>, select the volume from which to create the snapshot.</p>
+</li>
+<li>
+<p>Choose <strong>Create snapshot</strong>.</p>
+</li>
+</ol>
+<p>EBS Snapshot created!</p>
+<p>Now you can recover your EC2 instance with the snapshot of your EBS whenever you need it. You can use <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/snapshot-lifecycle.html">Amazon Data Lifecycle Manager</a>  to automate the creation, retention, and deletion of EBS snapshots and EBS-backed AMIs.</p>
+<hr>
+<h3 id="change-the-instance-type-of-the-amazon-ec2-instance-to-the-latest-generation-typehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps04-ec2change-the-instance-type-of-the-amazon-ec2-instance-to-the-latest-generation-type"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/04-ec2#change-the-instance-type-of-the-amazon-ec2-instance-to-the-latest-generation-type">Change the instance type of the Amazon EC2 instance to the latest generation type</a></h3>
+<p>Let&rsquo;s take a look at <code>Cost Optimization</code> pillar. Are there any ways we could optimize cost for our EC2 instance?</p>
+<p>Service Screener finding shows us that our EC2 instance is using an older generation type (c4.large). Let&rsquo;s upgrade to the latest generation for lower cost and higher performance.</p>
+<p><img alt="EC2NewGen" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/EC2NewGen_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>Service Screener shows a warning through the <strong>Label</strong> <code>Have Downtime</code> if a change will result in downtime.</p>
+<p>Steps to upgrade instance type:</p>
+<ol>
+<li>
+<p>Open the Amazon <strong>EC2</strong> <a href="https://us-east-1.console.aws.amazon.com/ec2/home?region=us-east-1">console</a> .</p>
+</li>
+<li>
+<p>In the navigation pane, choose <strong>Instances</strong>.</p>
+</li>
+<li>
+<p>Select the instance <strong>ss-webserver-instance</strong> and choose <strong>Instance state</strong>, then <strong>Stop instance</strong>. When prompted for confirmation, choose <strong>Stop</strong>. It can take a few minutes for the instance to stop.</p>
+</li>
+<li>
+<p>With the instance still selected, choose <strong>Actions</strong> &gt; <strong>Instance settings</strong> &gt; <strong>Change instance type</strong>.</p>
+</li>
+</ol>
+<p>This option is grayed out if the instance state is not stopped.</p>
+<ol start="5">
+<li>
+<p>On the <strong>Change instance type</strong> page, do the following:</p>
+</li>
+<li>
+<p>For Instance type, select <strong>c5.large</strong> to migrate the instance from the <strong>c4.large</strong> instance type.</p>
+</li>
+<li>
+<p>Choose <strong>Apply</strong> to accept the new settings.</p>
+</li>
+<li>
+<p>To start the instance, select the instance and choose <strong>Instance state</strong> &gt; <strong>Start instance</strong>. It can take a few minutes for the instance to enter the running state.</p>
+</li>
+</ol>
+<p>EC2 upgraded to newer generation!</p>
+<p>You have upgraded your EC2 instance from older generation (c4) to newer generation (c5). You can also change your instance to another instance types! You can find out the information about different EC2 instance types <a href="https://aws.amazon.com/ec2/instance-types/">here</a> .</p>
+<h1 id="rds">RDS</h1>
+<h3 id="remove-public-access-to-amazon-rds-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsremove-public-access-to-amazon-rds-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#remove-public-access-to-amazon-rds-instance">Remove public access to Amazon RDS instance</a></h3>
+<p><img alt="PubliclyAccessible" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/PubliclyAccessible_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>In our environment, our database server is publicly accessible. This poses a <code>High</code> risk of data security.</p>
+<ol>
+<li>Open the <strong>Amazon RDS</strong> <a href="https://us-east-1.console.aws.amazon.com/rds/home?region=us-east-1">console</a> .</li>
+<li>Navigate to <strong>Databases</strong> and then choose the DB instance <strong>appstack-ssmysqldbinstance</strong>.</li>
+<li>Choose <strong>Modify</strong>.</li>
+<li>Under <strong>Connectivity</strong>, expand <strong>Additional connectivity configuration</strong>.</li>
+<li>Under <strong>Public access</strong>, choose <strong>Not publicly accessible</strong>.</li>
+</ol>
+<p><img alt="Not publicly accessible" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/PubliclyAccessible_2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<ol start="6">
+<li>Choose <strong>Continue</strong>.</li>
+<li>Under Scheduling of modifications, choose <strong>Apply immediately</strong>.</li>
+<li>Choose <strong>Modify DB Instance</strong>.</li>
+<li>Wait for the status change from <code>Modifying</code> to <code>Available</code>. This might take a few minutes.</li>
+</ol>
+<p>While waiting for DB status to be available, feel free to grab a coffee or some snacks, or you could move on to doing the next module <strong>S3</strong>.</p>
+<p>Disabled publicly accessible option for RDS!</p>
+<h4 id="challengehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdschallenge"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#challenge">Challenge</a></h4>
+<p>Since our database server is still within a public subnet, can you make changes to the database for it to be in the private subnet?</p>
+<p>Whenever you modify a database instance, there will be downtime, if you are making changes on production database, we recommend to perform the modification on a test instance, before applying the same changes to production. When applying changes to production, you can choose to apply at next maintenance window instead of immediately. For more information .</p>
+<hr>
+<h3 id="enable-encryption-on-the-amazon-rds-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsenable-encryption-on-the-amazon-rds-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#enable-encryption-on-the-amazon-rds-instance">Enable encryption on the Amazon RDS instance</a></h3>
+<p><img alt="StorageEncrypted" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/StorageEncrypted_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>Our database is not secured as we do not have encryption at rest in place. Encryption allows us to increase data protection for our applications, which in many cases are part of organization&rsquo;s compliance requirement.</p>
+<p>You can only encrypt an Amazon RDS DB instance when you create it, not after the DB instance is created. However, because you can encrypt a copy of an unencrypted snapshot, you can effectively add encryption to an unencrypted DB instance. That is, you can create a snapshot of your DB instance, and then create an encrypted copy of that snapshot. You can then restore a DB instance from the encrypted snapshot, and thus you have an encrypted copy of your original DB instance.</p>
+<hr>
+<h3 id="create-a-db-snapshot-of-the-unencrypted-db-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdscreate-a-db-snapshot-of-the-unencrypted-db-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#create-a-db-snapshot-of-the-unencrypted-db-instance">Create a DB snapshot of the unencrypted DB instance</a></h3>
+<ol>
+<li>Open the <strong>Amazon RDS</strong> <a href="https://us-east-1.console.aws.amazon.com/rds/home?region=us-east-1">console</a> .</li>
+<li>In the navigation pane, choose <strong>Databases</strong>.</li>
+<li>In the list of DB instances, choose the <strong>appstack-ssmysqldbinstance</strong> DB instance.</li>
+<li>For <strong>Actions</strong>, choose <strong>Take snapshot</strong>. The Take DB snapshot window appears. <img alt="Take DB snapshot page" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/StorageEncrypted_2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></li>
+<li>Enter the name of the snapshot in the <strong>Snapshot name</strong> box.</li>
+<li>Choose <strong>Take snapshot</strong>.</li>
+<li>The <strong>Snapshots</strong> page appears, with the new DB snapshot&rsquo;s status shown as <code>Creating</code>.</li>
+</ol>
+<p>The snapshot creation will take 5 minutes or so, feel free to take a break if you need to.</p>
+<h3 id="create-an-encrypted-db-snapshothttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdscreate-an-encrypted-db-snapshot"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#create-an-encrypted-db-snapshot">Create an encrypted DB snapshot</a></h3>
+<ol>
+<li>Select the <strong>DB snapshot</strong> after its status is <code>Available</code>.</li>
+<li>For <strong>Actions</strong>, choose <strong>Copy snapshot</strong>. The <strong>Copy snapshot page</strong> appears. <img alt="Copy snapshot page" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/StorageEncrypted_3.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></li>
+<li>For <strong>New DB snapshot identifier</strong>, type the name of the DB snapshot copy.</li>
+<li>For <strong>Encryption</strong>, choose <strong>Enable Encryption</strong>.</li>
+<li>Choose <strong>Copy snapshot</strong>.</li>
+<li>You have now created an encrypted DB instance snapshot.</li>
+</ol>
+<p>AWS managed key for Amazon RDS is used to encrypt the DB snapshot in this workshop module. You can also create and use a customer managed key to encrypt a RDS instance or snapshot. For more information about KMS keys, see AWS KMS keys  in the AWS Key Management Service Developer Guide.</p>
+<hr>
+<h3 id="restore-the-db-instance-from-the-encrypted-snapshothttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsrestore-the-db-instance-from-the-encrypted-snapshot"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#restore-the-db-instance-from-the-encrypted-snapshot">Restore the DB instance from the encrypted snapshot</a></h3>
+<ol>
+<li>Select the encrypted DB snapshot after its status is <code>Available</code>.</li>
+<li>For <strong>Actions</strong>, choose <strong>Restore snapshot</strong>.</li>
+<li>For <strong>Deployment Options</strong>, select <strong>Single DB Instance</strong>.</li>
+<li>On the <strong>Restore snapshot</strong> page, for <strong>DB instance identifier</strong>, enter any name for the restored DB instance.</li>
+<li>Under <strong>Instance Configuration</strong>, choose <strong>Memory optimized classes</strong>, select <strong>db.r5.large</strong>.</li>
+<li>Under <strong>Connectivity</strong> &gt; <strong>VPC security group (firewall)</strong>, choose <strong>ss-cdk-repo/mainVPC</strong>.</li>
+<li>Under <strong>existing security group</strong>, select <strong>appstack-ssMySQLDBInstanceSecurityGroup</strong>.</li>
+<li>Keep other settings by default. Under <strong>Encryption</strong> tab, you should see that the encryption is enabled and you cannot disable it. This ensures that the database created will have encryption enabled.</li>
+<li>Choose <strong>Restore DB instance</strong>.</li>
+</ol>
+<p>The existing unencrypted DB instance and DB snapshots can be deleted after the new DB instance is created from the encrypted snapshot.</p>
+<hr>
+<h3 id="enable-automated-backups-on-the-amazon-rds-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsenable-automated-backups-on-the-amazon-rds-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#enable-automated-backups-on-the-amazon-rds-instance">Enable automated backups on the Amazon RDS instance</a></h3>
+<p>Similar to our web server, our database server does not have automated backup enabled, which results in Service Screener flagging <code>High</code> for <strong>Reliability</strong>.</p>
+<p><img alt="Backup" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/Backup_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>Amazon RDS comes with feature which allows you set automated backup for your database instance. Setting the backup retention period to a non-zero value would enable it.</p>
+<p>Steps to enable RDS Automated Backup:</p>
+<ol>
+<li>Open the <strong>Amazon RDS</strong> <a href="https://us-east-1.console.aws.amazon.com/rds/home?region=us-east-1">console</a> .</li>
+<li>In the navigation pane, choose <strong>Databases</strong>, and then choose the DB instance.</li>
+<li>Choose <strong>Modify</strong>.</li>
+<li>For <strong>Backup retention period</strong>, choose a positive non-zero value, for example 7 days.</li>
+<li>Choose <strong>Continue</strong>.</li>
+<li>Choose <strong>Apply immediately</strong>.</li>
+<li>Choose <strong>Modify DB instance</strong> to save the changes.</li>
+</ol>
+<p>Enabled automated backup for RDS!</p>
+<p>Learn more about Amazon RDS Automated Backup <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html">here</a> </p>
+<hr>
+<h3 id="enable-automatic-minor-version-upgrades-on-the-amazon-rds-instancehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps05-rdsenable-automatic-minor-version-upgrades-on-the-amazon-rds-instance"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/05-rds#enable-automatic-minor-version-upgrades-on-the-amazon-rds-instance">Enable automatic minor version upgrades on the Amazon RDS instance</a></h3>
+<p><img alt="AutoMinorVersionUpgrade" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/AutoMinorVersionUpgrade_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>At Amazon, we define <strong>operational excellence</strong> as a commitment to build software correctly while consistently delivering a great customer experience. Operational excellence helps your team to focus more of their time on building new features that benefit customers, and less time on maintenance and firefighting.</p>
+<p>In this case, we want to spend less time in maintaining a database, Amazon RDS has a feature which allows management of database easier with <strong>Automatic Minor Version Upgrades</strong>. It is a feature that you can enable to have your database automatically upgraded when a new minor database engine version is available.</p>
+<p>Steps to enable Automatic Minor Version Upgrades:</p>
+<ol>
+<li>
+<p>Open the <strong>Amazon RDS</strong> <a href="https://us-east-1.console.aws.amazon.com/rds/home?region=us-east-1">console</a> .</p>
+</li>
+<li>
+<p>In the navigation pane, choose <strong>Databases</strong>, and then choose the DB instance.</p>
+</li>
+<li>
+<p>Choose <strong>Modify</strong>.</p>
+</li>
+<li>
+<p>Expand <strong>Additional Configuration</strong> and set the <strong>Enable auto minor version upgrade</strong> option for Maintenance. <img alt="Enable auto minor version upgrade page" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/AutoMinorVersionUpgrade_2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+</li>
+<li>
+<p>Choose <strong>Continue</strong>.</p>
+</li>
+<li>
+<p>Choose <strong>Apply immediately</strong>.</p>
+</li>
+<li>
+<p>Choose <strong>Modify DB instance</strong> to save the changes.</p>
+</li>
+</ol>
+<p>Enabled automatic minor version upgrades!</p>
+<p>You can find out how automatic minor version upgrades work here .</p>
+<h1 id="s3">S3</h1>
+<h3 id="block-public-access-to-the-amazon-s3-buckethttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps06-s3block-public-access-to-the-amazon-s3-bucket"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/06-s3#block-public-access-to-the-amazon-s3-bucket">Block public access to the Amazon S3 bucket</a></h3>
+<p><img alt="PublicAccessBlock" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/PublicAccessBlock_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>In our environment, we have an S3 bucket which has block public access disabled. Typically, S3 buckets are best to be kept private, unless if you are hosting a public static website with S3.</p>
+<p>In our case, we are not using the S3 bucket for hosting public website or any files, therefore we can enable block public access setting.</p>
+<p>Steps to block public access to Amazon S3 bucket:</p>
+<ol>
+<li>Open the <strong>Amazon S3</strong> <a href="https://s3.console.aws.amazon.com/s3/home?region=us-east-1">console</a> .</li>
+<li>In the <strong>Bucket name</strong> list, choose the name of the bucket <strong>appstack-publicbucket</strong>.</li>
+<li>Choose <strong>Permissions</strong>.</li>
+<li>Choose <strong>Edit</strong> to change the public access settings for the bucket. <img alt="Edit Block public access page" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/PublicAccessBlock_2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></li>
+<li>Choose <strong>Save</strong>.</li>
+<li>When you&rsquo;re asked for confirmation, enter <strong>confirm</strong>. Then choose <strong>Confirm</strong> to save your changes.</li>
+</ol>
+<p>Enabled Block Public Access!</p>
+<p>If you are hosting static website, there are other ways to secure your S3 resources by restricting access with bucket policies, enable monitoring and logging, enabling encryption. For more information, see <a href="https://repost.aws/knowledge-center/secure-s3-resources">here</a> </p>
+<hr>
+<h3 id="create-a-lifecycle-configuration-for-the-amazon-s3-buckethttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps06-s3create-a-lifecycle-configuration-for-the-amazon-s3-bucket"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/06-s3#create-a-lifecycle-configuration-for-the-amazon-s3-bucket">Create a lifecycle configuration for the Amazon S3 bucket</a></h3>
+<p><img alt="BucketLifecycle" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/BucketLifecycle_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>To manage your objects so that they are stored cost effectively throughout their lifecycle, configure their <strong>Amazon S3 Lifecycle</strong>. An S3 Lifecycle configuration is a set of rules that define actions that Amazon S3 applies to a group of objects. You can automate moving objects to a lower cost storage tier if they are not needed frequently (e.g. Archive files that are created older than 90 days)</p>
+<p>Steps to create lifecycle configuration:</p>
+<ol>
+<li>Open the <strong>Amazon S3</strong> <a href="https://s3.console.aws.amazon.com/s3/home?region=us-east-1">console</a> .</li>
+<li>In the <strong>Bucket name</strong> list, choose the name of the bucket <strong>appstack-publicbucket</strong>.</li>
+<li>Go to <strong>Management</strong> &gt; <strong>Create Lifecycle Rule</strong>.</li>
+<li>In <strong>Lifecycle rule name</strong>, enter a name for your rule. The name must be unique within the bucket.</li>
+<li>For <strong>Choose a rule scope</strong>, choose <strong>This rule applies to all objects in the bucket</strong>, and choose <strong>I acknowledge that this rule applies to all objects in the bucket</strong>.</li>
+<li>Under <strong>Lifecycle rule actions</strong>, choose <strong>Transition current versions of objects between storage classes</strong>.</li>
+<li>In <strong>Storage class transitions</strong>, choose the storage class to transition to <strong>Standard-IA</strong>.</li>
+<li>In <strong>Days after object creation</strong>, enter the number of days after creation to transition the object, for example 30 days.</li>
+<li>Choose <strong>Create rule</strong>.</li>
+<li>You will see <strong>Lifecycle configuration</strong> page with the new rule you have just created.</li>
+</ol>
+<p>You can find out more examples of Amazon S3 lifecycle configuration here .</p>
+<hr>
+<h3 id="enable-intelligent-tiering-on-the-amazon-s3-buckethttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps06-s3enable-intelligent-tiering-on-the-amazon-s3-bucket"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/06-s3#enable-intelligent-tiering-on-the-amazon-s3-bucket">Enable Intelligent-Tiering on the Amazon S3 bucket</a></h3>
+<p><img alt="ObjectsIntelligentTier" src="https://static.us-east-1.prod.workshops.aws/d910a816-c647-40a6-9318-ee8f8b1fb7a1/static/ObjectsIntelligentTier_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy9kOTEwYTgxNi1jNjQ3LTQwYTYtOTMxOC1lZThmOGIxZmI3YTEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcyMDIzMDE5NX19fV19&Signature=E7TDRmSo9LyDafERsV75bZHTcoJ-9k7%7EuwMGXHooE0fg3FQeQ%7EhsYYYnGvOiE2YipnlKq-GIUqjCGcU1rkZkHE5LGZGzDP1SbMyOuSosaH5YsRvtnDhWN%7Ep-awpFyESegtwDFItNN00Epn4RD0MjBtDagwVGQbFSq5vjtZOuIQtmdxgOJDhFCQcl44WA%7EGMxl5opaJCC6WxMX52FP5jJEAD9gpAG0VJOvyZgaGwMva4NJORS4liicQwIpnP2rdffP4A3zCjvSEykUVxv0WphMeeS7rXVaOc9U5V8OxiQ1KBOdLt8jCOKVICvjBX0zQN2eYj7HfQfGr6bq1WXgMs2Zw__"></p>
+<p>If your S3 objects have unknown, changing or unpredictable access patterns, independent of object size of retention period, you can use S3 Intelligent-Tiering storage class.</p>
+<p>The S3 Intelligent-Tiering storage class is designed to optimize storage costs by automatically moving data to the most cost-effective access tier when access patterns change, without operational overhead or impact on performance.</p>
+<p>Steps to enable Intelligent-tiering:</p>
+<ol>
+<li>Open the <strong>Amazon S3</strong> <a href="https://s3.console.aws.amazon.com/s3/home?region=us-east-1">console</a> .</li>
+<li>In the <strong>Bucket name</strong> list, choose the name of the bucket <strong>appstack-publicbucket</strong>.</li>
+<li>Choose <strong>Properties</strong>.</li>
+<li>Navigate to the <strong>S3 Intelligent-Tiering Archive configurations</strong> section and choose <strong>Create configuration</strong>.</li>
+<li>In the <strong>Archive configuration settings</strong> section, specify a descriptive configuration name for your S3 Intelligent-Tiering Archive configuration.</li>
+<li>Under <strong>Choose a configuration scope</strong>, choose <strong>This configuration applies to all objects in the bucket</strong>.</li>
+<li>Under <strong>Status</strong>, select <strong>Enable</strong>.</li>
+<li>In the <strong>Archive rule actions</strong> section, select <strong>Deep Archive Access tier</strong>.</li>
+<li>For <strong>Days until transition to the Deep Archive Access tier</strong>, specify the number of days between 180 to 730.</li>
+<li>Choose <strong>Create</strong>.</li>
+</ol>
+<p>You can find out the information on how S3 Intelligent-Tier works here .</p>
+<p>Created S3 Lifecycle and used Intelligent-Tiering!</p>
+<h3 id="challengehttpscatalogworkshopsawseventdashboarden-usworkshop02-workshop-steps06-s3challenge"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/02-workshop-steps/06-s3#challenge">Challenge</a></h3>
+<p>Now that you have completed the fix for some of the findings, can you try fixing the other findings by Service Screener for your S3 bucket?</p>
+<h1 id="summary">Summary</h1>
+<h3 id="what-have-we-learnthttpscatalogworkshopsawseventdashboarden-usworkshopsummarywhat-have-we-learnt"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/summary#what-have-we-learnt">What have we learnt?</a></h3>
+<p>In this workshop, you have seen how you can use Service Screener to generate findings in your AWS Environment, improving your architecture based on the Well Architected Framework by using recommendations from Service Screener Report.</p>
+<p>You can run the Service Screener Tool again to generate a report to see if the findings are removed because it has been fixed.</p>
+<ol>
+<li>
+<p>Install Service Screener again, if your CloudShell terminal has expired.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m venv .
+</span></span><span style="display:flex;"><span>source bin/activate
+</span></span><span style="display:flex;"><span>rm -rf service-screner-v2
+</span></span><span style="display:flex;"><span>git clone https://github.com/aws-samples/service-screener-v2.git
+</span></span><span style="display:flex;"><span>cd service-screener-v2
+</span></span><span style="display:flex;"><span>pip install -r requirements.txt
+</span></span><span style="display:flex;"><span>alias screener<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;python3 </span><span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span><span style="color:#e6db74">/main.py&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Run Service Screener command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>screener --region us-east-1 
+</span></span></code></pre></div></li>
+</ol>
+<h4 id="challengehttpscatalogworkshopsawseventdashboarden-usworkshopsummarychallenge"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/summary#challenge">Challenge</a></h4>
+<p>You may continue to fix the remaining of the findings from Service Screener.</p>
+<h3 id="next-stephttpscatalogworkshopsawseventdashboarden-usworkshopsummarynext-step"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/summary#next-step">Next step</a></h3>
+<p>We would recommend customers to use this tool in your <strong>own AWS environment</strong> frequently to keep your AWS environment aligned with the AWS Well Architected Framework.</p>
+<p><a href="https://github.com/aws-samples/service-screener-v2">Service Screener Github</a>  contains information on how to setup Service Screener, you can also contribute in our open source project.</p>
+<hr>
+<h2 id="thank-you-for-attending-aws-service-screener-workshophttpscatalogworkshopsawseventdashboarden-usworkshopsummarythank-you-for-attending-aws-service-screener-workshop"><a href="https://catalog.workshops.aws/event/dashboard/en-US/workshop/summary#thank-you-for-attending-aws-service-screener-workshop!">Thank you for attending AWS Service Screener Workshop!</a></h2>
+<p>Please fill up the survey that will be distributed by your AWS Event facilitators and let us know how we can improve the workshop experience for you.</p>
+<h1 id="contributors">Contributors</h1>
+<p>If you are an AWS Partner who would like to run this workshop with AWS customers, you can reach out to your fellow AWS Solutions Architect.</p>
+<p>Service Screener Open source project contributors:</p>
+<ul>
+<li>KuetTai, Yong - AWS Solutions Architect</li>
+<li>Sarika Subramaniam - AWS Solutions Architect</li>
+<li>Chun Yong, Khoo - AWS Solutions Architect</li>
+<li>Nurul Najihah - AWS Solutions Architect</li>
+<li>Kitt Hon, Choy - AWS Solutions Architect</li>
+<li>Fahim Surani - AWS Solutions Architect</li>
+<li>Jia Qin, Choong - AWS Solutions Architect</li>
+<li>Lee Hsiang, Tan - AWS Partner Solutions Architect, ISV</li>
+<li>Sook Yan, Leong - AWS Technical Account Manager</li>
+<li>Hoon Sin, Cheong - AWS Security Specialist Solutions Architect</li>
+</ul>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/vi/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/" title="VPC Security và các tính năng Multi-VPC"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/vi/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1719680647"></script>
+    <script src="/js/jquery.sticky.js?1719680647"></script>
+    <script src="/js/featherlight.min.js?1719680647"></script>
+    <script src="/js/highlight.pack.js?1719680647"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1719680647"></script>
+    <script src="/js/learn.js?1719680647"></script>
+    <script src="/js/hugo-learn.js?1719680647"></script>
+
+    <link href="/mermaid/mermaid.css?1719680647" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1719680647"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

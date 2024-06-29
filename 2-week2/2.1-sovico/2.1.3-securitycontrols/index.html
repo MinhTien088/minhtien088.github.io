@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.127.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Security Controls :: AWS System Manager</title>
+
+    
+    <link href="/css/nucleus.css?1719680647" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1719680647" rel="stylesheet">
+    <link href="/css/hybrid.css?1719680647" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1719680647" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1719680647" rel="stylesheet">
+    <link href="/css/auto-complete.css?1719680647" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1719680647" rel="stylesheet">
+    <link href="/css/theme.css?1719680647" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1719680647" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1719680647" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1719680647"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2-week2/2.1-sovico/2.1.3-securitycontrols/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1719680647"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1719680647"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1719680647"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/" title="Week 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/">
+           <b> 1. </b> Week 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/" title="Module 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/">
+           <b> 1.1. </b> Module 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/1.1.1-awswaf/" title="AWS Well-Architected Framework" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/1.1.1-awswaf/">
+           <b> 1.1.1. </b> AWS Well-Architected Framework
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.2-lab1/" title="Lab 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.2-lab1/">
+           <b> 1.2. </b> Lab 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.3-lab7/" title="Lab 7" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.3-lab7/">
+           <b> 1.3. </b> Lab 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.4-lab9/" title="Lab 9" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.4-lab9/">
+           <b> 1.4. </b> Lab 9
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/" title="Week 2" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/">
+           <b> 2. </b> Week 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/">
+           <b> 2.1 </b> Sovico Skill Accelerator Lab
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.1-vpc/" title="VPC Fundamentals" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.1-vpc/">
+           <b> 2.1.1 </b> VPC Fundamentals
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.2-multivpcs/">
+           <b> 2.1.2 </b> Multiple VPCs
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Security Controls" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.3-securitycontrols/">
+           <b> 2.1.3 </b> Security Controls
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Connecting to On-Premises" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.4-connectonpremises/">
+           <b> 2.1.4 </b> Connecting to On-Premises
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.5-networkmonitoring/" title="Network Monitoring" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.5-networkmonitoring/">
+           <b> 2.1.5 </b> Network Monitoring
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/" title="Module 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/">
+           <b> 2.2 </b> Module 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.1-vpc/" title="Amazon Virtual Private Cloud" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.1-vpc/">
+           <b> 2.2.1 </b> Amazon Virtual Private Cloud
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/" title="VPC Security and Multi-VPC features" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/">
+           <b> 2.2.2 </b> VPC Security and Multi-VPC features
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.3-gapvxawsevent/" title="OPTIMIZING AWS COSTS AND SECURITY" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.3-gapvxawsevent/">
+           <b> 2.3. </b> OPTIMIZING AWS COSTS AND SECURITY
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"><i class='fab fa-facebook'></i> AWS Study Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="/2-week2/2.1-sovico/2.1.3-securitycontrols/" selected>English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="/vi/2-week2/2.1-sovico/2.1.3-securitycontrols/">Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total Cloud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b> Last Updated </b> <br>
+    <i>
+        <font color=orange>29-09-2024</font>
+    </i>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="" style="color:orange">Minh Tiến</a> <br>
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>Minh Tien Workshop</a> > <a href='/2-week2/'>Week 2</a> > <a href='/2-week2/2.1-sovico/'>Sovico Skill Accelerator Lab</a> > Security Controls
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#network-acls">Network ACLs</a></li>
+        <li><a href="#security-groups">Security Groups</a></li>
+        <li><a href="#endpoint-policies">Endpoint Policies</a></li>
+        <li><a href="#clean-up">Clean Up</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Security Controls
+            </h1>
+          
+
+        
+
+
+
+	<h3 id="network-acls">Network ACLs</h3>
+<p>Network ACLs are stateless access controls you configure at a subnet level, to allow or block a CIDR block on a particular port or range of ports. Network ACL rules are numbered list and evaluated top down, with a DENY ALL at the end. If a rule is matched, subsequent rules are not evaluated.</p>
+<p>Both inbound and outbound traffic can be controlled with these rules. By default when you create subnets, they will be attached to the default Network ACL which has an ALLOW ALL rule for both inbound and outbound traffic.</p>
+<p>In this section, we will modify the Network ACL associated with the workload subnets in VPC A to only ICMP traffic from VPC B&rsquo;s CIDR; and test connectivity from VPC A to VPC C, and test other connectivity from VPC B to VPC C as well.</p>
+<p><img alt="NACLs Architecture Diagram" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_nacls.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="default-nacl-configuration-vpc-a">Default NACL Configuration VPC A</h4>
+<ol>
+<li>In the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#acls:">Network ACLs</a> </li>
+<li>Select the <em>check box</em> for <code>VPC A Workload Subnets NACL</code></li>
+<li>Click on the <strong>Inbound Rules</strong> tab below to view existing inbound rules <img alt="View Inbound Rules" src="/images/2.week2/Screenshot_2024-06-24_165558.png"></li>
+</ol>
+<p>All traffic is evaluated for Protocol, Port and Source IP match. In this Network ACL, all traffic is allowed into the VPC A Public and Private Subnets by the first rule. The second rule which is a DENY ALL is not evaluated.</p>
+<p>We will now modify the first rule (100) to allow only ICMP traffic from VPC B&rsquo;s CIDR.</p>
+<ol start="4">
+<li>Click on <strong>Edit inbound rules</strong> button in the <strong>Inbound rules</strong> tab.</li>
+<li>For rule number 100 select <code>ALL ICMP - IPv4</code> as Type and enter VPC B&rsquo;s CIDR of <code>10.1.0.0/16</code> for Source</li>
+<li>Click on <strong>Save</strong> <img alt="Workloads NACL Save Changes" src="/images/2.week2/Screenshot_2024-06-24_165633.png"></li>
+<li>The screen should return to the Network ACL page and the updated rule will display on the <strong>Inbound rules</strong> tab like below</li>
+<li>Verify the rule for Type, Protocol, Port and Source for the &lsquo;ALLOW&rsquo; rule 100. <img alt="Workloads NACL Result" src="/images/2.week2/Screenshot_2024-06-24_165653.png"></li>
+</ol>
+<p>We have now completed modifying the default Network ACL of VPC A to allow ONLY ICMP traffic from VPC B&rsquo;s CIDR and all other traffic will be denied by the catch-all DENY rule. Let us now test this from VPC B for ALLOW, and VPC C for DENY.</p>
+<p>Note that we have not modified outbound rules, and the default outbound rule allows ALL traffic to flow out of the subnet.</p>
+<h4 id="test-connectivity-from-vpc-b-to-vpc-a">Test Connectivity from VPC B to VPC A</h4>
+<p>Here, we will login to the EC2 instance in VPC B using EC2 using Session Manager, and verify reachability to the EC2 instance in VPC A over ICMP (ping)</p>
+<ol>
+<li>
+<p>Click on <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a>  in the EC2 Dashboard</p>
+</li>
+<li>
+<p>Select the <em>check box</em> for <code>VPC B Private AZ1 Server</code> and click <strong>Connect</strong> button on the top right <img alt="Select VPC B Instance" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/nacls/nacls_select_instance_vpc_b.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click <strong>Connect</strong> in the <strong>Session Manager</strong> tab</p>
+</li>
+<li>
+<p>A new browser window opens with SSH connection to the instance in VPC B established and showing a command line prompt.</p>
+</li>
+<li>
+<p>Type this following command in the prompt:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.0.1.100 -c <span style="color:#ae81ff">5</span> 
+</span></span></code></pre></div></li>
+<li>
+<p>The ICMP traffic should flow through and return as shown below. <img alt="Ping Response" src="/images/2.week2/Screenshot_2024-06-24_165741.png"></p>
+</li>
+</ol>
+<p>We have now verified that the Network ACL on VPC A is allowing ICMP traffic to flow in and out from VPC B.</p>
+<h4 id="test-connectivity-from-vpc-c-to-vpc-a">Test Connectivity from VPC C to VPC A</h4>
+<p>Now we will login to the EC2 instance in VPC C using EC2 using Session Manager, and check reachability to the EC2 instance in VPC A over ICMP (ping)</p>
+<ol>
+<li>
+<p>Terminate the Session Manager connection to the EC2 Instance in VPC B</p>
+</li>
+<li>
+<p>In the top left corner click <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> for <code>VPC C Private AZ1 Server</code> and click <strong>Connect</strong> button on the top right <img alt="Select VPC C Instance" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/nacls/nacls_select_instance_vpc_c.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click <strong>Connect</strong> in the <strong>Session Manager</strong> tab</p>
+</li>
+<li>
+<p>A new browser window opens with SSH connection to the instance in VPC C established and showing a command line prompt.</p>
+</li>
+<li>
+<p>Type this following command in the prompt:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.0.1.100 -c <span style="color:#ae81ff">5</span> 
+</span></span></code></pre></div></li>
+<li>
+<p>The ICMP traffic should not flow through and not responses should be returned as shown below. <img alt="No Ping Response" src="/images/2.week2/Screenshot_2024-06-24_170228.png"></p>
+</li>
+</ol>
+<p>The ping command will not generate a response because the Network ACL in VPC A is DENYING all ICMP traffic that does not originate from VPC B.</p>
+<ol start="8">
+<li>Terminate the Session Manager connection</li>
+</ol>
+<p>We modified the default Network ACL in VPC A to allow ICMP traffic only from VPC B; the only other rule is a DENY ALL. We verified that ICMP traffic flows through from <code>VPC B Private AZ1 Server</code> to <code>VPC A Private AZ1 Server</code> but DID NOT flow through from <code>VPC C Private AZ1 Server</code>.</p>
+<p><img alt="NACLs Architecture Diagram" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_nacls_enforced.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="revert-changes">Revert Changes</h4>
+<ol>
+<li>In the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#acls:">Network ACLs</a> </li>
+<li>Select the <em>check box</em> for <code>VPC A Workload Subnets NACL</code> <img alt="Inbound Rules Result" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/nacls/nacls_workload_subnets_inbound_rules_revert_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>Click on <strong>Edit inbound rules</strong> button in the above screen.</li>
+<li>Edit Rule 100 and select <code>All traffic</code> for Type enter a CIDR of <code>0.0.0.0/0</code> for Source</li>
+<li>Click on <strong>Save</strong> <img alt="Revert Rule" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/nacls/nacls_revert_rule.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>The screen should return to the Network ACL page and the updated rule will display like below in the <strong>Inbound rules</strong> tab</li>
+<li>Verify the rule for Type, Protocol, Port and Source for the &lsquo;ALLOW&rsquo; rule 100. <img alt="Verify" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/nacls/nacls_workload_subnets_inbound_rules_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+</ol>
+<p><em><strong>Congratulations, you&rsquo;ve completed this section on Network ACLs</strong></em></p>
+<h3 id="security-groups">Security Groups</h3>
+<p>Security Groups are virtual, stateful firewalls attached to an instance or network interface. Both inbound and outbound rules can be defined to allow specific protocols, ports and source/destination CIDR. A DENY is not possible with security groups.</p>
+<p>With Security Groups, all rules are evaluated before a network packet is allowed or blocked, unlike Network ACLs where the rules are evaluated in order of rule number and once a rule matches subsequent rules are not evaluated.</p>
+<p><img alt="Security Groups" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_security_groups.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>In this exercise, we will modify the security group attached to <code>VPC A Private AZ1 Server</code> to allow only ICMP traffic inbound from VPC C&rsquo;s CIDR only. We will verify that the EC2 instance in VPC C is able to ping the EC2 instance in VPC A, but that the EC2 instance in VPC B is not able to ping the same EC2 instance in VPC A.</p>
+<p>Note:</p>
+<p><strong>It is NOT best practice</strong> to have open Security Groups that allow everything (0.0.0.0/0).</p>
+<p>Limit access to what is required.</p>
+<h4 id="modifying-the-security-group-in-vpc-a">Modifying the Security Group in VPC A</h4>
+<ol>
+<li>In the EC2 Dashboard click on <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:instanceState=running;sort=tag:Name">Instances</a> </li>
+<li>In the EC2 instance list, select the <em>check box</em> for <code>VPC A Private AZ1 Server</code></li>
+<li>Scroll down to the <strong>Security</strong> tab and click on the Security Group link named something like <code>sg-xxxxxxx (VPC A Security Group)</code> <img alt="Select VPC A Instance" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/security-groups/security_groups_select_instance_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>In the Security Group page, click on the <strong>Inbound rules</strong> tab, and then click on <strong>Edit inbound rules</strong> button <img alt="Edit Rules" src="/images/2.week2/Screenshot_2024-06-24_170508.png"></li>
+<li>In the <strong>Edit inbound rules</strong> page, update the rule that is currently allowing ICMP from 0.0.0.0/0 to allow only from VPC C&rsquo;s CIDR <code>10.2.0.0/16</code> <img alt="Update Rules" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/security-groups/security_groups_inbound_rules_update.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>Click <strong>Save rules</strong></li>
+</ol>
+<p>Now we have modified the Security Group on the EC2 instance in VPC A allow ICMP traffic (ping traffic) only from sources in VPC C, and from nowhere else. We will now test to verify that we are NOT able to ping this instance from VPC B, and we are ABLE to ping from VPC C.</p>
+<h4 id="test-connectivity-from-vpc-b-to-vpc-a-1">Test Connectivity from VPC B to VPC A</h4>
+<ol>
+<li>
+<p>In the EC2 Dashboard click on <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:instanceState=running;sort=tag:Name">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> for <code>VPC B Private AZ1 Server</code> from the list of instances, and click <strong>Connect</strong> button <img alt="Select VPC B Instance" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/security-groups/security_groups_select_instance_vpc_b.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>In the ‘Connect to instance’ dialogue click <strong>Connect</strong> in the <strong>Session Manager</strong> tab. This will open up a session in a browser window.</p>
+</li>
+<li>
+<p>In the command line, try pinging the private IPv4 address of the EC2 instance in VPC A using the command</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.0.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>It will freeze and make no progress. This is because the Security Group on the EC2 instance in VPC A has inbound rules to only allow ICMP from VPC C. There are no rules for allowing VPC B, and an implicit DENY occurs.<br>
+<img alt="Ping VPC A Instance" src="/images/2.week2/Screenshot_2024-06-24_170228.png"></p>
+<p>Now connect to the EC2 instance in VPC C and try to ping the EC2 instance in VPC A.</p>
+<h4 id="test-connectivity-from-vpc-c-to-vpc-a-1">Test Connectivity from VPC C to VPC A</h4>
+<ol>
+<li>
+<p>Terminate the Session Manager connection and click <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:instanceState=running;sort=tag:Name">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> for <code>VPC C Private AZ1 Server</code> from the list of instances, and click <strong>Connect</strong> button</p>
+</li>
+<li>
+<p>In the ‘Connect to instance’ dialog, click <strong>Connect</strong> in the <strong>Session Manager</strong> tab.</p>
+</li>
+<li>
+<p>In the command line, try pinging the private IPv4 address of the EC2 instance in VPC A using the command</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.0.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>The ping will succeed and traffic will flow through. This is because the Security Group on the EC2 instance in VPC A is allowing ICMP traffic from VPC C&rsquo;s CIDR range.</p>
+<p><img alt="Ping VPC A Instance" src="/images/2.week2/Screenshot_2024-06-24_170323.png"></p>
+<ol start="5">
+<li>Terminate the Session Manager connnection.</li>
+</ol>
+<p><em><strong>We have modified the Security Group on the EC2 instance in VPC A to allow only ICMP traffic from VPC C. We tested and verified that we cannot ping this instance from VPC B, but we are able to ping it from VPC C confirming the behavior of the Security Group.</strong></em> <img alt="Security Groups" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_security_group_enforced.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="reverting-changes-to-the-security-group-in-vpc-a">Reverting Changes to the Security Group in VPC A</h4>
+<ol>
+<li>In the EC2 Dashboard click on <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:instanceState=running;sort=tag:Name">Instances</a> </li>
+<li>In the EC2 instance list, select the <em>check box</em> for <code>VPC A Private AZ1 Server</code></li>
+<li>Scroll down to the <strong>Security</strong> tab and click on the Security Group link named something like <code>sg-xxxxxxx (VPC A Security Group)</code> <img alt="VPC A Security Group" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/security-groups/security_groups_select_instance_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>In the Security Group page, click on the <strong>Inbound rules</strong> tab, and then click on <strong>Edit inbound rules</strong> button <img alt="Revert Inbound Rules" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/security-groups/security_groups_inbound_rules_revert.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>In the <strong>Edit inbound rules</strong> page, update the rule that is currently allowing ICMP only from VPC C&rsquo;s CIDR of 10.2.0.0/16 back to <code>0.0.0.0/0</code> <img alt="Rules Reverted" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/security/security-groups/security_groups_inbound_rules_reverted.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>Click <strong>Save rules</strong></li>
+</ol>
+<p><em><strong>Congratulations you have completed this section on Security Groups</strong></em></p>
+<h3 id="endpoint-policies">Endpoint Policies</h3>
+<p>Endpoint policies are IAM policies attached to VPC endpoints to restrict/grant permission to the service&rsquo;s API calls. For example, with an S3 endpoint, a policy can be attached to limit only read access to one or more S3 buckets from the VPC.</p>
+<h4 id="verify-the-permissions-for-the-gateway-endpoint">Verify the permissions for the Gateway Endpoint</h4>
+<p>Now let us now verify access to S3 and what actions are permitted from <code>VPC A Private AZ1 Server</code>.</p>
+<ol>
+<li>
+<p>In the EC2 console navigate to <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> for instance <code>VPC A Private AZ1 Server</code></p>
+</li>
+<li>
+<p>Click <strong>Connect</strong> and use &ldquo;Session Manager&rdquo; to open a command prompt</p>
+</li>
+<li>
+<p>Issue the command</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  aws s3 ls | grep networking-day
+</span></span></code></pre></div></li>
+<li>
+<p>Copy the name of the bucket beginning <code>networking-day</code></p>
+</li>
+<li>
+<p>Issue the command <code>aws s3 ls s3://&lt;your-bucket-name&gt;</code> (replace with name of bucket you created) to check if we can list the contents of the bucket.</p>
+</li>
+<li>
+<p>Check that the command was successful and no errors returned. The bucket is empty and hence it did not return any listing.</p>
+</li>
+<li>
+<p>Let us try to create a test file and upload to the S3 bucket.</p>
+<ul>
+<li>
+<p>Issue the command below to create a new file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo touch /tmp/test.txt
+</span></span></code></pre></div></li>
+<li>
+<p>Then attempt to copy to S3 by typing (replace with name of your bucket)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>aws s3 cp /tmp/test.txt s3://&lt;your-bucket-name&gt;
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>You will see that the command succeeds and the file is uploaded to the S3 bucket.</p>
+</li>
+<li>
+<p>Confirm the bucket contains the new file <code>aws s3 ls s3://&lt;your-bucket-name&gt;</code> (replace with name of bucket you created) <img alt="S3 Bucket Contents" src="/images/2.week2/Screenshot_2024-06-24_170806.png"></p>
+</li>
+</ol>
+<h4 id="update-vpc-endpoint-policy-document-to-remove-permissions">Update VPC Endpoint policy document to remove permissions</h4>
+<p>Let us now remove the permissions in the VPC Endpoint policy document that allow creating objects in the S3 bucket, and test it by attempting to upload a file to the bucket.</p>
+<ol>
+<li>Navigate to VPC Dashboard and click on <a href="https://console.aws.amazon.com/vpc/home?#Endpoints:">Endpoints</a> </li>
+<li>Select the Gateway Endpoint for S3 we created in the above steps.</li>
+</ol>
+<p>If you did not begin this lab at VPC Fundamentals, your VPC Endpoints will not have Name tags set, unlike the /images/2.week2/screenshot below that shows the names. Select the Gateway Endpoint for S3 based on the Endpoint with the Service Name ending in <code>s3</code> and with the VPC ID ending in <code>VPC A</code>.</p>
+<ol start="3">
+<li>
+<p>In the bottom frame, click on &lsquo;Policy&rsquo; tab, then click on the Edit Policy button <img alt="Edit Policy" src="/images/2.week2/Screenshot_2024-06-24_171220.png"></p>
+</li>
+<li>
+<p>In the policy editing screen,click on <em>custom</em>, enter the below policy document and click save. This policy removes <code>s3:Put*</code> permissions to the VPC Endpoint, effectively preventing instances from VPC A to upload objects to S3 buckets in the account.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2008-10-17&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;Statement&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Sid&#34;</span>: <span style="color:#e6db74">&#34;ReadWriteAccess&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Principal&#34;</span>: <span style="color:#e6db74">&#34;*&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Action&#34;</span>: [
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;s3:Get*&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;s3:List*&#34;</span>
+</span></span><span style="display:flex;"><span>      ],
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Resource&#34;</span>: <span style="color:#e6db74">&#34;*&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li>
+<p>Let us now try uploading the test file again by issuing the command <code>aws s3 cp /tmp/test.txt s3://&lt;your-bucket-name&gt;</code></p>
+<p> (replace with name of bucket you created) to upload the file to the S3 bucket.</p>
+</li>
+</ol>
+<p><img alt="S3 Copy Failure" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/vpc-endpoints/gateway_endpoint_cp_s3_failure.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>Note that the command returned an &lsquo;Access Denied&rsquo; error message when trying to upload a file to the S3 bucket. This is because the Endpoint policy allows only Get* and List* actions, effectively making the S3 bucket read only, and all other actions are denied.</p>
+<h4 id="conclusion">Conclusion</h4>
+<p>We tested access to an S3 bucket through Gateway VPC Endpoint to S3, then we set the endpoint policy to allow only read actions; we tested that we can only list and get objects from the S3 bucket, and verified that put objects are denied by the endpoint policy showing that the VPC Endpoint policy is an effective mechanism to control allow/deny to service API calls from the VPC.</p>
+<h3 id="clean-up">Clean Up</h3>
+<p>If you are using your own AWS Account to conduct this workshop and you are finished, complete the follow steps to clean up.</p>
+<p><strong>Warning</strong></p>
+
+<div class="notices warning" ><p>You should only complete this clean up section if you do not plan on continuing with this workshop.</p>
+</div>
+
+
+<div class="notices warning" ><p>Make sure you terminate / delete the resources below to avoid unnecessary charges.</p>
+</div>
+
+<h4 id="please-make-a-selection">Please make a selection</h4>
+<p>Option 1: You started this lab at the start</p>
+<p>Option 2: You started the lab in the Multi VPCs section by deploying the CloudFormation template</p>
+<p>Option 3: You started the lab in the Basic Security section by deploying the CloudFormation template</p>
+<h4 id="finished">Finished</h4>
+<p><em>Once you have completed the above steps, you are finished. If you want to continue the workshop later, you can skip this step and use the CloudFormation template in the next step to build the prerequisites.</em></p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Connecting to On-Premises" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1719680647"></script>
+    <script src="/js/jquery.sticky.js?1719680647"></script>
+    <script src="/js/featherlight.min.js?1719680647"></script>
+    <script src="/js/highlight.pack.js?1719680647"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1719680647"></script>
+    <script src="/js/learn.js?1719680647"></script>
+    <script src="/js/hugo-learn.js?1719680647"></script>
+
+    <link href="/mermaid/mermaid.css?1719680647" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1719680647"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.127.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>VPC Fundamentals :: AWS System Manager</title>
+
+    
+    <link href="/css/nucleus.css?1719680647" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1719680647" rel="stylesheet">
+    <link href="/css/hybrid.css?1719680647" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1719680647" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1719680647" rel="stylesheet">
+    <link href="/css/auto-complete.css?1719680647" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1719680647" rel="stylesheet">
+    <link href="/css/theme.css?1719680647" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1719680647" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1719680647" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1719680647"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2-week2/2.1-sovico/2.1.1-vpc/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1719680647"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1719680647"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1719680647"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/" title="Week 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/">
+           <b> 1. </b> Week 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/" title="Module 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/">
+           <b> 1.1. </b> Module 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/1.1.1-awswaf/" title="AWS Well-Architected Framework" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/1.1.1-awswaf/">
+           <b> 1.1.1. </b> AWS Well-Architected Framework
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.2-lab1/" title="Lab 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.2-lab1/">
+           <b> 1.2. </b> Lab 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.3-lab7/" title="Lab 7" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.3-lab7/">
+           <b> 1.3. </b> Lab 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.4-lab9/" title="Lab 9" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.4-lab9/">
+           <b> 1.4. </b> Lab 9
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/" title="Week 2" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/">
+           <b> 2. </b> Week 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/">
+           <b> 2.1 </b> Sovico Skill Accelerator Lab
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.1-vpc/" title="VPC Fundamentals" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.1-vpc/">
+           <b> 2.1.1 </b> VPC Fundamentals
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.2-multivpcs/">
+           <b> 2.1.2 </b> Multiple VPCs
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Security Controls" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.3-securitycontrols/">
+           <b> 2.1.3 </b> Security Controls
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Connecting to On-Premises" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.4-connectonpremises/">
+           <b> 2.1.4 </b> Connecting to On-Premises
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.5-networkmonitoring/" title="Network Monitoring" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.5-networkmonitoring/">
+           <b> 2.1.5 </b> Network Monitoring
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/" title="Module 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/">
+           <b> 2.2 </b> Module 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.1-vpc/" title="Amazon Virtual Private Cloud" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.1-vpc/">
+           <b> 2.2.1 </b> Amazon Virtual Private Cloud
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/" title="VPC Security and Multi-VPC features" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/">
+           <b> 2.2.2 </b> VPC Security and Multi-VPC features
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.3-gapvxawsevent/" title="OPTIMIZING AWS COSTS AND SECURITY" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.3-gapvxawsevent/">
+           <b> 2.3. </b> OPTIMIZING AWS COSTS AND SECURITY
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"><i class='fab fa-facebook'></i> AWS Study Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="/2-week2/2.1-sovico/2.1.1-vpc/" selected>English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="/vi/2-week2/2.1-sovico/2.1.1-vpc/">Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total Cloud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b> Last Updated </b> <br>
+    <i>
+        <font color=orange>29-09-2024</font>
+    </i>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="" style="color:orange">Minh Tiến</a> <br>
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>Minh Tien Workshop</a> > <a href='/2-week2/'>Week 2</a> > <a href='/2-week2/2.1-sovico/'>Sovico Skill Accelerator Lab</a> > VPC Fundamentals
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#amazon-vpc">Amazon VPC</a></li>
+        <li><a href="#subnets">Subnets</a></li>
+        <li><a href="#network-acls">Network ACLs</a></li>
+        <li><a href="#route-tables">Route Tables</a></li>
+        <li><a href="#internet-connectivity">Internet Connectivity</a></li>
+        <li><a href="#vpc-endpoints">VPC Endpoints</a></li>
+        <li><a href="#ec2-instances">EC2 instances</a></li>
+        <li><a href="#test-connectivity">Test Connectivity</a></li>
+        <li><a href="#clean-up">Clean Up</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              VPC Fundamentals
+            </h1>
+          
+
+        
+
+
+
+	<h3 id="amazon-vpc">Amazon VPC</h3>
+<p>Amazon Virtual Private Cloud (Amazon VPC) enables you to launch AWS resources into a virtual network that you&rsquo;ve defined. This virtual network closely resembles a traditional network that you&rsquo;d operate in your own data center, with the benefits of using the scalable infrastructure of AWS.</p>
+<ol>
+<li>
+<p>To get started, navigate to the <a href="https://console.aws.amazon.com/vpc/home?#vpcs:">Your VPCs tab</a>  in the VPC section of the console and click <strong>Create VPC</strong> button.</p>
+</li>
+<li>
+<ul>
+<li>Enter <code>VPC A</code> as the <strong>Name tag</strong></li>
+<li>Specify <code>10.0.0.0/16</code> as <strong>IPv4 CIDR block</strong>.</li>
+<li>Do not enable IPv6.</li>
+<li>Leave <code>Default</code> selected as <strong>Tenancy</strong>.</li>
+<li>Accept proposed <strong>Tags</strong></li>
+<li>Click <strong>Create VPC</strong></li>
+</ul>
+</li>
+<li>
+<p>After completing these steps, you should have a new VPC listed under <strong>Your VPCs</strong></p>
+<p><img alt="VPC A Created" src="/images/2.week2/Screenshot_2024-06-24_103037.png"></p>
+</li>
+<li>
+<p>Click on <strong>Actions</strong> and select <strong>Edit VPC settings</strong> from the dropdown</p>
+</li>
+<li>
+<p>Check the box to enable DNS hostnames and select <strong>Save</strong>. </p>
+<p><img alt="Enable DNS hostnames" src="/images/2.week2/Screenshot_2024-06-24_103216.png"></p>
+</li>
+</ol>
+<p><strong>Congratulations, your first VPC is now built</strong></p>
+<h3 id="subnets">Subnets</h3>
+<p>A subnet is a range of IP addresses in your VPC. You can launch AWS resources into a specified subnet. Public subnets are for resources that must be connected to the internet, and private subnets for resources that won&rsquo;t be exposed to the internet.</p>
+<p>In this section we will create two public and two private subnets in each of two availability zones within your VPC.</p>
+<p><img alt="Subnets" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab1_subnets.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol>
+<li>
+<p>In the VPC panel on the left click on <a href="https://console.aws.amazon.com/vpc/home?#subnets:">Subnets</a> </p>
+</li>
+<li>
+<p>Click on <strong>Create subnet</strong> button in the top right corner.</p>
+</li>
+<li>
+<p>Choose <code>VPC A</code> from the <strong>VPC ID</strong> dropdown.</p>
+</li>
+<li>
+<p>In the <strong>Subnet settings</strong> section</p>
+<ul>
+<li>Enter the name as <code>VPC A Public Subnet AZ1</code></li>
+<li>Select the Availablity Zone of <code>us-east-1a</code></li>
+<li>Enter a CIDR block of <code>10.0.0.0/24</code>:</li>
+<li>Click <strong>Create subnet</strong></li>
+</ul>
+<p><img alt="Subnet Settings" src="/images/2.week2/Screenshot_2024-06-24_103614.png"></p>
+</li>
+<li>
+<p>You should have a new subnet listed under <strong>Subnets</strong>.</p>
+</li>
+<li>
+<p>Click on <strong>Create subnet</strong> again</p>
+</li>
+<li>
+<p>Under <strong>Subnet settings</strong></p>
+<ul>
+<li>Select <code>VPC A</code></li>
+<li>Enter a name of <code>VPC A Private Subnet AZ1</code></li>
+<li>Select the Availablity Zone of <code>us-east-1a</code></li>
+<li>Enter a CIDR block of <code>10.0.1.0/24</code></li>
+<li>Click <strong>Create subnet</strong></li>
+</ul>
+<p><img alt="Subnet 2 Settings" src="/images/2.week2/Screenshot_2024-06-24_103659.png"></p>
+</li>
+<li>
+<p>Click on <strong>Create subnet</strong> again and</p>
+<ul>
+<li>Select <code>VPC A</code></li>
+<li>Enter a name <code>VPC A Public Subnet AZ2</code></li>
+<li>Select the Availablity Zone of <code>us-east-1b</code></li>
+<li>Enter a CIDR block of <code>10.0.2.0/24</code></li>
+</ul>
+<p><img alt="Subnet 3 Settings" src="/images/2.week2/Screenshot_2024-06-24_104328.png"></p>
+</li>
+<li>
+<p>Click on <strong>Create subnet</strong> again and</p>
+<ul>
+<li>Select <code>VPC A</code></li>
+<li>Enter a name of <code>VPC A Private Subnet AZ2</code></li>
+<li>Select an Availablity Zone of <code>us-east-1b</code></li>
+<li>Enter a CIDR block of <code>10.0.3.0/24</code>:</li>
+</ul>
+<p><img alt="Subnet 4 Settings" src="/images/2.week2/Screenshot_2024-06-24_104412.png"></p>
+</li>
+<li>
+<p>After you finish the task, on the resulting <strong>Subnets</strong> screen</p>
+<ul>
+<li>Clear the subnet filter</li>
+<li>Sort by Name</li>
+<li>Confirm that four new subnets are available with names, CIDR blocks and Availabilty Zones as below</li>
+</ul>
+<p><img alt="Subnets Created" src="/images/2.week2/Screenshot_2024-06-24_104446.png"></p>
+</li>
+</ol>
+<h3 id="network-acls">Network ACLs</h3>
+<p>A network access control list (ACL) is an optional layer of security for your VPC for controlling traffic in and out of one or more subnets.</p>
+<p><img alt="NACLs" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab1_nacls.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>Select any of the subnets, and scroll down to the <em><strong>Network ACL</strong></em> tab to look at the default NACL rules. Rules are evaluated in order from lowest to highest. If the traffic doesn’t match any rules, the * rule is applied, and the traffic is denied. Default NACLs allow all inbound and outbound traffic, as shown below, unless customized.</p>
+<p><img alt="NACLs" src="/images/2.week2/Screenshot_2024-06-24_104521.png"></p>
+<h4 id="create-a-new-network-acl-for-workload-subnets-in-vpc-a">Create a new Network ACL for workload subnets in VPC A</h4>
+<ol>
+<li>
+<p>On the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#acls:">Network ACLs</a> </p>
+</li>
+<li>
+<p>Click <strong>Create network ACL</strong></p>
+</li>
+<li>
+<p>In the <strong>Network ACL settings</strong> screen</p>
+<ul>
+<li>Enter a name of <code>VPC A Workload Subnets NACL</code></li>
+<li>Select <code>VPC A</code> from the dropdown</li>
+<li>Click <strong>Create network ACL</strong></li>
+</ul>
+<p><img alt="Create Workload Subnets NACL" src="/images/2.week2/Screenshot_2024-06-24_104603.png"></p>
+</li>
+</ol>
+<p>The result will be a new NACL for VPC A alongside the default NACL created when the VPC was created.</p>
+<ol start="4">
+<li>
+<p>In the resulting <strong>Network ACLs</strong> screen</p>
+<ul>
+<li>Select the checkbox for <code>VPC A Workload Subnets NACL</code></li>
+<li>Scroll down to the <strong>Subnet associations</strong> tab</li>
+<li>Click <strong>Edit subnet associations</strong></li>
+</ul>
+<p><img alt="Edit NACL Associations" src="/images/2.week2/Screenshot_2024-06-24_104650.png"></p>
+</li>
+<li>
+<p>In the <strong>Edit subnet associations</strong> screen</p>
+<ul>
+<li>Select all four VPC A subnets to associate them with the NACL</li>
+<li>Click <strong>Save changes</strong>.</li>
+</ul>
+<p><img alt="Select Subnets" src="/images/2.week2/Screenshot_2024-06-24_104717.png"></p>
+</li>
+</ol>
+<p>The NACL should now be associated with four subnets on the following screen but because NACLs are created with only a DENY rule for inbound and outbound we will now change the default NACL rules to allow all traffic in both directions.</p>
+<ol start="6">
+<li>
+<p>In the <strong>Network ACLs</strong> screen</p>
+<ul>
+<li>Select the check box for <code>VPC A Workload Subnets NACL</code> for VPC A</li>
+<li>Scroll down and select the <strong>Inbound Rules</strong> tab below</li>
+<li>Notice that we have only <code>DENY</code> all rule</li>
+<li>Click <strong>Edit inbound rules</strong></li>
+</ul>
+<p><img alt="Edit Rules" src="/images/2.week2/Screenshot_2024-06-24_104942.png"></p>
+</li>
+<li>
+<p>In <strong>Edit inbound rules</strong> screen</p>
+<ul>
+<li>Click <strong>Add new rule</strong></li>
+<li>Input <code>100</code> in <strong>Rule number</strong></li>
+<li>Choose <code>All traffic</code> in <strong>Type</strong></li>
+<li>Leave <strong>Source</strong> as <code>0.0.0.0/0</code></li>
+<li>Click <strong>Save changes</strong></li>
+</ul>
+<p><img alt="Save Changes" src="/images/2.week2/Screenshot_2024-06-24_105011.png"></p>
+</li>
+<li>
+<p>In the resulting screen you should have a success banner and a new <code>Allow</code> rule under the <strong>Inbound rules</strong> tab:</p>
+<p><img alt="Success Screen" src="/images/2.week2/Screenshot_2024-06-24_105034.png"></p>
+</li>
+</ol>
+<p>Now follow the same steps described above for Inbound, but work on <strong>Outbound Rules</strong> tab of NACLs</p>
+<ol start="9">
+<li>
+<p>On the <strong>Outbound Rules</strong> tab</p>
+<ul>
+<li>Note that we have only <code>DENY</code> all rule</li>
+<li>Click <strong>Edit outbound rules</strong></li>
+</ul>
+<p><img alt="Outbound Rules" src="/images/2.week2/Screenshot_2024-06-24_105034.png"></p>
+</li>
+<li>
+<p>In the <strong>Edit outbound rules</strong> screen</p>
+<ul>
+<li>Click <strong>Add new rule</strong></li>
+<li>Input <code>100</code> in <strong>Rule number</strong></li>
+<li>Choose <code>All traffic</code> in <strong>Type</strong></li>
+<li>Leave <strong>Destination</strong> as <code>0.0.0.0/0</code></li>
+<li>Click <strong>Save changes</strong></li>
+</ul>
+<p><img alt="Edit Outbound Rules" src="/images/2.week2/Screenshot_2024-06-24_105108.png"></p>
+</li>
+<li>
+<p>On the resulting screen check that the rule has been added under the <strong>Outbound rules</strong> tab</p>
+<p><img alt="Save Changes" src="/images/2.week2/Screenshot_2024-06-24_105118.png"></p>
+</li>
+</ol>
+<p>Allowing all traffic in and out of your subnets is not a good security posture. You can use NACLs to set broad rules and/or DENY rules, and then use <em><strong>Security Groups</strong></em> to create fine grained rules. For example, you can deny traffic from specific IPs with NACLs but not with Security Groups.</p>
+<p>We will explore Network ACLs and Security Groups more in the <strong>Basic Security</strong> section.</p>
+<h3 id="route-tables">Route Tables</h3>
+<p>Your VPC has an implicit router, and you use route tables to control where network traffic is directed. Each subnet in your VPC must be associated with a route table, which controls the routing for the subnet (subnet route table). You can explicitly associate a subnet with a particular route table. Otherwise, the subnet is implicitly associated with the main route table. A subnet can only be associated with one route table at a time, but you can associate multiple subnets with the same subnet route table.</p>
+<p><img alt="Route Tables" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab1_route_tables.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="create-route-table-for-public-subnets">Create Route Table for Public Subnets</h4>
+<ol>
+<li>In left hand panel of the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#RouteTables:sort=routeTableId">Route Tables</a>  </li>
+</ol>
+<p>You will see the default route table that was created as part of the VPC creation, and in the <strong>Subnet Associations</strong> tab below the four subnets created earlier. We will now create a new public route table for the public subnets with a route to the internet via the Internet Gateway.</p>
+<ol start="2">
+<li>
+<p>Add new public route table by clicking on <strong>Create route table</strong> in the right hand corner</p>
+</li>
+<li>
+<p>Enter <code>VPC A Public Route Table</code> as the name and select <code>VPC A</code> from the VPC dropdown</p>
+</li>
+<li>
+<p>Click <strong>Create route table</strong> and a new route table will be created</p>
+</li>
+</ol>
+<p>As you can see there is only a local route, so we&rsquo;re going to enable internet access by adding a route to an Internet Gateway in a later step. For now we need to associate this public route table with the public subnets we created earlier.</p>
+<ol start="5">
+<li>
+<p>Scroll down and click on the <strong>Subnet Associations</strong> tab</p>
+<p><img alt="RT Subnets" src="/images/2.week2/Screenshot_2024-06-24_105258.png"></p>
+</li>
+<li>
+<p>Click on <strong>Edit subnet associations</strong></p>
+</li>
+<li>
+<p>Select <code>VPC A Public Subnet AZ1</code> and <code>VPC A Public Subnet AZ2</code> and click <strong>Save association</strong></p>
+<p><img alt="RT Associate" src="/images/2.week2/Screenshot_2024-06-24_105328.png"></p>
+</li>
+<li>
+<p>The two public subnets will now be associated with the public route table under <strong>Explicit Subnet Associations</strong> within the <strong>Subnet associations</strong> tab.</p>
+<p><img alt="RT Subnets" src="/images/2.week2/Screenshot_2024-06-24_105328.png"></p>
+</li>
+</ol>
+<h4 id="create-route-table-for-private-subnets">Create Route Table for Private Subnets</h4>
+<ol start="9">
+<li>
+<p>In the left hand panel of the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#RouteTables:sort=routeTableId">Route Tables</a>  and click on the <strong>Create route table</strong> button in the top right corner</p>
+</li>
+<li>
+<p>In the <strong>Create route table</strong> screen * Enter <code>VPC A Private Route Table</code> as the <strong>Name</strong> * Select <code>VPC A</code> from the dropdown for <strong>VPC ID</strong> * Click on <strong>Create route table</strong></p>
+</li>
+<li>
+<p>A new route table will be created with a local route</p>
+<p><img alt="Route Table" src="/images/2.week2/Screenshot_2024-06-24_105424.png"></p>
+</li>
+</ol>
+<p>We&rsquo;re going to enable outbound internet access by adding a route to the Internet via a NAT Gateway in the next step. For now we need to associate the private subnets to the route table.</p>
+<ol start="12">
+<li>
+<p>In the <strong>Subnet Associations</strong> tab click on <strong>Edit subnet associations</strong></p>
+<p><img alt="Associate Private Subnet" src="/images/2.week2/Screenshot_2024-06-24_105435.png"></p>
+</li>
+<li>
+<p>Select the two private subnets <code>VPC A Private Subnet AZ1</code> and <code>VPC A Private Subnet AZ2</code> and click <strong>Save associations</strong></p>
+<p><img alt="Associate Private Subnet" src="/images/2.week2/Screenshot_2024-06-24_105444.png"></p>
+</li>
+<li>
+<p>In the resulting screen click on <strong>Route tables</strong> and confirm that there are three route tables under VPC A: main/default, Public and Private.</p>
+<p><img alt="VPC A Route Tables" src="/images/2.week2/Screenshot_2024-06-24_105508.png"></p>
+</li>
+</ol>
+<h3 id="internet-connectivity">Internet Connectivity</h3>
+<p>In this section, we will deploy an Internet Gateway (IGW) and NAT Gateway into our VPC.</p>
+<p>An Internet Gateway establishes outside connectivity for EC2 instances that will be deployed into the VPC and provides both inbound and outbound connectivity to workloads running in public subnets whereas a NAT Gateway provides outbound connectivity for workloads running in private subnets.</p>
+<p><img alt="VPC Networking" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab1_internet_connectivity.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="deploy-an-internet-gateway">Deploy an Internet Gateway</h4>
+<ol>
+<li>
+<p>In the left hand panel click on <a href="https://console.aws.amazon.com/vpc/home?#igws:">Internet Gateways</a>  and click on <strong>Create internet gateway</strong></p>
+</li>
+<li>
+<p>Enter <code>VPC A IGW</code> as the name and click <strong>Create internet gateway</strong> in the bottom right corner</p>
+</li>
+<li>
+<p>On the success screen for the newly created IGW and click on <strong>Attach to VPC</strong>:</p>
+<p><img alt="Create IGW Result" src="/images/2.week2/Screenshot_2024-06-24_105633.png"></p>
+</li>
+<li>
+<p>Select <code>VPC A</code> from the dropdown list for Available VPCs and click <strong>Attach internet gateway</strong></p>
+<p><img alt="Attach IGW" src="/images/2.week2/Screenshot_2024-06-24_105647.png"></p>
+</li>
+<li>
+<p>The Internet Gateway should attach successfully.</p>
+</li>
+</ol>
+<p>We now have an internet access point for our VPC, but in order to utilize the newly created Internet Gateway, we need to update VPC routing tables to point the default routes for our public subnets to this Internet Gateway.</p>
+<h4 id="update-route-table-for-public-subnets">Update Route Table for Public Subnets</h4>
+<ol start="6">
+<li>
+<p>In left hand panel of the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#RouteTables:sort=routeTableId">Route Tables</a>  and select <code>VPC A Public Route Table</code></p>
+</li>
+<li>
+<p>Scroll down to the <strong>Routes</strong> tab</p>
+</li>
+</ol>
+<p>As you can see there is only a local route, so we&rsquo;re going to enable internet access by adding a route to the Internet Gateway</p>
+<ol start="8">
+<li>
+<p>Click on <strong>Edit Routes</strong></p>
+</li>
+<li>
+<p>In the resulting screen</p>
+<ul>
+<li>Click on <strong>Add route</strong></li>
+<li>Enter <code>0.0.0.0/0</code> in the <strong>Destination</strong></li>
+<li>Select <code>Internet Gateway</code> from the <strong>Target</strong> dropdown</li>
+</ul>
+</li>
+<li>
+<p>Choose <code>VPC A IGW</code></p>
+<p><img alt="Add Route Select IGW" src="/images/2.week2/Screenshot_2024-06-24_105801.png"></p>
+</li>
+<li>
+<p>Click <strong>Save changes</strong> and confirm that a new route has been added to the <strong>Routes</strong> tab</p>
+<p><img alt="Add Route IGW Success" src="/images/2.week2/Screenshot_2024-06-24_105815.png"></p>
+</li>
+</ol>
+<p>Next we will add outbound connectivity from the private subnets by deploying a NAT Gateway in a public subnet for use by workloads that should not be directly exposed to the internet.</p>
+<h4 id="create-nat-gateway">Create NAT Gateway</h4>
+<ol start="12">
+<li>
+<p>In the left hand panel of the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#NatGateways">NAT Gateways</a>  and click on <strong>Create NAT gateway</strong></p>
+</li>
+<li>
+<p>In the <strong>Create NAT gateway</strong> screen * Enter <code>VPC A NATGW</code> as the name * Choose <code>VPC A Public Subnet AZ1</code> * Click <strong>Allocate Elastic IP</strong> * Click <strong>Create NAT gateway</strong></p>
+<p><img alt="NAT GW Settings" src="/images/2.week2/Screenshot_2024-06-24_110030.png"></p>
+</li>
+<li>
+<p>Upon creation the NAT Gateway details are displayed</p>
+<p><img alt="NAT GW Success" src="/images/2.week2/Screenshot_2024-06-24_110108.png"></p>
+</li>
+</ol>
+<p>In this workshop, we only created one NAT Gateway in AZ1. It is best practice to create a NAT Gateway in each AZ that is utilized.</p>
+<h4 id="update-route-table-for-private-subnets">Update Route Table for Private Subnets</h4>
+<p>Now that we have a NAT Gateway in a public subnet we need to create a route to it from the private subnets and we will do that by adding an entry to the Route Table for the private subnets.</p>
+<ol start="15">
+<li>
+<p>In the left hand panel of the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#RouteTables:sort=routeTableId">Route Tables</a> </p>
+</li>
+<li>
+<p>Select <code>VPC A Private Route Table</code>, scroll down to the <strong>Routes</strong> tab and click on <strong>Edit routes</strong></p>
+</li>
+<li>
+<p>In the <strong>Edit routes</strong> screen * Click on <strong>Add route</strong> * Enter <code>0.0.0.0/0</code> in the <strong>Destination</strong> * Select <code>NAT Gateway</code> from the <strong>Target</strong> dropdown</p>
+</li>
+<li>
+<p>Choose <code>VPC A NATGW</code> and click on <strong>Save changes</strong></p>
+<p><img alt="Add Route NATGW Select" src="/images/2.week2/Screenshot_2024-06-24_110145.png"></p>
+</li>
+<li>
+<p>Confirm the new route appears in the <strong>Routes</strong> tab of the resulting screen</p>
+<p><img alt="Add Route NATGW Success" src="/images/2.week2/Screenshot_2024-06-24_110209.png"></p>
+</li>
+</ol>
+<p><em><strong>We have now gone through the bread and butter of AWS networking and built a networking foundation of public and private subnets across two availability zones with internet access.</strong></em></p>
+<h3 id="vpc-endpoints">VPC Endpoints</h3>
+<p>VPC Endpoints are private links to supported AWS services from a VPC, instead of reaching the service&rsquo;s public endpoints through the internet. Two types of VPC endpoints exist, Gateway endpoints and Interface endpoints.</p>
+<p>Gateway endpoints support only S3 and DynamoDB, and reach these services through a gateway from the VPC.</p>
+<p>Interface endpoints create a network interface in the VPC&rsquo;s subnets, and all traffic to the service flows through this interface to the service.</p>
+<p>Please see <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-privatelink/what-are-vpc-endpoints.html">What are VPC endpoints?</a>  in the <em>Securely Access Services Over AWS PrivateLink</em> whitepaper if you would like to learn more on the differences.</p>
+<p><img alt="VPC Networking" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab1_networking_built.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="create-an-interface-endpoint-for-kms">Create an Interface Endpoint for KMS</h4>
+<ol>
+<li>
+<p>Navigate to <a href="https://console.aws.amazon.com/vpc/home?#Endpoints:">Endpoints</a>  with the VPC console and click on <strong>Create Endpoint</strong> to start creating a VPC Endpoint</p>
+<p><img alt="Create Endpoint" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/vpc-endpoints/interface_endpoint_create.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>In the <strong>Endpoint settings</strong> screen</p>
+<ul>
+<li>Enter <code>VPC A KMS Endpoint</code> as the <strong>Name tag</strong></li>
+<li>Search for &lsquo;kms&rsquo; under <strong>Services</strong></li>
+</ul>
+<p><img alt="Search" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/vpc-endpoints/interface_endpoint_search.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>From the results select the KMS service name without the&rsquo;-fips&rsquo; suffix</p>
+<p><img alt="Search" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/vpc-endpoints/interface_endpoint_select_kms.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>In the <strong>VPC</strong> section</p>
+<ul>
+<li>Select <code>VPC A</code> from the dropdown</li>
+<li>Expand the <strong>Additional settings</strong> section</li>
+<li>Ensure that <strong>Enable DNS name</strong> is checked</li>
+<li>Select the <strong>IPv4</strong> radio button</li>
+</ul>
+<p><img alt="Select VPC" src="/images/2.week2/Screenshot_2024-06-24_110414.png"></p>
+</li>
+<li>
+<p>Select <code>VPC A Private Subnet AZ1</code> and <code>VPC A Private Subnet AZ2</code> from the subnets and check the <strong>IPv4</strong> radio button.</p>
+<p><img alt="Endpoint Subnets" src="/images/2.week2/Screenshot_2024-06-24_110442.png"></p>
+</li>
+<li>
+<p>Select the default security group and leave the Policy as <code>Full Access</code></p>
+<p><img alt="Endpoint Policy" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/vpc-endpoints/interface_endpoint_full_access.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click on <strong>Create endpoint</strong> button to create the VPC Endpoint for KMS in VPC A.</p>
+</li>
+<li>
+<p>Click on <strong>Close</strong> to return to the Endpoints screen.</p>
+</li>
+</ol>
+<h4 id="create-a-gateway-endpoint-for-s3">Create a Gateway Endpoint for S3</h4>
+<ol>
+<li>
+<p>Click &lsquo;Create Endpoint&rsquo; to start creating another VPC Endpoint</p>
+<p><img alt="Endpoints Screen" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/vpc-endpoints/interface_endpoint_created.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>In the <strong>Create endpoint</strong> screen, enter <code>VPC A S3 Endpoint</code> search for &lsquo;S3&rsquo; by service name</p>
+<p><img alt="Service Search" src="/images/2.week2/Screenshot_2024-06-24_110716.png"></p>
+</li>
+<li>
+<p>Select the endpoint that has a &ldquo;Type&rdquo; listed as &ldquo;Gateway&rdquo; and in the drop down box for VPC</p>
+<p><img alt="Select VPC" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/vpc-endpoints/gateway_endpoint_select.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Select <code>VPC A</code> as the <strong>VPC</strong> and check the checkbox for all the route tables</p>
+<p><img alt="Route Tables" src="/images/2.week2/Screenshot_2024-06-24_110908.png"></p>
+</li>
+<li>
+<p>Leave the Policy as <code>Full Access</code></p>
+<p><img alt="Full Access" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/vpc-endpoints/gateway_endpoint_full_access.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Click on <strong>Create endpoint</strong> button to create the VPC Endpoint for S3 attached to VPC A</p>
+<p><img alt="Endpoint Created" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/vpc-endpoints/gateway_endpoint_created.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+</ol>
+<p><em><strong>We have now gone through the bread and butter of AWS networking and built a networking foundation of public and private subnets across two availability zones with internet access and private connectivity to AWS service endpoints.</strong></em></p>
+<p><em><strong>In the next section we will launch an EC2 instance into both a public subnet and a private subnet to verify the connectivity.</strong></em></p>
+<h3 id="ec2-instances">EC2 instances</h3>
+<p>In this section, you will spin up EC2 instances in your VPC and protect them with a security group only allowing ICMP traffic to reach the hosts.</p>
+<p><img alt="Foundation and Instances" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab1_ec2_instances.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="launch-an-ec2-instance-into-a-public-subnet">Launch an EC2 Instance into a Public Subnet</h4>
+<p>In this section, you will create an EC2 instance in the <strong>Public</strong> Subnet of <strong>AZ2</strong> (Availability Zone B). You will create the instance in AZ1 in the next section.</p>
+<ol>
+<li>
+<p>In the <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a>  section of the EC2 console click <strong>Launch Instances</strong></p>
+</li>
+<li>
+<p>In the resulting <strong>Launch an instance</strong> screen</p>
+<ul>
+<li>Enter <code>VPC A Public AZ2 Server</code> for the <strong>Name</strong></li>
+<li>Ensure that Amazon Linux 2023 AMI will be selected, and the instance type is t2.micro.</li>
+</ul>
+<p><img alt="EC2 Server Name" src="/images/2.week2/Screenshot_2024-06-24_110956.png"></p>
+</li>
+<li>
+<p>Under <strong>Key pair (login)</strong> select <code>Proceed without a key pair</code>. A key pair is not needed since we will be using Systems Manager to connect to the instances.</p>
+<p><img alt="Key Pair" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/fundamentals/ec2_launch_keypair.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Under <strong>Network settings</strong> click <strong>Edit</strong> and</p>
+<ul>
+<li>Select <code>VPC A</code> from the dropdown for the <strong>VPC</strong> field</li>
+<li>Select <code>VPC A Public subnet AZ2</code> from the dropdown for the <strong>Subnet</strong> field</li>
+<li>Select <code>Enable</code> for the <strong>Auto-assign Public IP</strong> field</li>
+</ul>
+</li>
+<li>
+<p>Select <strong>Create security group</strong> with the name <code>VPC A Security Group</code>, description of <code>Open-up ports for ICMP</code></p>
+</li>
+<li>
+<p>In <strong>Inbound security groups rules</strong> under <strong>Type</strong> select <code>All ICMP - IPv4</code> and enter 0.0.0.0/0 as the Source</p>
+<p><img alt="Security Groups" src="/images/2.week2/Screenshot_2024-06-24_111256.png"></p>
+</li>
+</ol>
+<p>Since security groups are stateful, you don’t need to edit the outbound rules. The security group will allow the instance to respond to the ping since it saw the ping arrive at the instance.</p>
+<ol start="7">
+<li>
+<p>Expand <strong>Advanced network configuration</strong> and under <strong>Primary IP</strong> enter <code>10.0.2.100</code>.</p>
+<p><img alt="IP Address" src="/images/2.week2/Screenshot_2024-06-24_111344.png"></p>
+</li>
+<li>
+<p>At the bottom of the section</p>
+<ul>
+<li>Expand <strong>Advanced details</strong></li>
+<li>Under <strong>IAM Instance profile</strong> select <code>NetworkingWorkshopInstanceProfile</code> which was created in the pre-requisites section.</li>
+<li>Click <strong>Launch instance</strong></li>
+</ul>
+<p><img alt="Advanced detail" src="/images/2.week2/Screenshot_2024-06-24_111413.png"></p>
+</li>
+<li>
+<p>Click <strong>View all instances</strong></p>
+</li>
+</ol>
+<p>If you just finished the last step, your EC2 instance might still be spinning up. You can tell by looking at the Instance State and Status Checks columns. If you see <em>Pending</em> state or status <em>Initializing</em>, the instance is not ready yet. After few minutes, you should have an EC2 instance in the &ldquo;running&rdquo; state.</p>
+<p><em><strong>Congratulations! You have just launched a virtual server in your public subnet in AZ2.</strong></em></p>
+<h4 id="launch-instance-in-private-subnet">Launch Instance in Private Subnet</h4>
+<p>You could follow the same process in the last two sections in order to deploy an EC2 instance into a private subnet, however it is also possible to launch a new instance using the same settings as previously.</p>
+<ol start="10">
+<li>In the <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a>  section of the EC2 console</li>
+</ol>
+<ul>
+<li>Select the running public instance <code>VPC A Public AZ2 Server</code></li>
+<li>Click <strong>Actions</strong> then <strong>Image and templates</strong> then <strong>Launch more like this</strong></li>
+</ul>
+<p><img alt="Launch Private EC2" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/fundamentals/ec2_launch_more_like.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="11">
+<li>In the settings screen</li>
+</ol>
+<ul>
+<li>Update the <strong>Name</strong> to <code>VPC A Private AZ1 Server</code></li>
+<li>Under <strong>Key pair (login)</strong> select <code>Proceed without a key pair</code>.</li>
+<li>Update the <strong>Subnet</strong> to be <code>VPC A Private Subnet AZ1</code></li>
+<li>Set the <strong>Auto-Assign Public IP</strong> setting to <code>Disable</code>.</li>
+<li>Expand <strong>Advanced network configuration</strong> and under <strong>Primary IP</strong> enter <code>10.0.1.100</code>.</li>
+<li>Click <strong>Launch instance</strong></li>
+</ul>
+<p><img alt="Private EC2 Server" src="/images/2.week2/Screenshot_2024-06-24_111548.png"></p>
+<p><img src="/images/2.week2/Screenshot_2024-06-24_111623.png"></p>
+<p><img src="/images/2.week2/Screenshot_2024-06-24_111649.png"></p>
+<ol start="12">
+<li>Click <strong>View all instances</strong>. There should now be two EC2 instances running in the VPC</li>
+</ol>
+<p><em><strong>Congratulations, you now have an EC2 instance running in both a public and private subnet.</strong></em></p>
+<h3 id="test-connectivity">Test Connectivity</h3>
+<p>In this section, you will use the EC2 instances in the public and private subnets of your VPC to test the connectivity for the network foundations you created in the previous section.</p>
+<ol>
+<li>
+<p>In the <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a>  section of the EC2 console</p>
+<ul>
+<li>Select the <code>VPC A Public AZ2 Server</code> instance</li>
+<li>Scroll down to the <strong>Details</strong> tab</li>
+<li>Copy the <strong>Public IPv4 address</strong> field by clicking the copy icon to the left of it</li>
+</ul>
+</li>
+<li>
+<p>To ping the instance, you need to open your CLI. On Windows, open the Command Prompt. On Mac, open the Terminal.</p>
+</li>
+<li>
+<p>Type <code>ping</code> then a space, then paste the Elastic IP from above, then space then <code>-c 5</code> and enter.</p>
+<p>If the instance is reachable, we expect to see lines appearing such as</p>
+<p><img alt="EC2 Public ping response" src="/images/2.week2/Screenshot_2024-06-24_112052.png"></p>
+</li>
+</ol>
+<p><em><strong>Good job! You have successfully confirmed connectivity between the public EC2 instance and the internet.</strong></em></p>
+<p><img alt="Public Instance Connectivity" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab1_public_connectivity.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="test-private-instance-connectivity">Test Private Instance Connectivity</h4>
+<ol start="4">
+<li>
+<p>In the <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:">Instances</a>  section of the EC2 console</p>
+<ul>
+<li>Select the <code>VPC A Private AZ1 Server</code> instance</li>
+<li>Click on the <strong>Connect</strong> button</li>
+</ul>
+</li>
+<li>
+<p>In the following screen, select the Session Manager tab and click <strong>Connect</strong></p>
+<p>This will open a terminal from which you can test connectivity to both the public instance at <code>10.0.2.100</code> and external connectivity to <code>example.com</code> via the NAT Gateway.</p>
+</li>
+<li>
+<p>Copy the following ping commands and paste in the Session Manager console</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.0.2.100 -c <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>ping example.com -c <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><ol start="5">
+<li>
+<p>You should receive responses both from the public EC2 instance and example.com</p>
+<p><img alt="EC2 private ping" src="/images/2.week2/Screenshot_2024-06-24_112243.png"></p>
+</li>
+</ol>
+<p>If the ping to 10.0.2.100 is not successful, please ensure you correctly configured the IP address in the <a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/fundamentals/ec2-instances">EC2 Instances</a> section</p>
+<p><em><strong>Congratulations you have now confirmed outbound connectivity from both instances</strong></em></p>
+<p><img alt="Private Instance Connectivity" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab1_private_connectivity.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="compare-gateway-and-interface-endpoint-approaches">Compare Gateway and Interface Endpoint Approaches</h4>
+<h5 id="interface-endpoint-dns">Interface Endpoint DNS</h5>
+<ol start="6">
+<li>Type the following to check the DNS for the KMS service from the VPC A instance:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dig kms.us-east-1.amazonaws.com
+</span></span></code></pre></div><ol start="7">
+<li>
+<p>The response should point to two local IP addresses within the VPC A private subnet CIDR blocks of <code>10.0.1.0/24</code> and <code>10.0.3.0/24</code></p>
+<p><img alt="Interface Endpoint Dig" src="/images/2.week2/Screenshot_2024-06-24_112347.png"></p>
+</li>
+</ol>
+<p>Because the VPC DNS is returning the IP addresses for the Elastic Network Interfaces placed into the private subnets by the Interface Endpoint rather than the public IP address for KMS, the traffic to KMS from VPC A will be routed to the VPC Endpoint rather than traversing the internet to reach KMS.</p>
+<p><img alt="Interface Endpoint Path" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/interface_endpoint_path.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="8">
+<li>Terminate the Session Manager session.</li>
+</ol>
+<h5 id="gateway-endpoint-routing">Gateway Endpoint Routing</h5>
+<ol start="9">
+<li>
+<p>Navigate to the VPC console, and select <a href="https://console.aws.amazon.com/vpc/home?#RouteTables:">Route Tables</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> next to <code>VPC A Private Route Table</code> and scroll down to the <strong>Routes</strong> tab. It should show an entry pointing to the VPC Endpoint ID for destinations in the prefix list.</p>
+<p><img alt="GW Endpoint RT" src="/images/2.week2/Screenshot_2024-06-25_011100.png"></p>
+</li>
+</ol>
+<p>Because the S3 prefix list is a more specific route to S3 than the default route to the internet the traffic to S3 from VPC A will be routed to the VPC Endpoint rather than traversing the internet to the public S3 endpoint.</p>
+<p><img alt="GW Endpoint Path" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/gateway_endpoint_path.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>We have created VPC Endpoints for S3 and KMS and confirmed that the local route table pointed to the VPC endpoint for S3 whereas the local DNS entry for KMS now pointed to ENIs in the private subnets rather than the public interface.</p>
+<h3 id="clean-up">Clean Up</h3>
+<p>If you are using your own AWS Account to conduct this workshop and you are finished, complete the follow steps to clean up.</p>
+<p><strong>Warning</strong></p>
+
+<div class="notices warning" ><p>You should only complete this clean up section if you do not plan on continuing with this workshop.</p>
+</div>
+
+
+<div class="notices warning" ><p>Make sure you terminate / delete the resources below to avoid unnecessary charges.</p>
+</div>
+
+<h4 id="terminate-ec2-instances">Terminate EC2 instances</h4>
+<p><a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/fundamentals/cleanup#terminate-ec2-instances">Step-by-step to delete <code>VPC A Public AZ2 Server</code> and <code>VPC A Private AZ1 Server</code></a></p>
+<h4 id="delete-the-vpc-endpoints">Delete the VPC Endpoints</h4>
+<p><a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/fundamentals/cleanup#delete-the-vpc-endpoints">Step-by-step to delete the KMS and S3 VPC Endpoints</a></p>
+<h4 id="delete-the-vpc">Delete the VPC</h4>
+<p><a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/fundamentals/cleanup#delete-the-vpc">Step-by-step to delete VPC A</a></p>
+<h4 id="delete-the-prerequisites-cloudformation-stack">Delete the Prerequisites CloudFormation Stack</h4>
+<p><a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/fundamentals/cleanup#delete-the-prerequisites-cloudformation-stack">Step-by-step to delete the CloudFormation stack</a></p>
+<h4 id="finished">Finished</h4>
+<p><em>Once you have completed the above steps, you are finished. If you want to continue the workshop later, you can skip this step and use the CloudFormation template in the next step to build the prerequisites.</em></p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1719680647"></script>
+    <script src="/js/jquery.sticky.js?1719680647"></script>
+    <script src="/js/featherlight.min.js?1719680647"></script>
+    <script src="/js/highlight.pack.js?1719680647"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1719680647"></script>
+    <script src="/js/learn.js?1719680647"></script>
+    <script src="/js/hugo-learn.js?1719680647"></script>
+
+    <link href="/mermaid/mermaid.css?1719680647" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1719680647"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

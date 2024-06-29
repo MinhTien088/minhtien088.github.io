@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.127.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>Multiple VPCs :: AWS System Manager</title>
+
+    
+    <link href="/css/nucleus.css?1719680647" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1719680647" rel="stylesheet">
+    <link href="/css/hybrid.css?1719680647" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1719680647" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1719680647" rel="stylesheet">
+    <link href="/css/auto-complete.css?1719680647" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1719680647" rel="stylesheet">
+    <link href="/css/theme.css?1719680647" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1719680647" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1719680647" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1719680647"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/2-week2/2.1-sovico/2.1.2-multivpcs/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1719680647"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1719680647"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1719680647"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/" title="Week 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/">
+           <b> 1. </b> Week 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/" title="Module 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/">
+           <b> 1.1. </b> Module 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.1-module1/1.1.1-awswaf/" title="AWS Well-Architected Framework" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.1-module1/1.1.1-awswaf/">
+           <b> 1.1.1. </b> AWS Well-Architected Framework
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.2-lab1/" title="Lab 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.2-lab1/">
+           <b> 1.2. </b> Lab 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.3-lab7/" title="Lab 7" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.3-lab7/">
+           <b> 1.3. </b> Lab 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-week1/1.4-lab9/" title="Lab 9" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/1-week1/1.4-lab9/">
+           <b> 1.4. </b> Lab 9
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/" title="Week 2" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/">
+           <b> 2. </b> Week 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/" title="Sovico Skill Accelerator Lab" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/">
+           <b> 2.1 </b> Sovico Skill Accelerator Lab
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.1-vpc/" title="VPC Fundamentals" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.1-vpc/">
+           <b> 2.1.1 </b> VPC Fundamentals
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.2-multivpcs/" title="Multiple VPCs" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.2-multivpcs/">
+           <b> 2.1.2 </b> Multiple VPCs
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Security Controls" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.3-securitycontrols/">
+           <b> 2.1.3 </b> Security Controls
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.4-connectonpremises/" title="Connecting to On-Premises" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.4-connectonpremises/">
+           <b> 2.1.4 </b> Connecting to On-Premises
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.1-sovico/2.1.5-networkmonitoring/" title="Network Monitoring" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.1-sovico/2.1.5-networkmonitoring/">
+           <b> 2.1.5 </b> Network Monitoring
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/" title="Module 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/">
+           <b> 2.2 </b> Module 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.1-vpc/" title="Amazon Virtual Private Cloud" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.1-vpc/">
+           <b> 2.2.1 </b> Amazon Virtual Private Cloud
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/" title="VPC Security and Multi-VPC features" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.2-module2/2.2.2-vpcsec-multivpcs/">
+           <b> 2.2.2 </b> VPC Security and Multi-VPC features
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-week2/2.3-gapvxawsevent/" title="OPTIMIZING AWS COSTS AND SECURITY" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/2-week2/2.3-gapvxawsevent/">
+           <b> 2.3. </b> OPTIMIZING AWS COSTS AND SECURITY
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"><i class='fab fa-facebook'></i> AWS Study Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="/2-week2/2.1-sovico/2.1.2-multivpcs/" selected>English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="/vi/2-week2/2.1-sovico/2.1.2-multivpcs/">Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total Cloud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b> Last Updated </b> <br>
+    <i>
+        <font color=orange>29-09-2024</font>
+    </i>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="" style="color:orange">Minh Tiến</a> <br>
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>Minh Tien Workshop</a> > <a href='/2-week2/'>Week 2</a> > <a href='/2-week2/2.1-sovico/'>Sovico Skill Accelerator Lab</a> > Multiple VPCs
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#vpc-peering">VPC Peering</a></li>
+        <li><a href="#transit-gateway">Transit Gateway</a></li>
+        <li><a href="#tgw-route-tables">TGW Route Tables</a></li>
+        <li><a href="#clean-up">Clean Up</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Multiple VPCs
+            </h1>
+          
+
+        
+
+
+
+	<h4 id="vpc-peering--transit-gateway-overview">VPC Peering &amp; Transit Gateway Overview</h4>
+<p>A VPC peering connection is a networking connection between two VPCs that enables you to route traffic between them using private IPv4 addresses or IPv6 addresses. Instances in either VPC can communicate with each other as if they are within the same network. You can create a VPC peering connection between your own VPCs, or with a VPC in another AWS account. The VPCs can be in different regions (also known as an inter-region VPC peering connection).</p>
+<p>VPC Peering is a useful approach to connect a small number of pairs of VPCs however managing point-to-point connectivity across many VPCs without the ability to centrally manage the connectivity policies, can be operationally costly and cumbersome. For on-premises connectivity, you need to attach your AWS VPN to each individual VPC. This solution can be time consuming to build and hard to manage when the number of VPCs grows into the hundreds.</p>
+<p>AWS Transit Gateway is a service that enables you to connect VPCs and on-premises networks to a single gateway. As you grow the number of workloads running on AWS, you need to be able to scale your networks across multiple accounts and Amazon VPCs to keep up with the growth.</p>
+<p>In this lab, you will learn how to peer VPCs, and also create a Transit Gateway, attach VPCs, and configure routing with the Transit Gateway route tables.</p>
+<p>If you are running this lab in <strong>AWS Workshop Studio</strong>, the region has been set by your facilitator. The region you see in /images/2.week2/screenshots may not match your environment. This will not cause any problems.</p>
+<p>If you are running this lab in <strong>your own AWS Account</strong>, it is recommended for all lab resources to be created in us-east-1 region so that the /images/2.week2/screenshots match your environment. This is not mandatory.</p>
+<p>For this lab we will use CloudFormation to automatically build VPCs.</p>
+<h4 id="prerequisites">Prerequisites</h4>
+<p>If you have not completed the VPC Fundamentals section&hellip;</p>
+<p>-or-</p>
+<p>If you have completed the VPC Fundamentals section&hellip;</p>
+<ol start="2">
+<li>If you <strong>have</strong> completed the VPC Fundamentals lab and already have one VPC set up then load this CloudFormation template to create two additional VPCs:</li>
+</ol>
+<p><a href="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/cfn/multi-vpc-add-extra-vpcs.yaml?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J~7ymRH0Zd~BAFAow5URznkYUC11m940tHfTtFZjb0inr~UHlKX4aMx~6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14~ytkP00b0klOMAoCObjpWlF~P6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi~5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW~fBYWkdJ7cRirtLqaELletY9A__">Create two additional VPCs</a></p>
+<ol start="3">
+<li>
+<p>Navigate to <a href="https://console.aws.amazon.com/cloudformation/home">CloudFormation</a>  section in the AWS console. Click <strong>Create stack</strong> button and select <strong>With new resources (standard)</strong>.</p>
+</li>
+<li>
+<p>Under <strong>Specify template</strong>, select <strong>Upload a template file</strong>, click <strong>Choose file</strong> and select the CloudFormation template that you downloaded above. Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Enter the <strong>Stack name</strong> <code>NetworkingWorkshopMultiVPC</code>. Update the Parameter <strong>ParticipantIPAddress</strong>. Leave the other parameter defaults unchanged if you are running in us-east-1 and click <strong>Next</strong>. If you are running in another region, update the availability zones. </p>
+</li>
+</ol>
+<p><img alt="CFN Stack Details" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/pre-reqs/cfn_stack_details.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="6">
+<li>
+<p>Scroll to the bottom of the <strong>Configure stack options</strong> page and click <strong>Next</strong> again.</p>
+</li>
+<li>
+<p>Scroll to the bottom of the <strong>Review</strong> page and click the <strong>Submit</strong> button.</p>
+</li>
+<li>
+<p>The CloudFormation will begin deployment which you can follow by refreshing the <strong>Events</strong> and <strong>Resources</strong> tab.</p>
+</li>
+<li>
+<p>Once the CloudFormation template finishes lets go take a look at what it created. Click on the resources tab and you will find all the resources that were built as part of the CloudFormation stack.</p>
+</li>
+</ol>
+<p><strong>Important</strong></p>
+
+<div class="notices info" ><p>If the deployment of the CloudFormation template fails with the error that starts with <code>Value (NetworkingWorkshopInstanceProfile) for parameter iamInstanceProfile.name is invalid.</code>, please make sure you have completed the <a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/prereqs">prerequisites</a> section.</p>
+</div>
+
+
+<div class="notices info" ><p>If the deployment of the CloudFormation template fails due to the <strong>Elastic IP address</strong> limit being reached and you are using your own AWS account, please refer to the <strong>Elastic IP Quota</strong> section in <a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/prereqs/aws-account">Prerequisites - Your own AWS Account</a>.</p>
+</div>
+
+<p>Now go to <a href="https://console.aws.amazon.com/vpc/home?#vpcs:">Your VPCs</a> and take a look.</p>
+<p>You will find two new VPCs <strong>VPC A</strong>, <strong>VPC B</strong> and <strong>VPC C</strong> with CIDR blocks of 10.0.0.0/16, 10.1.0.0/16 and 10.2.0.0/16. Each VPC has two public and two private subnets.</p>
+<p><img alt="CFN VPCs" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/pre-reqs/cfn_created_vpcs.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>Each VPC has an EC2 instance in the private subnet located in the us-east-1a availability zone.</p>
+<p><img alt="CFN VPCs" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/pre-reqs/cfn_created_instances.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>The environment now looks something like the following. You may notice that <strong>VPC A</strong> is missing the TGW subnets. You will be creating these in the Transit Gateway section. <img alt="Multi-VPC setup" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_cloudformation.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h3 id="vpc-peering">VPC Peering</h3>
+<p>Please note, this section is optional and is not required to be completed to proceed with this workshop. You may skip to <a href="https://catalog.us-east-1.prod.workshops.aws/event/dashboard/en-US/workshop/foundational/multivpc/transit-gw">Transit Gateway</a></p>
+<p>A VPC peering connection is a networking connection between two VPCs that enables you to route traffic between them using private IPv4 addresses or IPv6 addresses. </p>
+<p>In this lab, we will establish VPC peering connections between <em>VPC A</em> and <em>VPC B</em>, as well as between <em>VPC A</em> and <em>VPC C</em> and show that traffic flows between only those VPCs with direct peering links.</p>
+<p><img alt="VPC Peering" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_vpc_peering.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+
+<div class="notices note" ><p>Note that all three VPCs have non-overlapping CIDRs. You cannot create a VPC peering connection between VPCs with matching or overlapping IPv4 CIDR blocks.</p>
+</div>
+
+<h4 id="setup-vpc-a-and-vpc-b-peering">Setup VPC A and VPC B Peering</h4>
+<h5 id="create-the-peering-connection-between-vpcs-a--b">Create the Peering Connection Between VPCs A &amp; B</h5>
+<ol>
+<li>
+<p>In the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#PeeringConnections:sort=vpcPeeringConnectionId">Peering Connections</a> </p>
+</li>
+<li>
+<p>Click on <strong>Create peering connection</strong> in the right hand corner</p>
+</li>
+</ol>
+<p><img alt="Peering Button" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_create_button.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>
+<p>Specify the Peering connection name as <code>VPC A &lt;&gt; VPC B</code></p>
+</li>
+<li>
+<p>Under <strong>Select a local VPC to peer with</strong> select <code>VPC A</code> as <strong>VPC ID (Requester)</strong></p>
+</li>
+</ol>
+<p><img alt="Select Requester" src="/images/2.week2/Screenshot_2024-06-24_145328.png"></p>
+<ol start="5">
+<li>
+<p>Under <strong>Select another VPC to peer with</strong> ensure that <code>My Account</code> is selected for <strong>Account</strong></p>
+</li>
+<li>
+<p>For <strong>Region</strong> select the region for this workshop <code>This Region (us-east-1)</code>.</p>
+</li>
+<li>
+<p>For <strong>VPC ID (Accepter)</strong> select <code>VPC B</code></p>
+</li>
+</ol>
+<p><img alt="Select Accepter" src="/images/2.week2/Screenshot_2024-06-24_145335.png"></p>
+<ol start="8">
+<li>Click on <strong>Create peering connection</strong></li>
+</ol>
+<p><img alt="Create Connection" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_create_connection.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="9">
+<li>
+<p>The newly created peering connection will be in <em>Pending Acceptance</em> state.</p>
+</li>
+<li>
+<p>On the resulting screen, navigate under <strong>Actions</strong> and click <strong>Accept request</strong></p>
+</li>
+</ol>
+<p><img alt="Select Accept" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_accept_request.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="11">
+<li>On the following pop-select, click <strong>Accept request</strong></li>
+</ol>
+<p><img alt="Accept Request" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_popup_accept.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="12">
+<li>Click on <strong>Modify my route tables now</strong> in the resulting screen</li>
+</ol>
+<p><img alt="Modify Route Tables" src="/images/2.week2/Screenshot_2024-06-24_145350.png"></p>
+<h5 id="update-route-table-in-vpc-a">Update Route Table in VPC A</h5>
+<ol>
+<li>
+<p>Select the <em>check box</em> for the <code>VPC A Private Route Table</code></p>
+</li>
+<li>
+<p>Scroll down and click on <strong>Routes</strong> tab</p>
+</li>
+<li>
+<p>Click <strong>Edit routes</strong> </p>
+</li>
+</ol>
+<p><img alt="Edit Routes" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_route_table_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="4">
+<li>Add route entry for &ldquo;VPC B&rdquo; using the CIDR range <code>10.1.0.0/16</code> and selecting Peering Connection <code>VPC A &lt;&gt; VPC B</code> for the target</li>
+</ol>
+<p><img alt="Add VPC B Route" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_route_select_vpc_b.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="5">
+<li>
+<p>Click <strong>Save changes</strong></p>
+</li>
+<li>
+<p>Confirm that the new route appears in the <strong>Routes</strong> tab of the resulting screen</p>
+</li>
+</ol>
+<p><img alt="Routes Updated" src="/images/2.week2/Screenshot_2024-06-24_145753.png"></p>
+<h5 id="update-route-table-in-vpc-b">Update Route Table in VPC B</h5>
+<ol>
+<li>
+<p>Click on <strong>Route tables</strong></p>
+</li>
+<li>
+<p>Select <em>check box</em> for <code>VPC B Private Route Table</code></p>
+</li>
+<li>
+<p>Click on <strong>Routes</strong> tab</p>
+</li>
+<li>
+<p>Click <strong>Edit routes</strong></p>
+</li>
+</ol>
+<p><img alt="Edit Routes" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_route_table_vpc_b.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="5">
+<li>Add a route entry for <strong>VPC A</strong> using CIDR range <code>10.0.0.0/16</code> as the Destination and <code>VPC A &lt;&gt; VPC B</code> as the target</li>
+</ol>
+<p><img alt="Select Target" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_route_select_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="6">
+<li>
+<p>Click <strong>Save changes</strong></p>
+</li>
+<li>
+<p>The route table will be updated with routes for the peering connection</p>
+</li>
+</ol>
+<p><img alt="Route Table Updated" src="/images/2.week2/Screenshot_2024-06-24_145841.png"></p>
+<h4 id="setup-vpc-a-and-vpc-c-peering">Setup VPC A and VPC C Peering</h4>
+<h5 id="create-the-peering-connection-between-vpcs-a--c">Create the Peering Connection Between VPCs A &amp; C</h5>
+<ol>
+<li>
+<p>In the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#PeeringConnections:sort=vpcPeeringConnectionId">Peering Connections</a> </p>
+</li>
+<li>
+<p>Click on <strong>Create peering connection</strong> in the right hand corner</p>
+</li>
+</ol>
+<p><img alt="Create Connection" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ac_button.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>
+<p>Specify the Peering connection name as <code>VPC A &lt;&gt; VPC C</code></p>
+</li>
+<li>
+<p>Under <strong>Select a local VPC to peer with</strong> select <code>VPC A</code> as <strong>VPC ID (Requester)</strong></p>
+</li>
+<li>
+<p>Under <strong>Select another VPC to peer with</strong> ensure that <code>My Account</code> is selected for <strong>Account</strong></p>
+</li>
+<li>
+<p>For <strong>Region</strong> select the region for this workshop <code>This Region (us-east-1)</code>.</p>
+</li>
+<li>
+<p>For <strong>VPC ID (Accepter)</strong> select <code>VPC C</code></p>
+</li>
+</ol>
+<p><img alt="Select VPC C" src="/images/2.week2/Screenshot_2024-06-24_150048.png"></p>
+<ol start="8">
+<li>Click on <strong>Create peering connection</strong> </li>
+</ol>
+<p><img alt="Create" src="/images/2.week2/Screenshot_2024-06-24_150056.png"></p>
+<ol start="9">
+<li>
+<p>The newly created peering connection will be in <em>Pending Acceptance</em> state.</p>
+</li>
+<li>
+<p>On the resulting screen, navigate under <strong>Actions</strong> and click <strong>Accept request</strong></p>
+</li>
+</ol>
+<p><img alt="Accept" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ac_actions_accept.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p><img src="/images/2.week2/Screenshot_2024-06-24_150307.png"></p>
+<ol start="11">
+<li>
+<p>On the following pop-select, click <strong>Accept request</strong></p>
+</li>
+<li>
+<p>Click on <strong>Modify my route tables now</strong> in the resulting screen</p>
+</li>
+</ol>
+<p><img alt="Modify Route Tables" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ac_modify_rt_button.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h5 id="update-route-table-in-vpc-a-1">Update Route Table in VPC A</h5>
+<ol>
+<li>
+<p>Select <em>check box</em> for <code>VPC A Private Route Table</code></p>
+</li>
+<li>
+<p>Scroll down and click on <strong>Routes</strong> tab</p>
+</li>
+<li>
+<p>Click <strong>Edit routes</strong></p>
+</li>
+</ol>
+<p><img alt="Edit Routes" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ac_route_table_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="4">
+<li>
+<p>Add route entry for &ldquo;VPC C&rdquo; using the CIDR range <code>10.2.0.0/16</code> and selecting Peering Connection <code>VPC A &lt;&gt; VPC C</code> for the target</p>
+</li>
+<li>
+<p>Click <strong>Save changes</strong></p>
+</li>
+</ol>
+<p><img alt="Save" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ac_route_select_vpc_c.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="6">
+<li>Confirm that the new route appears in the <strong>Routes</strong> tab of the resulting screen</li>
+</ol>
+<p><img alt="Routes Tab" src="/images/2.week2/Screenshot_2024-06-24_150359.png"></p>
+<h5 id="update-route-table-in-vpc-c">Update Route Table in VPC C</h5>
+<ol>
+<li>
+<p>Navigate back to <strong>Route Tables</strong> and select <em>check box</em> for <code>VPC C Private Route Table</code></p>
+</li>
+<li>
+<p>Click on <strong>Routes</strong> tab</p>
+</li>
+<li>
+<p>Click <strong>Edit routes</strong></p>
+</li>
+</ol>
+<p><img alt="Edit Routes" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ac_route_table_vpc_c.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="4">
+<li>Add a route entry for <strong>VPC A</strong> using CIDR range <code>10.0.0.0/16</code> as the Destination and <code>VPC A &lt;&gt; VPC C</code> as the Target</li>
+</ol>
+<p><img alt="Add Route" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ac_route_select_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="5">
+<li>
+<p>Click <strong>Save changes</strong></p>
+</li>
+<li>
+<p>The route table will be updated with routes for the peering connection</p>
+</li>
+</ol>
+<p><img alt="Route Table Updated" src="/images/2.week2/Screenshot_2024-06-24_150539.png"></p>
+<h4 id="check-connectivity">Check Connectivity</h4>
+<h5 id="check-connectivity-from-vpc-a">Check Connectivity from VPC A</h5>
+<ol>
+<li>
+<p>Proceed to <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:instanceState=running">EC2 Console</a> .</p>
+</li>
+<li>
+<p>Select the <code>VPC A Private AZ1 Server</code> EC2 instance and click the <strong>Connect</strong> button above</p>
+</li>
+</ol>
+<p><img alt="Select Instance" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_select_vpc_a_instance.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>
+<p>Click <strong>Connect</strong> in the <strong>Session Manager</strong> tab</p>
+</li>
+<li>
+<p>Try pinging EC2 instances in <strong>VPC B</strong> and <strong>VPC C</strong> using the private addresses of the instances</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.1.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>ping 10.2.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><p>If peering and routing are configured correctly, you should be able to ping both instances. </p>
+<p><img alt="Ping success" src="/images/2.week2/Screenshot_2024-06-24_151159.png"></p>
+<h5 id="check-connectivity-from-vpc-b">Check Connectivity from VPC B</h5>
+<ol>
+<li>
+<p>Terminate the Session Manager connection and in the resulting screen click on <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:instanceState=running">Instances</a> .</p>
+</li>
+<li>
+<p>Select <strong>VPC B Private AZ1 Server</strong> EC2 instance and connect using Session Manager.</p>
+</li>
+</ol>
+<p><img alt="Session Manager" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_select_vpc_b_instance.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>Ping the EC2 instance in VPC A using the IP address <code>10.0.1.100</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.0.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><p><img alt="Ping A from B" src="/images/2.week2/Screenshot_2024-06-24_151246.png"></p>
+<ol start="4">
+<li>Can you ping the instance in VPC C using the IP address <code>10.2.1.100</code>?</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.2.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><p><img alt="Ping C from B" src="/images/2.week2/Screenshot_2024-06-24_151331.png"></p>
+<p>There is no direct peering between VPC B and VPC C. VPC B and VPC C cannot communicate via VPC A because VPC peering does not permit transitive routing.</p>
+<ol start="5">
+<li>Terminate the Session Manager connection and close the browser tab.</li>
+</ol>
+<p><em><strong>Congratulations</strong></em> you&rsquo;ve set up a peering architecture that connects VPC A to VPC B and VPC C but prevents VPC B and VPC C communicating.</p>
+<p>While this approach can be used to interconnect many VPCs, managing many point-to-point connections can be cumbersome at scale. A more scalable approach is to utilize AWS Transit Gateway so we will now remove the point-to-point peering connections between VPCs in preparation for setting up Transit Gateway (TGW) to interconnect the three VPCs</p>
+<h4 id="delete-vpc-peering-connections">Delete VPC Peering Connections</h4>
+<ol>
+<li>
+<p>In the VPC Dashboard navigate to <a href="https://console.aws.amazon.com/vpc/home?#PeeringConnections:sort=vpcPeeringConnectionId">Peering Connections</a> </p>
+</li>
+<li>
+<p>Select the <code>VPC A &lt;&gt; VPC B</code> peering connectoin and delete it by clicking <strong>Actions</strong> and selecting <strong>Delete peering connnection</strong></p>
+</li>
+</ol>
+<p><img alt="Select Connection" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_delete.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>Select the checkbox to <strong>Delete related route table entries</strong> to avoid traffic blackholing scenario.</li>
+</ol>
+<p><img alt="Select Checkbox" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/vpc-peering/peering_vpcs_ab_delete_confirm.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="4">
+<li>
+<p>Type <code>delete</code> in the text box and click <strong>Delete</strong></p>
+</li>
+<li>
+<p>Repeat deletion of VPC peering for the <code>VPC A &lt;&gt; VPC C</code> connection.</p>
+</li>
+</ol>
+<p><em><strong>Congratulations you now have now completed this section of the lab.</strong></em></p>
+<h3 id="transit-gateway">Transit Gateway</h3>
+<p>AWS Transit Gateway connects your Amazon Virtual Private Clouds (VPCs) and on-premises networks through a central hub. This simplifies your network and puts an end to complex peering relationships. It acts as a cloud router – each new connection is only made once.</p>
+<h4 id="create-the-transit-gateway">Create the Transit Gateway</h4>
+<ol>
+<li>
+<p>In the left hand pane of the VPC Dashboard scroll down and click on <a href="https://console.aws.amazon.com/vpc/home?#TransitGateways:">Transit Gateways</a> </p>
+</li>
+<li>
+<p>Click on <strong>Create Transit Gateway</strong></p>
+</li>
+</ol>
+<p><img alt="Create TGW" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_create.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>Add a name for the new Transit Gateway as <code>TGW</code> and add a description of <code>TGW for us-east-1</code>.</li>
+</ol>
+<p><img alt="TGW Name" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_name_description.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="4">
+<li>Select <code>Multicast support</code> and keep the remaining settings at the defaults. You will need this option enabled if you progress to the advanced multicast lab. Click on <strong>Create transit gateway</strong>.</li>
+</ol>
+<p><img alt="Click Create TGW" src="/images/2.week2/Screenshot_2024-06-24_154234.png"></p>
+<h4 id="attach-vpcs-to-transit-gateway">Attach VPCs to Transit Gateway</h4>
+<p>The best practice for connecting VPCs to Transit Gateway is to use a dedicated /28 subnet in each availability zone and the CloudFormation run earlier created these for VPC B and VPC C alongside two private and public /24 subnets for hosting workloads.</p>
+<p>However the &ldquo;VPC Fundamentals&rdquo; lab only created the two public and two private /24 subnets for VPC A and our AWS environment currently looks like this:</p>
+<p><img alt="VPC A after CFN" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_cloudformation.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>Therefore before we create the transit gateway we need to add a dedicated /28 subnet in each availability zone in <strong>VPC A</strong> for the transit gateway attachments.</p>
+<h5 id="create-transit-gateway-subnets-in-vpc-a">Create Transit Gateway Subnets in VPC A</h5>
+<ol>
+<li>
+<p>Within the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#subnets:">Subnets</a>  and click the <strong>Create subnet</strong> button</p>
+</li>
+<li>
+<p>Create a subnet under VPC A with a name of <code>VPC A TGW Subnet AZ1</code> in <code>us-east-1a</code> with a CIDR block of <code>10.0.5.0/28</code></p>
+</li>
+<li>
+<p>Create another subnet under VPC A with a name of <code>VPC A TGW Subnet AZ2</code> in <code>us-east-1b</code> with a CIDR block of <code>10.0.5.16/28</code></p>
+</li>
+</ol>
+<p><img alt="Subnets" src="/images/2.week2/Screenshot_2024-06-24_154730.png"></p>
+<p>Now that we have subnets to place the transit gateway attachments into we will attach VPC A, VPC B, and VPC C to the transit gateway and test connectivity between our EC2 instances in each VPC.</p>
+<p><img alt="Aligned VPCs" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_aligned_vpcs.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h5 id="create-transit-gateway-attachment-for-vpc-a">Create Transit Gateway Attachment for VPC A</h5>
+<ol>
+<li>
+<p>On the left navigation pane go to <a href="https://console.aws.amazon.com/vpc/home?#TransitGatewayAttachments:">Transit Gateway Attachments</a> </p>
+</li>
+<li>
+<p>Click on <strong>Create Transit Gateway Attachment</strong>.</p>
+</li>
+</ol>
+<p><img alt="TGW Attachment" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_attachment_create.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>
+<p>Enter <code>VPC A Attachment</code> as the <strong>Name tag</strong>.</p>
+</li>
+<li>
+<p>Select the transit gateway from the dropdown for <strong>Transit Gateway ID</strong>.</p>
+</li>
+<li>
+<p>Leave <strong>Attachment Type</strong> as <code>VPC</code></p>
+</li>
+</ol>
+<p><img alt="TGW Attachment Name" src="/images/2.week2/Screenshot_2024-06-24_154858.png"></p>
+<ol start="6">
+<li>
+<p>Select <strong>VPC A</strong> from the <strong>VPC ID</strong> drop down.</p>
+</li>
+<li>
+<p>Select <code>VPC A TGW Subnet AZ1</code> and <code>VPC A TGW Subnet AZ2</code> for the <strong>Subnet IDs</strong>.</p>
+</li>
+</ol>
+<p><img alt="TGW Attachment" src="/images/2.week2/Screenshot_2024-06-24_154905.png"></p>
+<p>Note that the TGW subnets will not be selected by default, double check the subnets are the TGW ones.</p>
+<ol start="8">
+<li>
+<p>Click <strong>Create transit gateway attachment</strong> on the bottom right corner.</p>
+</li>
+<li>
+<p>VPC attachment should create successfully and will be in a pending state initially</p>
+</li>
+</ol>
+<p><img alt="TGW Attachment" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_attachment_success_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h5 id="create-transit-gateway-attachment-for-vpc-b">Create Transit Gateway Attachment for VPC B</h5>
+<ol>
+<li>
+<p>Click <strong>Create Transit Gateway Attachment</strong>.</p>
+</li>
+<li>
+<p>Enter <code>VPC B Attachment</code> as the <strong>Name tag</strong>.</p>
+</li>
+<li>
+<p>Select the transit gateway from the dropdown for <strong>Transit Gateway ID</strong>.</p>
+</li>
+<li>
+<p>Leave <strong>Attachment Type</strong> as <code>VPC</code></p>
+</li>
+</ol>
+<p><img alt="TGW Attachment Name" src="/images/2.week2/Screenshot_2024-06-24_155122.png"></p>
+<ol start="5">
+<li>
+<p>Select <strong>VPC B</strong> from the <strong>VPC ID</strong> drop down</p>
+</li>
+<li>
+<p>Select <code>VPC B TGW Subnet AZ1</code> and <code>VPC B TGW Subnet AZ2</code> for the <strong>Subnet IDs</strong>.</p>
+</li>
+</ol>
+<p><img alt="TGW Attachment" src="/images/2.week2/Screenshot_2024-06-24_155137.png"></p>
+<p>Note that the TGW subnets will not be selected by default, double check the subnets are the TGW ones.</p>
+<ol start="7">
+<li>
+<p>Click <strong>Create transit gateway attachment</strong> on the bottom right corner.</p>
+</li>
+<li>
+<p>VPC attachment should create successfully and will be in a pending state initially</p>
+</li>
+</ol>
+<p><img alt="TGW Attachment" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_attachment_success_vpc_b.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h5 id="create-transit-gateway-attachment-for-vpc-c">Create Transit Gateway Attachment for VPC C</h5>
+<ol>
+<li>
+<p>Click <strong>Create Transit Gateway Attachment</strong>.</p>
+</li>
+<li>
+<p>Name the attachment as <code>VPC C attachment</code>.</p>
+</li>
+<li>
+<p>Select the transit gateway from the dropdown for <strong>Transit Gateway ID</strong>.</p>
+</li>
+<li>
+<p>Leave <strong>Attachment Type</strong> as <code>VPC</code></p>
+</li>
+</ol>
+<p><img alt="TGW Attachment Name" src="/images/2.week2/Screenshot_2024-06-24_155207.png"></p>
+<ol start="5">
+<li>
+<p>Select <code>VPC C</code> from the <strong>VPC ID</strong> drop dowm.</p>
+</li>
+<li>
+<p>Select <code>VPC C TGW Subnet AZ1</code> and <code>VPC C TGW Subnet AZ2</code> for the <strong>Subnet IDs</strong>.</p>
+</li>
+</ol>
+<p><img alt="TGW Attachment" src="/images/2.week2/Screenshot_2024-06-24_155214.png"></p>
+<p>Note that the TGW subnets will not be selected by default, double check the subnets are the TGW ones.</p>
+<ol start="7">
+<li>
+<p>Click <strong>Create transit gateway attachment</strong> on the bottom right corner.</p>
+</li>
+<li>
+<p>VPC attachment should create successfully and will be in a pending state initially</p>
+</li>
+</ol>
+<p><img alt="TGW Attachment" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_attachment_success_vpc_c.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>Let’s go take a look at how the Transit Gateway attached to the VPC.</p>
+<p><img alt="Attachments" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_attachments.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>On the left in the EC2 Dashboard click on <a href="https://console.aws.amazon.com/ec2/v2/home?#NIC:">Network Interfaces</a> </p>
+<p><img alt="Network Interfaces" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_network_interfaces.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>There are now six interfaces with a Description beginning <code>Network Interface for Transit Gateway Attachment...</code> representing the Elastic Network Interfaces that have been placed in each of the two Transit Gateway subnets in each of the three VPCs.</p>
+<p>Now that we have attachments in all three VPCs, we need to add routes to their route tables to point traffic to the interfaces.</p>
+<h4 id="add-routes-to-tgw-in-the-vpc-route-tables">Add Routes to TGW in the VPC Route Tables</h4>
+<ol>
+<li>
+<p>On the left in the VPC Dashboard click on <a href="https://console.aws.amazon.com/vpc/home?#RouteTables:sort=tag:Name">Route Tables</a> </p>
+</li>
+<li>
+<p>Select the <em>check box</em> for <code>VPC A Private Route Table</code>, scroll down select the <strong>Routes</strong> tab and click on <strong>Edit routes</strong>. </p>
+</li>
+</ol>
+<p><img alt="Edit Routes" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_private_route_table_select_vpc_a.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>
+<p>Add a route to VPC B in the <strong>VPC A Private Route Table</strong> using a Destination of <code>10.1.0.0/16</code> with a Target as the transit gateway.</p>
+</li>
+<li>
+<p>Add a route to VPC C in the <strong>VPC A Private Route Table</strong> using a Destination of <code>10.2.0.0/16</code> with a Target as the transit gateway.</p>
+</li>
+<li>
+<p>Click <strong>Save routes</strong>.</p>
+</li>
+</ol>
+<p><img alt="Select Routes" src="/images/2.week2/Screenshot_2024-06-24_155537.png"></p>
+<ol start="6">
+<li>Confirm that the routes have been added to the route table.</li>
+</ol>
+<p><img alt="Routes Added" src="/images/2.week2/Screenshot_2024-06-24_155546.png"></p>
+<ol start="7">
+<li>
+<p>Click on <strong>Route tables</strong></p>
+</li>
+<li>
+<p>Select the <em>check box</em> for <code>VPC B Private Route Table</code>, scroll down select the <strong>Routes</strong> tab and click on <strong>Edit routes</strong>.</p>
+</li>
+</ol>
+<p><img alt="Edit Routes" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_private_route_table_select_vpc_b.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="9">
+<li>Add an aggregate route with a Destination of <code>10.0.0.0/8</code> with a Target as the transit gateway. Click <strong>Save routes</strong>.</li>
+</ol>
+<p><img alt="Select Routes" src="/images/2.week2/Screenshot_2024-06-24_155612.png"></p>
+<ol start="10">
+<li>Confirm that the route has been added to the <strong>VPC B Private Route Table</strong>.</li>
+</ol>
+<p><img alt="Routes Added" src="/images/2.week2/Screenshot_2024-06-24_155619.png"></p>
+<ol start="11">
+<li>
+<p>Click on <strong>Route tables</strong></p>
+</li>
+<li>
+<p>Select the <em>check box</em> for <code>VPC C Private Route Table</code>, scroll down select the <strong>Routes</strong> tab and click on <strong>Edit routes</strong>.</p>
+</li>
+</ol>
+<p><img alt="Edit Routes" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_private_route_table_select_vpc_c.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="13">
+<li>Add an aggregate route with a Destination of <code>10.0.0.0/8</code> with a Target as the transit gateway. Click Save routes.</li>
+</ol>
+<p><img alt="Select Routes" src="/images/2.week2/Screenshot_2024-06-24_160000.png"></p>
+<ol start="14">
+<li>Confirm that the route has been added to the <strong>VPC C Private Route Table</strong>.</li>
+</ol>
+<p><img alt="Routes Added" src="/images/2.week2/Screenshot_2024-06-24_160009.png"></p>
+<h4 id="test-connectivity">Test Connectivity</h4>
+<p>Now let’s test the connectivity between the instances in the private subnets in VPC A, B &amp; C.</p>
+<ol>
+<li>
+<p>Navigate to <a href="https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:instanceState=running">Instances</a> in the EC2 Dashboard</p>
+</li>
+<li>
+<p>Select the <em>check box</em> for <code>VPC A Private AZ1 Server</code> and click <strong>Connect</strong> to use Session Manager to connect </p>
+</li>
+</ol>
+<p><img alt="SSM Connection" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/transit-gw/tgw_connect_ec2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>Confirm connectivity between the VPCs by pinging the IP address on the instances in VPC B and VPC C with the following commands:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.1.1.100 -c <span style="color:#ae81ff">5</span> 
+</span></span><span style="display:flex;"><span>ping 10.2.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><ol start="4">
+<li>You should see a response from both EC2 instances </li>
+</ol>
+<p><img alt="Ping" src="/images/2.week2/Screenshot_2024-06-24_160248.png"></p>
+<p><em><strong>Congratulations you now have a multi-VPC architecture with connectivity between the VPCs provided by Transit Gateway.</strong></em></p>
+<p><img alt="Attachments Diagram" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_vpc_routing.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h3 id="tgw-route-tables">TGW Route Tables</h3>
+<p>Your transit gateway routes IPv4 and IPv6 packets between attachments using transit gateway route tables. You can configure these route tables to propagate routes from the route tables for the attached VPCs, VPN connections, and Direct Connect gateways. You can also add static routes to the transit gateway route tables. When a packet comes from one attachment, it is routed to another attachment using the route that matches the destination IP address.</p>
+<p>In this section we will explore using transit gateway route tables to provide network segmentation.</p>
+<h4 id="inspect-the-transit-gateway-default-route-table">Inspect the Transit Gateway Default Route Table</h4>
+<ol>
+<li>
+<p>In the VPC Dashboard scroll down and click <a href="https://console.aws.amazon.com/vpc/home?#TransitGatewayRouteTables:">Transit Gateway Route Tables</a> </p>
+</li>
+<li>
+<p>Select the Transit Gateway route table, scroll down and click on the <strong>Associations Tab</strong>. You will see the three attachments for the three VPCs. </p>
+</li>
+</ol>
+<p><img alt="TGW Route Table Associations" src="/images/2.week2/Screenshot_2024-06-24_160353.png"></p>
+<ol start="3">
+<li>Next click on the <strong>Propagations Tab</strong>. You will see all three attachments are propogating the CIDRs for the VPCs. </li>
+</ol>
+<p><img alt="TGW Propagations" src="/images/2.week2/Screenshot_2024-06-24_160403.png"></p>
+<ol start="4">
+<li>Finally click on the <strong>Routes Tab</strong>. You will see the three routes for the three VPCs. </li>
+</ol>
+<p><img alt="TGW Routes" src="/images/2.week2/Screenshot_2024-06-24_160420.png"></p>
+<p>As we have seen the Transit Gateway automatically associates newly attached VPCs to the default route table and propagates routes from the VPCs into the Transit Gateway Route Table. This makes it very easy for VPCs to have connectivity to other VPCs. </p>
+<p><img alt="TGW Route Table Diagram" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_attachments.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>But there are often times when we do not want VPCs to have connectivity to other VPCs except for a Shared Services VPC. For this lab we will use <strong>VPC A</strong> as our Shared Services VPC and modify the default configurations on the Transit Gateway route table and make it so that <strong>VPC B</strong> and <strong>VPC C</strong> cannot talk to each other but both are able to communicate with any shared services in <strong>VPC A</strong>. </p>
+<p><img alt="Shared Services Diagram" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_shared_services.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>This is a typical ‘shared services’ VPC configuration in which <strong>VPC A</strong> would host services like LDAP, DNS, or other shared resources.</p>
+<h4 id="delete-vpc-a-attachment-from-transit-gateway-route-table">Delete VPC A Attachment from Transit Gateway Route Table</h4>
+<p>The first thing we need to do is delete the association for <strong>VPC A</strong> from the original Transit Gateway Route Table that you created. You need to reference the VPC ‘Resource ID’ to ensure you delete the correct VPC</p>
+<ol>
+<li>Navigate to <a href="https://console.aws.amazon.com/vpc/home?#vpcs:">Your VPCs</a>  and make a note of the VPC ID for <strong>VPC A</strong>. <img alt="Note VPC A ID" src="/images/2.week2/Screenshot_2024-06-24_160513.png"></li>
+<li>Navigate back to <a href="https://console.aws.amazon.com/vpc/home?#TransitGatewayRouteTables:">Transit Gateway Route Tables</a> </li>
+<li>Select the <em>check box</em> for the TGW route table and scroll down to the <strong>Associations</strong> tab <img alt="Delete VPC C Association" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_association_delete.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></li>
+<li>Select the association with the <strong>Resource ID</strong> that matches the VPC ID for <strong>VPC A</strong> noted down earlier and click <strong>Delete association</strong></li>
+<li>Confirm the deletion by clicking <strong>Delete Association</strong> on the following screen <img alt="Confirm Deletion" src="/images/2.week2/Screenshot_2024-06-24_160724.png"></li>
+<li>The association will move into <em>disassociating</em> state. <img alt="VPC C disassociating" src="/images/2.week2/Screenshot_2024-06-24_160743.png"></li>
+</ol>
+<h4 id="delete-propagations-for-vpc-b--c-from-transit-gateway-route-table">Delete Propagations for VPC B &amp; C from Transit Gateway Route Table</h4>
+<p>We will now delete the propagations that were automatically created for both <strong>VPC B</strong> and <strong>VPC C</strong> one at a time from the route table so that the only one remaining is that for the VPC ID of <strong>VPC A</strong>. This will remove the routes for <strong>VPC B</strong> and <strong>VPC C</strong> so they cannot reach each other via this route table.</p>
+<ol>
+<li>
+<p>Navigate to the <strong>Propagations</strong> tab.</p>
+</li>
+<li>
+<p>Select one of the propagations where the <strong>Resource ID</strong> does NOT match the VPC ID noted down for <strong>VPC A</strong> and click <strong>Delete Propagation</strong> </p>
+</li>
+</ol>
+<p><img alt="Delete Propagation 1" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_delete_propagation_1.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>Confirm the deletion by clicking <strong>Delete propagation</strong> on the pop-up. </li>
+</ol>
+<p><img alt="Confirm Propagation Delete 1" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_delete_propagation_1_confirm.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="4">
+<li>Select the other propagation where the <strong>Resource ID</strong> does NOT match the VPC ID for <strong>VPC A</strong> and click <strong>Delete Propagation</strong> </li>
+</ol>
+<p><img alt="Delete Propagation 2" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_delete_propagation_2.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="5">
+<li>Confirm the deletion by clicking <strong>Delete propagation</strong> on the pop-up. </li>
+</ol>
+<p><img alt="Confirm Propagation Delete 2" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_delete_propagation_2_confirm.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p><img src="/images/2.week2/Screenshot_2024-06-24_160859.png"></p>
+<ol start="7">
+<li>Navigate to the <strong>Routes tab</strong> to check the result (it may take a few seconds to update) </li>
+</ol>
+<p><img alt="Route Table Associations" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_table_after_deletes.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<p>The only route in the original Transit Gateway Route Table should be a propagated route to 10.0.0.0/16 to <strong>VPC A</strong>.</p>
+<p>The attachments for both <strong>VPC B</strong> and <strong>VPC C</strong> are still associated to the original route table and this means that both <strong>VPC B</strong> and <strong>VPC C</strong> are able to reach <strong>VPC A</strong> via the route table as there is a route for 10.0.0.0/16 being propagated into it by <strong>VPC A</strong>.</p>
+<p>However the attachment for <strong>VPC A</strong> is no longer associated to a route table in the TGW and therefore there is no routing information that would allow traffic to reach <strong>VPC B</strong> and <strong>VPC C</strong> from <strong>VPC A</strong>. To add those routes we will now create another route table for <strong>VPC A</strong> to use.</p>
+<h4 id="create-shared-services-route-table">Create Shared Services Route Table</h4>
+<p>To create a return path from <strong>VPC A</strong> we will create a new Shared Services Route Table.</p>
+<ol>
+<li>Click <strong>Create Transit Gateway Route Table</strong> </li>
+</ol>
+<p><img alt="Create New Route Table" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_shared_services_table_create.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="2">
+<li>Enter <code>Shared Services TGW Route Table</code> as the <strong>Name tag</strong> and select the transit gateway from the dropdown for <strong>Transit Gateway ID</strong> </li>
+</ol>
+<p><img alt="New Route Table Settings" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_shared_services_table_settings.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="3">
+<li>Click <strong>Create transit gateway route table</strong>* and wait for the new route table to change state to <em>available</em> </li>
+</ol>
+<p><img alt="Shared Service Route Table Available" src="/images/2.week2/Screenshot_2024-06-24_161017.png"></p>
+<ol start="4">
+<li>Scroll down to the <strong>Associations</strong> tab and click <strong>Create association</strong> </li>
+</ol>
+<p><img alt="Associate VPC A to Shared Services RT" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_shared_services_association_create.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="5">
+<li>Associate the <code>VPC A attachment</code> with the Shared Services route table by selecting it from the dropdown and clicking <strong>Create association</strong>. </li>
+</ol>
+<p><img alt="New Route Table Association" src="/images/2.week2/Screenshot_2024-06-24_161034.png"></p>
+<h4 id="create-propagations-for-vpc-b--vpc-c">Create Propagations for VPC B &amp; VPC C</h4>
+<p>Now that <strong>VPC A</strong> is associated with the new Shared Services Route Table in the Transit Gateway we need to create propagations for <strong>VPC B</strong> and <strong>VPC C</strong> so that this route table knows how to access 10.1.0.0/16 and 10.2.0.0/16. This enables <strong>VPC A</strong> to have a return path to both <strong>VPC B</strong> and <strong>VPC C</strong>.</p>
+<ol>
+<li>
+<p>Navigate to <strong>Propagations</strong> tab and click <strong>Create Propagation</strong>. <img alt="New Route Table Propagation" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_shared_services_propagations_tab.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+</li>
+<li>
+<p>Select the <code>VPC B attachment</code> from the dropdown and click <strong>Create propagation</strong> </p>
+</li>
+</ol>
+<p><img alt="Create VPC B Propagation" src="/images/2.week2/Screenshot_2024-06-24_161054.png"></p>
+<ol start="3">
+<li>There should now be two propagations in the <strong>Propagations</strong> tab </li>
+</ol>
+<p><img alt="Shared Services Propagations" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/multivpc/tgw-routing/tgw_routing_shared_services_updated_propagations.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<ol start="4">
+<li>Take a look at the <strong>Routes</strong> tab for the shared services route table. </li>
+</ol>
+<p><img alt="Shared Services Routes" src="/images/2.week2/Screenshot_2024-06-24_161205.png"></p>
+<p>There should be routes to both <strong>VPC B</strong> (10.1.0.0/16) and <strong>VPC C</strong> (10.2.0.0/16).</p>
+<p><img alt="Shared Services Routing Domains Diagram" src="https://static.us-east-1.prod.workshops.aws/75ba8d1e-a9a3-4d2b-8f3b-1e14daba212a/static/foundational/images/lab-states/lab2_routing_domains.png?Key-Pair-Id=K36Q2WVO3JP7QD&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zdGF0aWMudXMtZWFzdC0xLnByb2Qud29ya3Nob3BzLmF3cy83NWJhOGQxZS1hOWEzLTRkMmItOGYzYi0xZTE0ZGFiYTIxMmEvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTcxOTgzNzg5MX19fV19&Signature=J%7E7ymRH0Zd%7EBAFAow5URznkYUC11m940tHfTtFZjb0inr%7EUHlKX4aMx%7E6gTR6trOGax0S2TqdiprWe1I6HDk1Ild-CSdgLKrchlG6pXxQlrXAbMG71ShedSygBsjhf6Xe5GzFbESDBBHpa2jA0VPqtjC82bd-LgYxoevch14%7EytkP00b0klOMAoCObjpWlF%7EP6IOGj7SYq7D9dapW4jOMc60cihl2SPSbSwOv3baJdg5wMAB4gjahEE3wVKFQf6oi%7E5iLlFQVMgi4ja2EkQgOlsVQ7XZeNa-poJDPItq4jxjoZRToeIOlel8gRDKW%7EfBYWkdJ7cRirtLqaELletY9A__"></p>
+<h4 id="test-connectivity-1">Test Connectivity</h4>
+<p>Now let’s use Session Manager to connect to the EC2 instance in <strong>VPC B</strong> and test connectivity to the instances in <strong>VPC A</strong> and <strong>VPC C</strong>.</p>
+<ol>
+<li>In the EC2 Dashboard click on <a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:instanceState=running">EC2 Instances</a> </li>
+<li>Select <code>VPC B Private AZ1 Server</code> and Click <strong>Connect</strong></li>
+<li>In the <strong>Session Manager</strong> tab, click <strong>Connect</strong></li>
+<li>Ping the servers in VPC A <code>10.0.1.100</code> and VPC C <code>10.2.1.100</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ping 10.0.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>ping 10.2.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sh-4.2$ ping 10.0.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>PING 10.0.1.100 <span style="color:#f92672">(</span>10.0.1.100<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 10.0.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">254</span> time<span style="color:#f92672">=</span>1.002 ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 10.0.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">254</span> time<span style="color:#f92672">=</span>0.909 ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 10.0.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">254</span> time<span style="color:#f92672">=</span>0.908 ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 10.0.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">254</span> time<span style="color:#f92672">=</span>0.896 ms
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span> bytes from 10.0.1.100: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">254</span> time<span style="color:#f92672">=</span>0.903 ms
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>--- 10.0.1.100 ping statistics ---
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span> packets transmitted, <span style="color:#ae81ff">5</span> received, 0% packet loss, time 4004ms
+</span></span><span style="display:flex;"><span>rtt min/avg/max/mdev <span style="color:#f92672">=</span> 0.896/1.128/2.024/0.448 ms
+</span></span><span style="display:flex;"><span>sh-4.2$ ping 10.2.1.100 -c <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>PING 10.2.1.100 <span style="color:#f92672">(</span>10.2.1.100<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>--- 10.2.1.100 ping statistics ---
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span> packets transmitted, <span style="color:#ae81ff">0</span> received, 100% packet loss, time 4072ms
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sh-4.2$
+</span></span></code></pre></div><p><img src="/images/2.week2/Screenshot_2024-06-24_163146.png"></p>
+<p>Now because we deleted the association in the main route table <strong>VPC B</strong> can talk to <strong>VPC A</strong>, but <strong>VPC B</strong> cannot talk to <strong>VPC C</strong>.</p>
+<p><em><strong>Congratulations you&rsquo;ve established network segmentation using the Transit Gateway route tables and completed the lab.</strong></em></p>
+<h3 id="clean-up">Clean Up</h3>
+<p>If you are using your own AWS Account to conduct this workshop and you are finished, complete the follow steps to clean up.</p>
+<p><strong>Warning</strong></p>
+
+<div class="notices warning" ><p>You should only complete this clean up section if you do not plan on continuing with this workshop.</p>
+</div>
+
+
+<div class="notices warning" ><p>Make sure you terminate / delete the resources below to avoid unnecessary charges.</p>
+</div>
+
+<h4 id="delete-transit-gateway-and-attachments">Delete Transit Gateway and attachments</h4>
+<h4 id="delete-the-remaining-resources">Delete the remaining resources</h4>
+<h4 id="finished">Finished</h4>
+<p><em>Once you have completed the above steps, you are finished. If you want to continue the workshop later, you can skip this step and use the CloudFormation template in the next step to build the prerequisites.</em></p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/2-week2/2.1-sovico/2.1.1-vpc/" title="VPC Fundamentals"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/2-week2/2.1-sovico/2.1.3-securitycontrols/" title="Security Controls" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.min.js?1719680647"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1719680647"></script>
+    <script src="/js/jquery.sticky.js?1719680647"></script>
+    <script src="/js/featherlight.min.js?1719680647"></script>
+    <script src="/js/highlight.pack.js?1719680647"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1719680647"></script>
+    <script src="/js/learn.js?1719680647"></script>
+    <script src="/js/hugo-learn.js?1719680647"></script>
+
+    <link href="/mermaid/mermaid.css?1719680647" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1719680647"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>
